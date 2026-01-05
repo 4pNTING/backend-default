@@ -3,25 +3,25 @@ syntax = "proto3";
 package auth;
 
 service AuthService {
-  // Login: เช็ค Username/Password -> บันทึกเวลาเข้า -> คืนค่า User info
+  // 1. Login (ไม่มี page/limit/keyword)
   rpc Login (LoginRequest) returns (LoginResponse);
   
-  // Logout: ส่ง User UID -> บันทึกเวลาออก
+  // 2. Logout
   rpc Logout (LogoutRequest) returns (ActionResponse);
-
-  // ดูประวัติ (สำหรับผู้จัดการ)
+  
+  // 3. Get Logs (ส่วนนี้มี Pagination)
   rpc GetAccessLogs (GetLogsRequest) returns (AccessLogListResponse);
 }
 
 message LoginRequest {
   string username = 1;
-  string password = 2; // เปลี่ยนจาก PIN เป็น Password
+  string password = 2;
 }
 
 message LoginResponse {
   bool success = 1;
   string user_uid = 2;
-  string role = 3;     // MANAGER, STAFF
+  string role = 3;
   string message = 4;
 }
 
@@ -34,12 +34,20 @@ message ActionResponse {
   string message = 2;
 }
 
+// Request ของการดึง Log
 message GetLogsRequest {
-  string date = 1; // Optional: "2024-01-01"
+  string date = 1;
+  int32 page = 2;
+  int32 limit = 3;
+  string keyword = 4;
 }
 
+// Response ของการดึง Log
 message AccessLogListResponse {
   repeated AccessLogItem logs = 1;
+  int32 total = 2;     // <--- แก้กลับเป็น total ตามที่ขอครับ
+  int32 page = 3;
+  int32 last_page = 4;
 }
 
 message AccessLogItem {
