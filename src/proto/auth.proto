@@ -3,14 +3,7 @@ syntax = "proto3";
 package auth;
 
 service AuthService {
-  // 1. Login (ไม่มี page/limit/keyword)
   rpc Login (LoginRequest) returns (LoginResponse);
-  
-  // 2. Logout
-  rpc Logout (LogoutRequest) returns (ActionResponse);
-  
-  // 3. Get Logs (ส่วนนี้มี Pagination)
-  rpc GetAccessLogs (GetLogsRequest) returns (AccessLogListResponse);
 }
 
 message LoginRequest {
@@ -20,38 +13,8 @@ message LoginRequest {
 
 message LoginResponse {
   bool success = 1;
-  string user_uid = 2;
+  string _id = 2;
   string role = 3;
   string message = 4;
-}
-
-message LogoutRequest {
-  string user_uid = 1;
-}
-
-message ActionResponse {
-  bool success = 1;
-  string message = 2;
-}
-
-// Request ของการดึง Log
-message GetLogsRequest {
-  string date = 1;
-  int32 page = 2;
-  int32 limit = 3;
-  string keyword = 4;
-}
-
-// Response ของการดึง Log
-message AccessLogListResponse {
-  repeated AccessLogItem logs = 1;
-  int32 total = 2;     // <--- แก้กลับเป็น total ตามที่ขอครับ
-  int32 page = 3;
-  int32 last_page = 4;
-}
-
-message AccessLogItem {
-  string user_name = 1;
-  string action = 2;
-  string timestamp = 3;
+  bool is_active = 5;
 }

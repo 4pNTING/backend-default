@@ -1,25 +1,72 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './database/user.entity';
-import { AccessLog } from './database/access-log.entity';
-import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+
+// Import Modules ของเรา
+import { RepositoriesModule } from './infrastructure/repositories/repositories.module';
+import { CategoryUsecasesProxyModule } from './infrastructure/usecases-proxy/category-usecases-proxy.module';
+import { ZoneUsecasesProxyModule } from './infrastructure/usecases-proxy/zone-usecases-proxy.module';
+import { AuthUsecasesProxyModule } from './infrastructure/usecases-proxy/auth-usecases-proxy.module';
+
+// import { CategoryController } from './infrastructure/controllers/category/category.controller';
+import { ZoneController } from './infrastructure/controllers/zone/zone.controller';
+import { AuthController } from './infrastructure/controllers/auth/auth.controller';
+
+import { CategoryEntity } from './infrastructure/entities/category.entity';
+import { ZoneEntity } from './infrastructure/entities/zone.entity';
+import { UserEntity } from './infrastructure/entities/user.entity';
+
+import { CategoryResolver } from './infrastructure/resolvers/category/category.resolver';
+import { ZoneResolver } from './infrastructure/resolvers/zone/zone.resolver';
+import { AuthResolver } from './infrastructure/resolvers/auth/auth.resolver';
 
 @Module({
     imports: [
-        TypeOrmModule.forRoot({
-            type: 'postgres',
-            host: 'localhost',       // ถูกต้อง (ตรงกับภาพที่ 5)
-            port: 5432,              // ถูกต้อง (ตรงกับภาพที่ 5)
-            username: 'postgres',    // ถูกต้อง (ตรงกับภาพที่ 5)
-            password: '21019954pn', // รหัสผ่านที่คุณตั้งตอนติดตั้งใหม่ (ตรวจสอบให้แน่ใจว่าถูกต้อง)
-            database: 'postgres',    // *** แก้ไขจุดนี้: เปลี่ยนจาก 'pos_db' เป็น 'postgres' เพื่อให้รันได้ทันที
-            entities: [User, AccessLog],
-            synchronize: true,
+        // 1. Config Environment (อ่านไฟล์ .env)
+        ConfigModule.forRoot({ isGlobal: true }),
+
+        // 2. GraphQL Config (__NEW__)
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+            sortSchema: true,
+            playground: true,
+            path: '/api-gateway',
         }),
-        TypeOrmModule.forFeature([User, AccessLog]),
+
+        // 2. Database Connection (Postgres)
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                type: 'postgres',
+                host: configService.get<string>('DB_HOST') || 'localhost',
+                port: configService.get<number>('DB_PORT') || 5435,
+                username: configService.get<string>('DB_USER'),
+                password: configService.get<string>('DB_PASSWORD'),
+                database: configService.get<string>('DB_NAME'),
+                entities: [CategoryEntity, ZoneEntity, UserEntity],
+                synchronize: true,
+                autoLoadEntities: true,
+                logging: true,
+            }),
+        }),
+
+        // 3. Register Modules
+        RepositoriesModule,
+        CategoryUsecasesProxyModule.register(), // Load Dynamic Module
+        ZoneUsecasesProxyModule.register(),
+        AuthUsecasesProxyModule.register(),
     ],
-    controllers: [AuthController],
-    providers: [AuthService],
+    controllers: [
+        // 4. Register Controllers
+        // CategoryController,
+        ZoneController,
+        AuthController,
+    ],
+    providers: [CategoryResolver, ZoneResolver, AuthResolver],
 })
 export class AppModule { }
