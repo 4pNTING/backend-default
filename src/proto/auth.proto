@@ -14,7 +14,11 @@ message LoginRequest {
 message LoginResponse {
   bool success = 1;
   string _id = 2;
-  string role = 3;
-  string message = 4;
-  bool is_active = 5;
+  string username = 3;
+  string role = 4;
+  string message = 5;
+  bool is_active = 6;
+  string token = 7;
+  string created_at = 8;
+  string updated_at = 9;
 }

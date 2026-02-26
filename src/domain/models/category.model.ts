@@ -9,9 +9,7 @@ export class CategoryModel {
   isActive?: boolean;
 }
 
-// ==============================
-// CREATE
-// ==============================
+
 export class CreateCategoryRequest {
   name: string;
   description?: string;
@@ -21,9 +19,6 @@ export class CreateCategoryRequest {
 
 export class CreateCategoryResponse extends CategoryModel { }
 
-// ==============================
-// UPDATE
-// ==============================
 export class UpdateCategoryRequest {
   id: number;
   name?: string;
@@ -37,9 +32,6 @@ export class UpdateCategoryResponse {
   success: boolean;
 }
 
-// ==============================
-// DELETE
-// ==============================
 export class DeleteCategoryRequest {
   id: number;
 }
@@ -49,11 +41,7 @@ export class DeleteCategoryResponse {
   success: boolean;
 }
 
-// ==============================
-// LOAD ALL
-// ==============================
 export class LoadAllCategoryRequest {
-  // อาจจะรับเป็น QueryProps เข้ามาแทนใน Controller
 }
 
 export class LoadAllCategoryResponse {
@@ -61,9 +49,6 @@ export class LoadAllCategoryResponse {
   total: number;
 }
 
-// ==============================
-// LOAD BY ID
-// ==============================
 export class LoadCategoryByIdRequest {
   id: number;
 }

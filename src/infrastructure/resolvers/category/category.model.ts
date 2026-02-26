@@ -1,24 +1,19 @@
-import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
+import { ObjectType, Field, InputType, Int } from '@nestjs/graphql';
 import {
-    ConditionDto,
     DateFilterDto,
-    InNumberDto,
-    InStringDto,
     PaginateDto,
-    SearchDto,
-    ActiveStatus
+    SearchDto
 } from '../../common/graphql/common.model';
+import { ActiveStatus } from '../../../domain/enums/enum';
 
 export { ActiveStatus };
 
-// ==============================
-// OBJECT TYPES (Output)
-// ==============================
+
 
 @ObjectType()
 export class Category {
     @Field(() => Int, { nullable: true })
-    _id: number; // ใช้ _id จริงๆ ตามที่ขอ
+    _id: number;
 
     @Field()
     name: string;
@@ -30,7 +25,7 @@ export class Category {
     photo?: string;
 
     @Field({ nullable: true })
-    createdAt?: Date; // ควรใช้ Date scalar ถ้าตั้งค่าไว้
+    createdAt?: Date;
 
     @Field({ nullable: true })
     updatedAt?: Date;
@@ -81,10 +76,6 @@ export class RestoreCategoryResponse {
     category: Category;
 }
 
-
-// ==============================
-// INPUT TYPES (Input)
-// ==============================
 
 @InputType()
 export class CreateCategoryDto {

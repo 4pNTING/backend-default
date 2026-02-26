@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../common/jwt-auth.guard';
 import {
     Category,
     LoadCategoryResponse,
@@ -25,6 +26,7 @@ import { LoadByIDCategoryUseCase } from '../../../usecases/category/loadByIDCate
 import { RestoreCategoryUseCase } from '../../../usecases/category/restoreCategory.usecase';
 
 @Resolver(() => Category)
+@UseGuards(JwtAuthGuard)
 export class CategoryResolver {
     constructor(
         @Inject(CategoryUsecasesProxyModule.CREATE_CATEGORY_PROXY)
@@ -75,15 +77,12 @@ export class CategoryResolver {
 
             // 3. Filter (isActive via Enum)
             if (input.isActive) {
-                let isActiveValue: string | undefined;
-                if (input.isActive === ActiveStatus.ACTIVE) isActiveValue = 'true';
-                if (input.isActive === ActiveStatus.INACTIVE) isActiveValue = 'false';
+                let isActiveValue: boolean | undefined;
+                if (input.isActive === ActiveStatus.ACTIVE) isActiveValue = true;
+                if (input.isActive === ActiveStatus.INACTIVE) isActiveValue = false;
 
-                if (isActiveValue) {
-                    query.condition = [{
-                        field: 'isActive',
-                        value: isActiveValue
-                    }];
+                if (isActiveValue !== undefined) {
+                    query.isActive = isActiveValue;
                 }
                 // If ALL, do nothing (fetch all)
             }

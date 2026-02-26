@@ -19,14 +19,9 @@ export class LoadAllCategoryAction {
         );
       }
 
-      // 1.5 Condition (isActive)
-      if (query.condition && query.condition.length > 0) {
-        for (const cond of query.condition) {
-          if (cond.field === 'isActive' && cond.value) {
-            const isActive = cond.value === 'true';
-            qb.andWhere('category.isActive = :isActive', { isActive });
-          }
-        }
+      // 1.5 Filter (isActive)
+      if (query.isActive !== undefined) {
+        qb.andWhere('category.isActive = :isActive', { isActive: query.isActive });
       }
 
       // 2. Pagination

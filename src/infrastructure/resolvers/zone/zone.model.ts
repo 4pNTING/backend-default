@@ -1,12 +1,11 @@
 import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 import {
-    ConditionDto,
     DateFilterDto,
-    InNumberDto,
-    InStringDto,
-    PaginateDto,
-    SearchDto
+    SearchDto,
+    ActiveStatus
 } from '../../common/graphql/common.model';
+
+export { ActiveStatus };
 
 // ==============================
 // OBJECT TYPES (Output)
@@ -132,8 +131,8 @@ export class LoadZoneDto {
     @Field(() => Int, { nullable: true })
     limit?: number;
 
-    @Field({ nullable: true })
-    isActive?: string;
+    @Field(() => ActiveStatus, { nullable: true })
+    isActive?: ActiveStatus;
 
     @Field({ nullable: true })
     keyword?: string;

@@ -37,13 +37,11 @@ import { LoadCategoryByIdValidation } from './loadCategoryById/loadCategoryById.
 export class DatabaseCategoryRepository implements ICategoryRepository {
   constructor(
     @InjectRepository(CategoryEntity)
-    private readonly categoryEntity: Repository<CategoryEntity>, // Inject Repository
-    private readonly dataSource: DataSource, // Inject DataSource
+    private readonly categoryEntity: Repository<CategoryEntity>,
+    private readonly dataSource: DataSource,
   ) { }
 
-  // ==========================================
-  // CREATE
-  // ==========================================
+
   async create(params: CreateCategoryRequest): Promise<CreateCategoryResponse> {
     const session = this.dataSource.createQueryRunner();
     await session.connect();
@@ -61,9 +59,6 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     }
   }
 
-  // ==========================================
-  // UPDATE
-  // ==========================================
   async update(params: UpdateCategoryRequest): Promise<void> {
     const session = this.dataSource.createQueryRunner();
     await session.connect();
@@ -80,20 +75,12 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     }
   }
 
-  // ==========================================
-  // DELETE (Soft Delete)
-  // ==========================================
   async delete(params: DeleteCategoryRequest): Promise<void> {
     const session = this.dataSource.createQueryRunner();
     await session.connect();
     await session.startTransaction();
     try {
-      // Validate if needed
-      // await new DeleteCategoryValidation(this.categoryEntity).execute(params);
-
-      // Use Soft Delete
       await session.manager.softDelete(CategoryEntity, params.id);
-
       await session.commitTransaction();
     } catch (error) {
       await session.rollbackTransaction();
@@ -103,9 +90,6 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     }
   }
 
-  // ==========================================
-  // RESTORE
-  // ==========================================
   async restore(id: number): Promise<void> {
     const session = this.dataSource.createQueryRunner();
     await session.connect();
@@ -121,9 +105,6 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     }
   }
 
-  // ==========================================
-  // LOAD ALL
-  // ==========================================
   async findAll(query: QueryProps): Promise<LoadAllCategoryResponse> {
     const session = this.dataSource.createQueryRunner();
     await session.connect();
@@ -140,9 +121,6 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     }
   }
 
-  // ==========================================
-  // LOAD BY ID
-  // ==========================================
   async findById(params: LoadCategoryByIdRequest): Promise<LoadCategoryByIdResponse | null> {
     const session = this.dataSource.createQueryRunner();
     await session.connect();
@@ -160,9 +138,6 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     }
   }
 
-  // ==========================================
-  // FIND BY NAME
-  // ==========================================
   async findByName(name: string): Promise<LoadCategoryByIdResponse | null> {
     const entity = await this.categoryEntity.findOne({ where: { name } });
     if (!entity) return null;

@@ -6,7 +6,6 @@ import {
     LoadCategoryByIdRequest
 } from '@domain/models/category.model';
 
-// Import Proxy Module
 import { CategoryUsecasesProxyModule } from '../../usecases-proxy/category-usecases-proxy.module';
 import { CreateCategoryUseCase } from '@usecases/category/createCategory.usecase';
 import { UpdateCategoryUseCase } from '@usecases/category/updateCategory.usecase';
@@ -45,7 +44,6 @@ export class CategoryGrpcController {
 
     @GrpcMethod('CategoryService', 'FindAll')
     async findAll() {
-        // ในตัวอย่างนี้ขอส่ง query ว่างไปก่อนนะครับ (ของจริงต้อง map จาก proto)
         return await this.loadCategoryUseCase.execute({});
     }
 

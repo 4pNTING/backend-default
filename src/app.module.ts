@@ -22,6 +22,7 @@ import { UserEntity } from './infrastructure/entities/user.entity';
 import { CategoryResolver } from './infrastructure/resolvers/category/category.resolver';
 import { ZoneResolver } from './infrastructure/resolvers/zone/zone.resolver';
 import { AuthResolver } from './infrastructure/resolvers/auth/auth.resolver';
+import { JwtStrategy } from './infrastructure/common/jwt.strategy';
 
 @Module({
     imports: [
@@ -67,6 +68,6 @@ import { AuthResolver } from './infrastructure/resolvers/auth/auth.resolver';
         ZoneController,
         AuthController,
     ],
-    providers: [CategoryResolver, ZoneResolver, AuthResolver],
+    providers: [CategoryResolver, ZoneResolver, AuthResolver, JwtStrategy],
 })
 export class AppModule { }

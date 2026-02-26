@@ -20,6 +20,10 @@ export class AuthController {
             role: result.role,
             message: result.message,
             is_active: result.isActive,
+            username: result.username,
+            token: result.token,
+            created_at: result.createdAt ? result.createdAt.toISOString() : undefined,
+            updated_at: result.updatedAt ? result.updatedAt.toISOString() : undefined,
         };
     }
 }

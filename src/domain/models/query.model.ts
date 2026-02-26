@@ -13,29 +13,11 @@ export interface Search {
   q?: string;
 }
 
-export interface Condition {
-  field?: string;
-  value?: string;
-}
-
-export interface InNumber {
-  field?: string;
-  value?: number[];
-}
-
-export interface InString {
-  field?: string;
-  value?: string[];
-}
-
 export interface QueryProps {
   dateFilter?: DateFilter;
   search?: Search;
   sort?: number;
   paginate?: Paginate;
-  condition?: Condition[];
-  inNumber?: InNumber[];
-  inString?: InString[];
-  joins?: string[];
+  isActive?: boolean;
   select?: string[];
 }

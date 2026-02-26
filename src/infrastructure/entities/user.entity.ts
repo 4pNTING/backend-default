@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { UserModel } from '../../domain/models/user.model';
+import { Role } from '../../domain/enums/enum';
 
 @Entity('users')
 export class UserEntity implements UserModel {
@@ -10,10 +11,14 @@ export class UserEntity implements UserModel {
     username: string;
 
     @Column()
-    password?: string;
+    password: string;
 
-    @Column({ default: 'user' })
-    role?: string;
+    @Column({
+        type: 'enum',
+        enum: Role,
+        default: Role.USER
+    })
+    role?: Role;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;

@@ -21,7 +21,8 @@ import {
     UpdateZoneResponse,
     DeleteZoneResponse,
     RestoreZoneResponse,
-    LoadZoneByIdResponse
+    LoadZoneByIdResponse,
+    ActiveStatus
 } from './zone.model';
 
 @Resolver(() => Zone)
@@ -66,10 +67,13 @@ export class ZoneResolver {
 
             // 3. Filter (isActive)
             if (input.isActive) {
-                query.condition = [{
-                    field: 'isActive',
-                    value: input.isActive // Sent as string, action will handle
-                }];
+                let isActiveValue: boolean | undefined;
+                if (input.isActive === ActiveStatus.ACTIVE) isActiveValue = true;
+                if (input.isActive === ActiveStatus.INACTIVE) isActiveValue = false;
+
+                if (isActiveValue !== undefined) {
+                    query.isActive = isActiveValue;
+                }
             }
         }
 

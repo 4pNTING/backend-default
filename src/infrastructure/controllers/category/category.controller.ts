@@ -1,20 +1,20 @@
-import { 
-  Controller, 
-  Get, 
-  Post, 
-  Put, 
-  Delete, 
-  Body, 
-  Param, 
-  Inject, 
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Inject,
   ParseIntPipe,
   HttpCode,
   HttpStatus
 } from '@nestjs/common';
-import { 
-  CreateCategoryRequest, 
-  UpdateCategoryRequest, 
-  DeleteCategoryRequest 
+import {
+  CreateCategoryRequest,
+  UpdateCategoryRequest,
+  DeleteCategoryRequest
 } from '@domain/models/category.model';
 import { QueryProps } from '@domain/models/query.model';
 
@@ -43,41 +43,31 @@ export class CategoryController {
 
     @Inject(CategoryUsecasesProxyModule.LOAD_BY_ID_CATEGORY_PROXY)
     private readonly loadCategoryByIdUseCase: LoadByIDCategoryUseCase,
-  ) {}
+  ) { }
 
-  // ==========================================
-  // GET: Get All (Basic) or Search
-  // ==========================================
-  @Post('search') // ใช้ POST เพื่อส่ง QueryProps (Filter/Sort) ได้ง่าย
+
+  @Post('search')
   @HttpCode(HttpStatus.OK)
   async findAll(@Body() query: QueryProps) {
     return await this.loadCategoryUseCase.execute(query);
   }
 
-  // ==========================================
-  // GET: Get By ID
-  // ==========================================
+
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await this.loadCategoryByIdUseCase.execute({ id });
   }
 
-  // ==========================================
-  // POST: Create
-  // ==========================================
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() body: CreateCategoryRequest) {
     return await this.createCategoryUseCase.execute(body);
   }
 
-  // ==========================================
-  // PUT: Update
-  // ==========================================
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   async update(
-    @Param('id', ParseIntPipe) id: number, 
+    @Param('id', ParseIntPipe) id: number,
     @Body() body: Omit<UpdateCategoryRequest, 'id'> // รับ Body ไม่รวม ID
   ) {
     // รวม ID จาก Param เข้ากับ Body
@@ -85,9 +75,6 @@ export class CategoryController {
     return await this.updateCategoryUseCase.execute(request);
   }
 
-  // ==========================================
-  // DELETE: Delete
-  // ==========================================
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param('id', ParseIntPipe) id: number) {

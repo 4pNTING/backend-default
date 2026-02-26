@@ -1,14 +1,20 @@
 import { Inject } from '@nestjs/common';
 import { Args, Mutation, Resolver, Field, InputType, ObjectType } from '@nestjs/graphql';
+import { IsString, IsNotEmpty } from 'class-validator'; // <-- 1. เพิ่มตัวตรวจสอบข้อมูล
 import { AuthUsecasesProxyModule } from '../../usecases-proxy/auth-usecases-proxy.module';
 import { LoginUseCase } from '../../../usecases/auth/login.usecase';
-import { LoginRequest, LoginResponse } from '../../../domain/models/user.model';
+import { LoginResponse } from '../../../domain/models/user.model';
 
 @InputType()
 class AuthLoginArgs {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     username: string;
+
     @Field()
+    @IsString()
+    @IsNotEmpty()
     password: string;
 }
 
@@ -23,7 +29,11 @@ class AuthLoginResponse {
     @Field()
     message: string;
     @Field({ nullable: true })
+    username: string;
+    @Field({ nullable: true })
     isActive?: boolean;
+    @Field({ nullable: true })
+    token?: string;
 }
 
 @Resolver()
