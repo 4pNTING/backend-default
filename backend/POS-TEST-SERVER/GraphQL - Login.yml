@@ -1,0 +1,30 @@
+info:
+  name: GraphQL - Login
+  type: graphql
+  seq: 1
+
+graphql:
+  method: POST
+  url: http://localhost:3000/api-gateway
+  body:
+    query: |
+      mutation {
+        login(loginData: {
+          username: "chanthalayT", 
+          password: "123456"
+        }) {
+          success
+          _id
+          username
+          message
+          role
+          token
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

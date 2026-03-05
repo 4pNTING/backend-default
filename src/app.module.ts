@@ -41,11 +41,10 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
         // 1. Config Environment (อ่านไฟล์ .env)
         ConfigModule.forRoot({ isGlobal: true }),
 
-        // 2. GraphQL Config (__NEW__)
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-            sortSchema: true,
+            sortSchema: false,
             playground: true,
             path: '/api-gateway',
         }),

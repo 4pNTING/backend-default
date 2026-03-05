@@ -123,17 +123,16 @@ export class RestoreZoneDto {
 }
 
 @InputType()
-@InputType()
 export class LoadZoneDto {
     @Field(() => Int, { nullable: true })
-    page: number;
+    page?: number;
 
     @Field(() => Int, { nullable: true })
-    limit: number;
+    limit?: number;
 
-    @Field(() => ActiveStatus, { nullable: true })
+    @Field(() => ActiveStatus)
     isActive: ActiveStatus;
 
     @Field({ nullable: true })
-    keyword: string;
+    keyword?: string;
 }

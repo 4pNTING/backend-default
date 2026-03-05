@@ -13,17 +13,25 @@ export class AuthController {
 
     @GrpcMethod('AuthService', 'Login')
     async login(data: LoginRequest): Promise<any> {
-        const result = await this.loginUseCase.execute(data);
-        return {
-            success: result.success,
-            _id: result._id,
-            role: result.role,
-            message: result.message,
-            is_active: result.isActive,
-            username: result.username,
-            token: result.token,
-            created_at: result.createdAt ? result.createdAt.toISOString() : undefined,
-            updated_at: result.updatedAt ? result.updatedAt.toISOString() : undefined,
-        };
+        try {
+            const result = await this.loginUseCase.execute(data);
+            return {
+                success: result.success,
+                _id: result._id,
+                role: result.role,
+                message: result.message,
+                is_active: result.isActive,
+                username: result.username,
+                token: result.token,
+                created_at: result.createdAt,
+                updated_at: result.updatedAt,
+            };
+        } catch (error) {
+            console.error('Login Error:', error);
+            return {
+                success: false,
+                message: error.message || 'Internal Server Error',
+            };
+        }
     }
 }

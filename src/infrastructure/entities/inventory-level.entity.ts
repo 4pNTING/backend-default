@@ -8,23 +8,23 @@ export class InventoryLevelEntity implements InventoryLevelModel {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ name: 'product_id' })
+    @Column()
     productId: number;
 
-    @Column({ name: 'zone_id' })
+    @Column()
     zoneId: number;
 
     @Column('int', { default: 0 })
     quantity: number;
 
     @ManyToOne(() => ProductEntity, product => product.inventoryLevels)
-    @JoinColumn({ name: 'product_id' })
+    @JoinColumn()
     product: ProductEntity;
 
     @ManyToOne(() => ZoneEntity)
-    @JoinColumn({ name: 'zone_id' })
+    @JoinColumn()
     zone: ZoneEntity;
 
-    @UpdateDateColumn({ name: 'updated_at' })
+    @UpdateDateColumn()
     updatedAt: Date;
 }

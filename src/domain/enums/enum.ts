@@ -1,15 +1,15 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum Role {
-    USER = 'USER',
-    MANAGER = 'MANAGER',
-    ADMIN = 'ADMIN',
+    USER = 'user',
+    MANAGER = 'manager',
+    ADMIN = 'admin',
 }
 
 export enum ActiveStatus {
-    ACTIVE = 'ACTIVE',
-    INACTIVE = 'INACTIVE',
-    ALL = 'ALL'
+    ACTIVE = 'active',
+    INACTIVE = 'inactive',
+    ALL = 'all'
 }
 
 registerEnumType(ActiveStatus, {
@@ -18,13 +18,13 @@ registerEnumType(ActiveStatus, {
 });
 
 export enum InventoryMovementType {
-    IN = 'IN',
-    OUT = 'OUT',
-    TRANSFER = 'TRANSFER',
-    ADJUST = 'ADJUST'
+    IN = 'in',
+    OUT = 'out',
+    TRANSFER = 'transfer',
+    ADJUST = 'adjust'
 }
 
 registerEnumType(InventoryMovementType, {
     name: 'InventoryMovementType',
-    description: 'Type of inventory movement: IN, OUT, TRANSFER, or ADJUST',
+    description: 'Type of inventory movement: in, out, transfer, or adjust',
 });

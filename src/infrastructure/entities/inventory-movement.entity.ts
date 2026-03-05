@@ -9,10 +9,10 @@ export class InventoryMovementEntity implements InventoryMovementModel {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ name: 'product_id' })
+    @Column()
     productId: number;
 
-    @Column({ name: 'zone_id', nullable: true })
+    @Column({ nullable: true })
     zoneId: number;
 
     @Column('int')
@@ -27,17 +27,17 @@ export class InventoryMovementEntity implements InventoryMovementModel {
     @Column({ nullable: true })
     note: string;
 
-    @Column({ name: 'user_id', nullable: true })
+    @Column({ nullable: true })
     userId: number;
 
     @ManyToOne(() => ProductEntity, product => product.movements)
-    @JoinColumn({ name: 'product_id' })
+    @JoinColumn()
     product: ProductEntity;
 
     @ManyToOne(() => ZoneEntity)
-    @JoinColumn({ name: 'zone_id' })
+    @JoinColumn()
     zone: ZoneEntity;
 
-    @CreateDateColumn({ name: 'created_at' })
+    @CreateDateColumn()
     createdAt: Date;
 }

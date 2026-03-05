@@ -20,18 +20,24 @@ class AuthLoginArgs {
 
 @ObjectType()
 class AuthLoginResponse {
-    @Field()
-    success: boolean;
     @Field({ nullable: true })
     _id?: string;
-    @Field({ nullable: true })
-    role?: string;
-    @Field()
-    message: string;
+
     @Field({ nullable: true })
     username: string;
+
+    @Field({ nullable: true })
+    role?: string;
+
+    @Field()
+    message: string;
+
     @Field({ nullable: true })
     isActive?: boolean;
+
+    @Field()
+    success: boolean;
+
     @Field({ nullable: true })
     token?: string;
 }

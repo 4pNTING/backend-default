@@ -25,15 +25,15 @@ export class ProductEntity implements ProductModel {
     @Column('int')
     cost: number;
 
-    @Column({ name: 'category_id' })
+    @Column()
     categoryId: number;
 
-    @Column({ name: 'low_stock_threshold', default: 5 })
+    @Column({ default: 5 })
     lowStockThreshold: number;
 
     // เชื่อมไปหา Category (Many Products -> 1 Category)
     @ManyToOne(() => CategoryEntity, category => category.products)
-    @JoinColumn({ name: 'category_id' })
+    @JoinColumn()
     category: CategoryEntity;
 
     // เชื่อมไปหา Inventory (1 Product -> Many Inventory Levels & Movements)
@@ -43,15 +43,15 @@ export class ProductEntity implements ProductModel {
     @OneToMany(() => InventoryMovementEntity, movement => movement.product)
     movements: InventoryMovementEntity[];
 
-    @CreateDateColumn({ name: 'created_at' })
+    @CreateDateColumn()
     createdAt: Date;
 
-    @UpdateDateColumn({ name: 'updated_at' })
+    @UpdateDateColumn()
     updatedAt: Date;
 
-    @DeleteDateColumn({ name: 'deleted_at' })
+    @DeleteDateColumn()
     deletedAt: Date;
 
-    @Column({ default: true, name: 'is_active' })
+    @Column({ default: true })
     isActive: boolean;
 }

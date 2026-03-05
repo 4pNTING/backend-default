@@ -1,0 +1,7 @@
+info:
+  name: POS-TEST-SERVER
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit

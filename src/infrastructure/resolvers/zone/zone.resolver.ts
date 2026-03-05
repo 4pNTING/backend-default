@@ -44,7 +44,7 @@ export class ZoneResolver {
 
     @Query(() => LoadZoneResponse, { name: 'loadZone' })
     async loadZone(
-        @Args('input', { nullable: true }) input: LoadZoneDto,
+        @Args('input') input: LoadZoneDto,
     ) {
         // Map simple input directly to QueryProps
         const query: any = {};
