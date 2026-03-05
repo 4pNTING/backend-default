@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 import { CategoryModel } from '../../domain/models/category.model';
+import { ProductEntity } from './product.entity';
 
 @Entity('categories')
 export class CategoryEntity implements CategoryModel {
@@ -26,4 +27,9 @@ export class CategoryEntity implements CategoryModel {
 
   @Column({ default: true, name: 'is_active' })
   isActive: boolean;
+
+  @OneToMany(() => ProductEntity, product => product.category)
+  products: ProductEntity[];
+
+
 }

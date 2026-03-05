@@ -1,14 +1,8 @@
 import { ObjectType, Field, InputType, Int } from '@nestjs/graphql';
-import {
-    DateFilterDto,
-    PaginateDto,
-    SearchDto
-} from '../../common/graphql/common.model';
+import { DateFilterDto, PaginateDto, SearchDto } from '../../common/graphql/common.model';
 import { ActiveStatus } from '../../../domain/enums/enum';
 
 export { ActiveStatus };
-
-
 
 @ObjectType()
 export class Category {

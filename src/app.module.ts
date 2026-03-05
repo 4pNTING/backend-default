@@ -10,6 +10,9 @@ import { RepositoriesModule } from './infrastructure/repositories/repositories.m
 import { CategoryUsecasesProxyModule } from './infrastructure/usecases-proxy/category-usecases-proxy.module';
 import { ZoneUsecasesProxyModule } from './infrastructure/usecases-proxy/zone-usecases-proxy.module';
 import { AuthUsecasesProxyModule } from './infrastructure/usecases-proxy/auth-usecases-proxy.module';
+import { ProductUsecasesProxyModule } from './infrastructure/usecases-proxy/product-usecases-proxy.module';
+import { InventoryLevelUsecasesProxyModule } from './infrastructure/usecases-proxy/inventory-level-usecases-proxy.module';
+import { InventoryMovementUsecasesProxyModule } from './infrastructure/usecases-proxy/inventory-movement-usecases-proxy.module';
 
 // import { CategoryController } from './infrastructure/controllers/category/category.controller';
 import { ZoneController } from './infrastructure/controllers/zone/zone.controller';
@@ -18,10 +21,16 @@ import { AuthController } from './infrastructure/controllers/auth/auth.controlle
 import { CategoryEntity } from './infrastructure/entities/category.entity';
 import { ZoneEntity } from './infrastructure/entities/zone.entity';
 import { UserEntity } from './infrastructure/entities/user.entity';
+import { ProductEntity } from './infrastructure/entities/product.entity';
+import { InventoryLevelEntity } from './infrastructure/entities/inventory-level.entity';
+import { InventoryMovementEntity } from './infrastructure/entities/inventory-movement.entity';
 
 import { CategoryResolver } from './infrastructure/resolvers/category/category.resolver';
 import { ZoneResolver } from './infrastructure/resolvers/zone/zone.resolver';
 import { AuthResolver } from './infrastructure/resolvers/auth/auth.resolver';
+import { ProductResolver } from './infrastructure/resolvers/product/product.resolver';
+import { InventoryLevelResolver } from './infrastructure/resolvers/inventory-level/inventory-level.resolver';
+import { InventoryMovementResolver } from './infrastructure/resolvers/inventory-movement/inventory-movement.resolver';
 import { JwtStrategy } from './infrastructure/common/jwt.strategy';
 
 @Module({
@@ -49,7 +58,14 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
                 username: configService.get<string>('DB_USER'),
                 password: configService.get<string>('DB_PASSWORD'),
                 database: configService.get<string>('DB_NAME'),
-                entities: [CategoryEntity, ZoneEntity, UserEntity],
+                entities: [
+                    CategoryEntity,
+                    ZoneEntity,
+                    UserEntity,
+                    ProductEntity,
+                    InventoryLevelEntity,
+                    InventoryMovementEntity
+                ],
                 synchronize: true,
                 autoLoadEntities: true,
                 logging: true,
@@ -61,6 +77,9 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
         CategoryUsecasesProxyModule.register(), // Load Dynamic Module
         ZoneUsecasesProxyModule.register(),
         AuthUsecasesProxyModule.register(),
+        ProductUsecasesProxyModule.register(),
+        InventoryLevelUsecasesProxyModule.register(),
+        InventoryMovementUsecasesProxyModule.register(),
     ],
     controllers: [
         // 4. Register Controllers
@@ -68,6 +87,14 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
         ZoneController,
         AuthController,
     ],
-    providers: [CategoryResolver, ZoneResolver, AuthResolver, JwtStrategy],
+    providers: [
+        CategoryResolver,
+        ZoneResolver,
+        AuthResolver,
+        ProductResolver,
+        InventoryLevelResolver,
+        InventoryMovementResolver,
+        JwtStrategy
+    ],
 })
 export class AppModule { }

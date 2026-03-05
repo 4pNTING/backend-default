@@ -5,7 +5,6 @@ import { UpdateCategoryRequest } from '@domain/models/category.model';
 export class UpdateCategoryAction {
   constructor(private readonly session: QueryRunner) { }
 
-  // ✅ รับ params ตัวเดียว ถูกต้องแล้ว
   public async execute(params: UpdateCategoryRequest): Promise<void> {
     try {
       await this.session.manager.update(CategoryEntity, params.id, {

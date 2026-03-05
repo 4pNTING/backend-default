@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Args, Mutation, Resolver, Field, InputType, ObjectType } from '@nestjs/graphql';
-import { IsString, IsNotEmpty } from 'class-validator'; // <-- 1. เพิ่มตัวตรวจสอบข้อมูล
+import { IsString, IsNotEmpty } from 'class-validator';
 import { AuthUsecasesProxyModule } from '../../usecases-proxy/auth-usecases-proxy.module';
 import { LoginUseCase } from '../../../usecases/auth/login.usecase';
 import { LoginResponse } from '../../../domain/models/user.model';

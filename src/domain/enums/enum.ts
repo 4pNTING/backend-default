@@ -16,3 +16,15 @@ registerEnumType(ActiveStatus, {
     name: 'ActiveStatus',
     description: 'Filter for active, inactive, or all items',
 });
+
+export enum InventoryMovementType {
+    IN = 'IN',
+    OUT = 'OUT',
+    TRANSFER = 'TRANSFER',
+    ADJUST = 'ADJUST'
+}
+
+registerEnumType(InventoryMovementType, {
+    name: 'InventoryMovementType',
+    description: 'Type of inventory movement: IN, OUT, TRANSFER, or ADJUST',
+});
