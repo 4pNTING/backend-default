@@ -12,11 +12,14 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
-      package: ['category', 'zone', 'auth'], // ต้องตรงกับใน .proto
+      package: ['category', 'zone', 'auth', 'product', 'inventory_level', 'inventory_movement'],
       protoPath: [
         join(__dirname, '../src/proto/category.proto'),
         join(__dirname, '../src/proto/zone.proto'),
-        join(__dirname, '../src/proto/auth.proto')
+        join(__dirname, '../src/proto/auth.proto'),
+        join(__dirname, '../src/proto/product.proto'),
+        join(__dirname, '../src/proto/inventory_level.proto'),
+        join(__dirname, '../src/proto/inventory_movement.proto'),
       ], // Path ของไฟล์ .proto
       url: 'localhost:9897', // รันที่ Port 5000
     },

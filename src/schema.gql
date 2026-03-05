@@ -45,6 +45,44 @@ type CreateCategoryResponse {
   category: Category
 }
 
+input CreateInventoryLevelDto {
+  productId: Int!
+  quantity: Int!
+  zoneId: Int!
+}
+
+type CreateInventoryLevelResponse {
+  inventoryLevel: InventoryLevel
+}
+
+input CreateInventoryMovementDto {
+  note: String
+  productId: Int!
+  quantity: Int!
+  type: InventoryMovementType!
+  userId: Int
+  zoneId: Int!
+}
+
+type CreateInventoryMovementResponse {
+  inventoryMovement: InventoryMovement
+}
+
+input CreateProductDto {
+  categoryId: Int!
+  cost: Int!
+  description: String
+  isActive: Boolean
+  lowStockThreshold: Int
+  name: String!
+  price: Int!
+  sku: String!
+}
+
+type CreateProductResponse {
+  product: Product
+}
+
 input CreateZoneDto {
   description: String
   isActive: Boolean
@@ -68,12 +106,49 @@ type DeleteCategoryResponse {
   category: Category
 }
 
+input DeleteProductDto {
+  _id: Int!
+}
+
+type DeleteProductResponse {
+  product: Product
+}
+
 input DeleteZoneDto {
   _id: Int!
 }
 
 type DeleteZoneResponse {
   zone: Zone
+}
+
+type InventoryLevel {
+  _id: Int
+  product: Product
+  productId: Int!
+  quantity: Int!
+  updatedAt: DateTime
+  zone: Zone
+  zoneId: Int!
+}
+
+type InventoryMovement {
+  _id: Int
+  createdAt: DateTime
+  note: String
+  productId: Int!
+  quantity: Int!
+  type: InventoryMovementType!
+  userId: Int
+  zoneId: Int!
+}
+
+"""Type of inventory movement: IN, OUT, TRANSFER, or ADJUST"""
+enum InventoryMovementType {
+  ADJUST
+  IN
+  OUT
+  TRANSFER
 }
 
 input LoadCategoryByIdDto {
@@ -94,6 +169,69 @@ input LoadCategoryDto {
 type LoadCategoryResponse {
   category: [Category!]!
   count: Int!
+}
+
+input LoadInventoryLevelByIdDto {
+  _id: Int!
+}
+
+type LoadInventoryLevelByIdResponse {
+  inventoryLevel: InventoryLevel
+}
+
+input LoadInventoryLevelByProductAndZoneDto {
+  productId: Int!
+  zoneId: Int!
+}
+
+input LoadInventoryLevelDto {
+  limit: Int
+  page: Int
+  productId: Int
+  zoneId: Int
+}
+
+type LoadInventoryLevelResponse {
+  count: Int!
+  inventoryLevel: [InventoryLevel!]!
+}
+
+input LoadInventoryMovementByIdDto {
+  _id: Int!
+}
+
+type LoadInventoryMovementByIdResponse {
+  inventoryMovement: InventoryMovement
+}
+
+input LoadInventoryMovementDto {
+  limit: Int
+  page: Int
+}
+
+type LoadInventoryMovementResponse {
+  count: Int!
+  inventoryMovement: [InventoryMovement!]!
+}
+
+input LoadProductByIdDto {
+  _id: Int!
+}
+
+type LoadProductByIdResponse {
+  product: Product
+}
+
+input LoadProductDto {
+  isActive: ActiveStatus
+  keyword: String
+  limit: Int
+  page: Int
+}
+
+type LoadProductResponse {
+  count: Int!
+  product: [Product!]!
 }
 
 input LoadZoneByIdDto {
@@ -118,19 +256,49 @@ type LoadZoneResponse {
 
 type Mutation {
   createCategory(input: CreateCategoryDto!): CreateCategoryResponse!
+  createInventoryLevel(input: CreateInventoryLevelDto!): CreateInventoryLevelResponse!
+  createInventoryMovement(input: CreateInventoryMovementDto!): CreateInventoryMovementResponse!
+  createProduct(input: CreateProductDto!): CreateProductResponse!
   createZone(input: CreateZoneDto!): CreateZoneResponse!
   deleteCategory(input: DeleteCategoryDto!): DeleteCategoryResponse!
+  deleteProduct(input: DeleteProductDto!): DeleteProductResponse!
   deleteZone(input: DeleteZoneDto!): DeleteZoneResponse!
   login(loginData: AuthLoginArgs!): AuthLoginResponse!
   restoreCategory(input: RestoreCategoryDto!): RestoreCategoryResponse!
+  restoreProduct(input: RestoreProductDto!): RestoreProductResponse!
   restoreZone(input: RestoreZoneDto!): RestoreZoneResponse!
   updateCategory(input: UpdateCategoryDto!): UpdateCategoryResponse!
+  updateInventoryLevel(input: UpdateInventoryLevelDto!): UpdateInventoryLevelResponse!
+  updateProduct(input: UpdateProductDto!): UpdateProductResponse!
   updateZone(input: UpdateZoneDto!): UpdateZoneResponse!
+}
+
+type Product {
+  _id: Int
+  category: Category
+  categoryId: Int!
+  cost: Int!
+  createdAt: DateTime
+  description: String
+  inventoryLevels: [InventoryLevel!]
+  isActive: Boolean
+  lowStockThreshold: Int!
+  name: String!
+  price: Int!
+  sku: String!
+  updatedAt: DateTime
 }
 
 type Query {
   loadCategory(input: LoadCategoryDto): LoadCategoryResponse!
   loadCategoryById(input: LoadCategoryByIdDto!): LoadCategoryByIdResponse
+  loadInventoryLevel(input: LoadInventoryLevelDto): LoadInventoryLevelResponse!
+  loadInventoryLevelById(input: LoadInventoryLevelByIdDto!): LoadInventoryLevelByIdResponse
+  loadInventoryLevelByProductAndZone(input: LoadInventoryLevelByProductAndZoneDto!): LoadInventoryLevelByIdResponse
+  loadInventoryMovement(input: LoadInventoryMovementDto): LoadInventoryMovementResponse!
+  loadInventoryMovementById(input: LoadInventoryMovementByIdDto!): LoadInventoryMovementByIdResponse
+  loadProduct(input: LoadProductDto): LoadProductResponse!
+  loadProductById(input: LoadProductByIdDto!): LoadProductByIdResponse
   loadZone(input: LoadZoneDto): LoadZoneResponse!
   loadZoneById(input: LoadZoneByIdDto!): LoadZoneByIdResponse!
 }
@@ -141,6 +309,14 @@ input RestoreCategoryDto {
 
 type RestoreCategoryResponse {
   category: Category
+}
+
+input RestoreProductDto {
+  _id: Int!
+}
+
+type RestoreProductResponse {
+  product: Product
 }
 
 input RestoreZoneDto {
@@ -161,6 +337,31 @@ input UpdateCategoryDto {
 
 type UpdateCategoryResponse {
   category: Category
+}
+
+input UpdateInventoryLevelDto {
+  _id: Int!
+  quantity: Int!
+}
+
+type UpdateInventoryLevelResponse {
+  inventoryLevel: InventoryLevel
+}
+
+input UpdateProductDto {
+  _id: Int!
+  categoryId: Int
+  cost: Int
+  description: String
+  isActive: Boolean
+  lowStockThreshold: Int
+  name: String
+  price: Int
+  sku: String
+}
+
+type UpdateProductResponse {
+  product: Product
 }
 
 input UpdateZoneDto {

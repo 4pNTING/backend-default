@@ -17,6 +17,9 @@ import { InventoryMovementUsecasesProxyModule } from './infrastructure/usecases-
 // import { CategoryController } from './infrastructure/controllers/category/category.controller';
 import { ZoneController } from './infrastructure/controllers/zone/zone.controller';
 import { AuthController } from './infrastructure/controllers/auth/auth.controller';
+import { ProductGrpcController } from './infrastructure/controllers/product/product-grpc.controller';
+import { InventoryLevelGrpcController } from './infrastructure/controllers/inventory-level/inventory-level-grpc.controller';
+import { InventoryMovementGrpcController } from './infrastructure/controllers/inventory-movement/inventory-movement-grpc.controller';
 
 import { CategoryEntity } from './infrastructure/entities/category.entity';
 import { ZoneEntity } from './infrastructure/entities/zone.entity';
@@ -86,6 +89,9 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
         // CategoryController,
         ZoneController,
         AuthController,
+        ProductGrpcController,
+        InventoryLevelGrpcController,
+        InventoryMovementGrpcController,
     ],
     providers: [
         CategoryResolver,

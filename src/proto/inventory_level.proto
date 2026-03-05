@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package inventory_level;
+
+message InventoryLevel {
+  int32 id = 1;
+  int32 productId = 2;
+  int32 zoneId = 3;
+  int32 quantity = 4;
+  string updatedAt = 5;
+}
+
+message CreateInventoryLevelRequest {
+  int32 productId = 1;
+  int32 zoneId = 2;
+  int32 quantity = 3;
+}
+
+message CreateInventoryLevelResponse {
+  int32 id = 1;
+  int32 productId = 2;
+  int32 zoneId = 3;
+  int32 quantity = 4;
+  string updatedAt = 5;
+}
+
+message UpdateInventoryLevelRequest {
+  int32 id = 1;
+  int32 quantity = 2;
+}
+
+message UpdateInventoryLevelResponse {
+  int32 id = 1;
+  bool success = 2;
+}
+
+message LoadAllInventoryLevelRequest {
+}
+
+message LoadAllInventoryLevelResponse {
+  repeated InventoryLevel items = 1;
+  int32 total = 2;
+}
+
+message LoadInventoryLevelByIdRequest {
+  int32 id = 1;
+}
+
+message LoadInventoryLevelByIdResponse {
+  int32 id = 1;
+  int32 productId = 2;
+  int32 zoneId = 3;
+  int32 quantity = 4;
+  string updatedAt = 5;
+}
+
+message LoadInventoryLevelByProductAndZoneRequest {
+  int32 productId = 1;
+  int32 zoneId = 2;
+}
+
+message LoadInventoryLevelByProductAndZoneResponse {
+  int32 id = 1;
+  int32 productId = 2;
+  int32 zoneId = 3;
+  int32 quantity = 4;
+  string updatedAt = 5;
+}
+
+service InventoryLevelService {
+  rpc Create (CreateInventoryLevelRequest) returns (CreateInventoryLevelResponse);
+  rpc FindAll (LoadAllInventoryLevelRequest) returns (LoadAllInventoryLevelResponse);
+  rpc FindOne (LoadInventoryLevelByIdRequest) returns (LoadInventoryLevelByIdResponse);
+  rpc FindByProductAndZone (LoadInventoryLevelByProductAndZoneRequest) returns (LoadInventoryLevelByProductAndZoneResponse);
+  rpc Update (UpdateInventoryLevelRequest) returns (UpdateInventoryLevelResponse);
+}
