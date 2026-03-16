@@ -84,6 +84,7 @@ type AuthLoginResponse {
   isActive: Boolean
   success: Boolean!
   token: String
+  refreshToken: String
 }
 
 type InventoryLevel {

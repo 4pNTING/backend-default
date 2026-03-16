@@ -34,6 +34,9 @@ export class LoginUseCase {
         };
 
         const accessToken = jwt.sign(payload, this.jwtSecret, { expiresIn: this.jwtExpiration as jwt.SignOptions['expiresIn'] });
+        
+        // Generate Refresh Token
+        const refreshToken = jwt.sign(payload, this.jwtSecret, { expiresIn: '7d' });
 
         return {
             success: true,
@@ -43,6 +46,7 @@ export class LoginUseCase {
             isActive: user.isActive,
             role: user.role,
             token: accessToken,
+            refreshToken: refreshToken,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         };

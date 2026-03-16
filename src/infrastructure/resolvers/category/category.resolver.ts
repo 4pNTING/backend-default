@@ -63,8 +63,8 @@ export class CategoryResolver {
             // 1. Pagination
             if (input.page || input.limit) {
                 query.paginate = {
-                    page: input.page || 1,
-                    limit: input.limit || 10
+                    page: input.page,
+                    limit: input.limit
                 };
             }
 

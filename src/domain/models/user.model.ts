@@ -23,6 +23,7 @@ export class LoginResponse {
     message: string;
     isActive?: boolean;
     token?: string;
+    refreshToken?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }

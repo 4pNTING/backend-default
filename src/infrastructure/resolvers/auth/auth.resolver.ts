@@ -40,6 +40,9 @@ class AuthLoginResponse {
 
     @Field({ nullable: true })
     token?: string;
+
+    @Field({ nullable: true })
+    refreshToken?: string;
 }
 
 @Resolver()

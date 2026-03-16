@@ -25,8 +25,8 @@ export class LoadAllCategoryAction {
       }
 
       // 2. Pagination
-      const page = query.paginate?.page || 1;
-      const limit = query.paginate?.limit || 10;
+      const page = query.paginate?.page;
+      const limit = query.paginate?.limit;
       qb.skip((page - 1) * limit).take(limit);
 
       // 3. Sort
