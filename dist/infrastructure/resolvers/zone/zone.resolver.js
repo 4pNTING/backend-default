@@ -37,8 +37,8 @@ let ZoneResolver = class ZoneResolver {
         if (input) {
             if (input.page || input.limit) {
                 query.paginate = {
-                    page: input.page || 1,
-                    limit: input.limit || 10
+                    page: input.page,
+                    limit: input.limit
                 };
             }
             if (input.keyword) {
@@ -47,10 +47,7 @@ let ZoneResolver = class ZoneResolver {
                 };
             }
             if (input.isActive) {
-                query.condition = [{
-                        field: 'isActive',
-                        value: input.isActive
-                    }];
+                query.isActive = input.isActive;
             }
         }
         const result = await this.loadAllZoneUsecase.execute(query);
@@ -77,7 +74,6 @@ let ZoneResolver = class ZoneResolver {
         await this.updateZoneUsecase.execute({
             id: input._id,
             name: input.name,
-            description: input.description,
             isActive: input.isActive
         });
         const updated = await this.loadZoneByIdUsecase.execute({ id: input._id });
@@ -85,7 +81,7 @@ let ZoneResolver = class ZoneResolver {
     }
     async deleteZone(input) {
         await this.deleteZoneUsecase.execute({ id: input._id });
-        return { zone: { _id: input._id } };
+        return { zone: { _id: input._id, name: '' } };
     }
     async restoreZone(input) {
         await this.restoreZoneUsecase.execute(input._id);
@@ -96,7 +92,7 @@ let ZoneResolver = class ZoneResolver {
 exports.ZoneResolver = ZoneResolver;
 __decorate([
     (0, graphql_1.Query)(() => zone_model_1.LoadZoneResponse, { name: 'loadZone' }),
-    __param(0, (0, graphql_1.Args)('input', { nullable: true })),
+    __param(0, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [zone_model_1.LoadZoneDto]),
     __metadata("design:returntype", Promise)

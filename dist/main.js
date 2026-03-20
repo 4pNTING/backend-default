@@ -14,7 +14,7 @@ async function bootstrap() {
             protoPath: [
                 (0, path_1.join)(__dirname, '../src/proto/category.proto'),
                 (0, path_1.join)(__dirname, '../src/proto/zone.proto'),
-                (0, path_1.join)(__dirname, '../src/proto/auth.proto')
+                (0, path_1.join)(__dirname, '../src/proto/auth.proto'),
             ],
             url: 'localhost:9897',
         },
@@ -27,8 +27,6 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
     await app.startAllMicroservices();
     await app.listen(3000);
-    console.log(`🚀 HTTP Server is running on: http://localhost:3000/api`);
-    console.log(`🚀 gRPC Service is running on: localhost:9897`);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

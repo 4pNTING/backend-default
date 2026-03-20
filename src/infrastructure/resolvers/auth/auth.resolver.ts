@@ -4,6 +4,7 @@ import { IsString, IsNotEmpty } from 'class-validator';
 import { AuthUsecasesProxyModule } from '../../usecases-proxy/auth-usecases-proxy.module';
 import { LoginUseCase } from '../../../usecases/auth/login.usecase';
 import { LoginResponse } from '../../../domain/models/user.model';
+import { ActiveStatus } from '../../../domain/enums/enum';
 
 @InputType()
 class AuthLoginArgs {
@@ -29,14 +30,8 @@ class AuthLoginResponse {
     @Field({ nullable: true })
     role?: string;
 
-    @Field()
-    message: string;
-
-    @Field({ nullable: true })
-    isActive?: boolean;
-
-    @Field()
-    success: boolean;
+    @Field(() => String, { nullable: true })
+    isActive?: ActiveStatus;
 
     @Field({ nullable: true })
     token?: string;

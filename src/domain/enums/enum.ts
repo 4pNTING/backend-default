@@ -4,12 +4,13 @@ export enum Role {
     USER = 'user',
     MANAGER = 'manager',
     ADMIN = 'admin',
+    STAFF = 'staff',
 }
 
 export enum ActiveStatus {
-    ACTIVE = 'active',
-    INACTIVE = 'inactive',
-    ALL = 'all'
+    active = 'active',
+    inactive = 'inactive',
+    all = 'all'
 }
 
 registerEnumType(ActiveStatus, {

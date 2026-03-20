@@ -1,12 +1,14 @@
+import { ActiveStatus } from '../enums/enum';
+
 // Base Model
 export class CategoryModel {
-  id: number;
+  id: string;
   name: string;
   description?: string;
   photo?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  isActive?: boolean;
+  isActive?: ActiveStatus;
 }
 
 
@@ -14,30 +16,30 @@ export class CreateCategoryRequest {
   name: string;
   description?: string;
   photo?: string;
-  isActive?: boolean;
+  isActive?: ActiveStatus;
 }
 
 export class CreateCategoryResponse extends CategoryModel { }
 
 export class UpdateCategoryRequest {
-  id: number;
+  id: string;
   name?: string;
   description?: string;
   photo?: string;
-  isActive?: boolean;
+  isActive?: ActiveStatus;
 }
 
 export class UpdateCategoryResponse {
-  id: number;
+  id: string;
   success: boolean;
 }
 
 export class DeleteCategoryRequest {
-  id: number;
+  id: string;
 }
 
 export class DeleteCategoryResponse {
-  id: number;
+  id: string;
   success: boolean;
 }
 
@@ -50,7 +52,7 @@ export class LoadAllCategoryResponse {
 }
 
 export class LoadCategoryByIdRequest {
-  id: number;
+  id: string;
 }
 
 export class LoadCategoryByIdResponse extends CategoryModel { }

@@ -1,13 +1,13 @@
-import { Role } from '../enums/enum';
+import { Role, ActiveStatus } from '../enums/enum';
 
 export class UserModel {
-    id: number;
+    id: string;
     username: string;
     password: string;
     role?: Role;
     createdAt?: Date;
     updatedAt?: Date;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 
 export class LoginRequest {
@@ -16,12 +16,10 @@ export class LoginRequest {
 }
 
 export class LoginResponse {
-    success: boolean;
     _id?: string;
     username?: string;
     role?: Role;
-    message: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
     token?: string;
     refreshToken?: string;
     createdAt?: Date;

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 import { ZoneUsecasesProxyModule } from '../../usecases-proxy/zone-usecases-proxy.module';
 import { CreateZoneUsecase } from '../../../usecases/zone/createZone.usecase';
@@ -65,15 +65,8 @@ export class ZoneResolver {
                 };
             }
 
-            // 3. Filter (isActive)
             if (input.isActive) {
-                let isActiveValue: boolean;
-                if (input.isActive === ActiveStatus.ACTIVE) isActiveValue = true;
-                if (input.isActive === ActiveStatus.INACTIVE) isActiveValue = false;
-
-                if (isActiveValue !== undefined) {
-                    query.isActive = isActiveValue;
-                }
+                query.isActive = input.isActive;
             }
         }
 
@@ -114,7 +107,6 @@ export class ZoneResolver {
         await this.updateZoneUsecase.execute({
             id: input._id,
             name: input.name,
-            description: input.description,
             isActive: input.isActive
         });
 
@@ -128,7 +120,7 @@ export class ZoneResolver {
         @Args('input') input: DeleteZoneDto,
     ) {
         await this.deleteZoneUsecase.execute({ id: input._id });
-        return { zone: { _id: input._id } as Zone }; // Return partial for ID confirmation
+        return { zone: { _id: input._id, name: '' } as Zone }; // Return partial for ID confirmation
     }
 
     @Mutation(() => RestoreZoneResponse)

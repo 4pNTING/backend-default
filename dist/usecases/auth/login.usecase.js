@@ -35,40 +35,42 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginUseCase = void 0;
 const bcrypt = __importStar(require("bcrypt"));
+const jwt = __importStar(require("jsonwebtoken"));
+const common_1 = require("@nestjs/common");
 class LoginUseCase {
-    constructor(userRepository) {
+    constructor(userRepository, jwtSecret, jwtExpiration) {
         this.userRepository = userRepository;
+        this.jwtSecret = jwtSecret;
+        this.jwtExpiration = jwtExpiration;
     }
     async execute(request) {
+        if (!request || !request.username || !request.password) {
+            throw new common_1.UnauthorizedException('Username and password are required');
+        }
         const user = await this.userRepository.findByUsername(request.username);
-        if (!user) {
-            return {
-                success: false,
-                message: 'Invalid username or password',
-            };
+        if (!user || !user.password) {
+            throw new common_1.UnauthorizedException('Invalid username or password');
         }
-        const isPasswordValid = await bcrypt.compare(request.password, user.password || '');
+        const isPasswordValid = await bcrypt.compare(request.password, user.password);
         if (!isPasswordValid) {
-            if (user.password === request.password) {
-                return {
-                    success: true,
-                    _id: user.id.toString(),
-                    role: user.role,
-                    message: 'Login successful (plain text)',
-                    isActive: user.isActive,
-                };
-            }
-            return {
-                success: false,
-                message: 'Invalid username or password',
-            };
+            throw new common_1.UnauthorizedException('Invalid username or password');
         }
+        const payload = {
+            id: user.id,
+            username: user.username,
+            role: user.role
+        };
+        const accessToken = jwt.sign(payload, this.jwtSecret, { expiresIn: this.jwtExpiration });
+        const refreshToken = jwt.sign(payload, this.jwtSecret, { expiresIn: '7d' });
         return {
-            success: true,
-            _id: user.id.toString(),
-            role: user.role,
-            message: 'Login successful',
+            _id: user.id,
+            username: user.username,
             isActive: user.isActive,
+            role: user.role,
+            token: accessToken,
+            refreshToken: refreshToken,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
         };
     }
 }

@@ -1,8 +1,9 @@
+import { ActiveStatus } from '../../common/graphql/common.model';
+export { ActiveStatus };
 export declare class Zone {
-    _id: number;
+    _id: string;
     name: string;
-    description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -27,27 +28,26 @@ export declare class RestoreZoneResponse {
 }
 export declare class CreateZoneDto {
     name: string;
-    description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class UpdateZoneDto {
-    _id: number;
+    _id: string;
     name?: string;
     description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class LoadZoneByIdDto {
-    _id: number;
+    _id: string;
 }
 export declare class DeleteZoneDto {
-    _id: number;
+    _id: string;
 }
 export declare class RestoreZoneDto {
-    _id: number;
+    _id: string;
 }
 export declare class LoadZoneDto {
     page?: number;
     limit?: number;
-    isActive?: string;
+    isActive: ActiveStatus;
     keyword?: string;
 }

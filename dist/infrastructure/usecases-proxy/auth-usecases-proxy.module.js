@@ -9,6 +9,7 @@ var AuthUsecasesProxyModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthUsecasesProxyModule = void 0;
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
 const user_repository_1 = require("../repositories/user/user.repository");
 const repositories_module_1 = require("../repositories/repositories.module");
 const login_usecase_1 = require("../../usecases/auth/login.usecase");
@@ -18,9 +19,9 @@ let AuthUsecasesProxyModule = AuthUsecasesProxyModule_1 = class AuthUsecasesProx
             module: AuthUsecasesProxyModule_1,
             providers: [
                 {
-                    inject: [user_repository_1.DatabaseUserRepository],
+                    inject: [user_repository_1.DatabaseUserRepository, config_1.ConfigService],
                     provide: AuthUsecasesProxyModule_1.LOGIN_PROXY,
-                    useFactory: (repo) => new login_usecase_1.LoginUseCase(repo),
+                    useFactory: (repo, config) => new login_usecase_1.LoginUseCase(repo, config.get('JWT_SECRET'), config.get('JWT_EXPIRATION')),
                 },
             ],
             exports: [AuthUsecasesProxyModule_1.LOGIN_PROXY],

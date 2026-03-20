@@ -1,11 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { UserModel } from '../../domain/models/user.model';
-import { Role } from '../../domain/enums/enum';
+import { Role, ActiveStatus } from '../../domain/enums/enum';
 
 @Entity('users')
 export class UserEntity implements UserModel {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column({ unique: true })
     username: string;
@@ -29,6 +29,10 @@ export class UserEntity implements UserModel {
     @DeleteDateColumn()
     deletedAt: Date;
 
-    @Column({ default: true })
-    isActive: boolean;
+    @Column({ 
+        type: 'enum',
+        enum: ActiveStatus,
+        default: ActiveStatus.active 
+    })
+    isActive: ActiveStatus;
 }

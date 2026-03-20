@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestoreZoneAction = void 0;
 const zone_entity_1 = require("@infrastructure/entities/zone.entity");
+const enum_1 = require("@domain/enums/enum");
 class RestoreZoneAction {
     constructor(session) {
         this.session = session;
@@ -9,7 +10,7 @@ class RestoreZoneAction {
     async execute(id) {
         try {
             await this.session.manager.restore(zone_entity_1.ZoneEntity, id);
-            await this.session.manager.update(zone_entity_1.ZoneEntity, id, { isActive: true });
+            await this.session.manager.update(zone_entity_1.ZoneEntity, id, { isActive: enum_1.ActiveStatus.active });
         }
         catch (error) {
             console.error('ERROR RestoreZoneAction', error?.message);

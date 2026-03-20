@@ -11,35 +11,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZoneEntity = void 0;
 const typeorm_1 = require("typeorm");
+const enum_1 = require("../../domain/enums/enum");
 let ZoneEntity = class ZoneEntity {
 };
 exports.ZoneEntity = ZoneEntity;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    __metadata("design:type", String)
 ], ZoneEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], ZoneEntity.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enum_1.ActiveStatus,
+        default: enum_1.ActiveStatus.active
+    }),
     __metadata("design:type", String)
-], ZoneEntity.prototype, "description", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ default: true, name: 'is_active' }),
-    __metadata("design:type", Boolean)
 ], ZoneEntity.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], ZoneEntity.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
+    (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], ZoneEntity.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.DeleteDateColumn)({ name: 'deleted_at' }),
+    (0, typeorm_1.DeleteDateColumn)(),
     __metadata("design:type", Date)
 ], ZoneEntity.prototype, "deletedAt", void 0);
 exports.ZoneEntity = ZoneEntity = __decorate([

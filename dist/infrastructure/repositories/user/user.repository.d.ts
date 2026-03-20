@@ -6,5 +6,5 @@ export declare class DatabaseUserRepository implements IUserRepository {
     private readonly userRepository;
     constructor(userRepository: Repository<UserEntity>);
     findByUsername(username: string): Promise<UserModel | null>;
-    findById(id: number): Promise<UserModel | null>;
+    findById(id: string): Promise<UserModel | null>;
 }

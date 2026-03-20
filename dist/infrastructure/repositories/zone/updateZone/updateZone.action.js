@@ -10,7 +10,6 @@ class UpdateZoneAction {
         try {
             await this.session.manager.update(zone_entity_1.ZoneEntity, params.id, {
                 name: params.name,
-                description: params.description,
                 isActive: params.isActive,
                 updatedAt: new Date()
             });

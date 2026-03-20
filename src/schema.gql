@@ -3,13 +3,13 @@
 # ------------------------------------------------------
 
 type Category {
-  _id: Int
+  _id: String
   name: String!
   description: String
   photo: String
   createdAt: DateTime
   updatedAt: DateTime
-  isActive: Boolean
+  isActive: String
 }
 
 """
@@ -43,10 +43,9 @@ type RestoreCategoryResponse {
 }
 
 type Zone {
-  _id: Int
+  _id: String
   name: String!
-  description: String
-  isActive: Boolean
+  isActive: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -80,111 +79,9 @@ type AuthLoginResponse {
   _id: String
   username: String
   role: String
-  message: String!
-  isActive: Boolean
-  success: Boolean!
+  isActive: String
   token: String
   refreshToken: String
-}
-
-type InventoryLevel {
-  _id: Int
-  productId: Int!
-  zoneId: Int!
-  quantity: Int!
-  updatedAt: DateTime
-  product: Product
-  zone: Zone
-}
-
-type LoadInventoryLevelResponse {
-  count: Int!
-  inventoryLevel: [InventoryLevel!]!
-}
-
-type LoadInventoryLevelByIdResponse {
-  inventoryLevel: InventoryLevel
-}
-
-type CreateInventoryLevelResponse {
-  inventoryLevel: InventoryLevel
-}
-
-type UpdateInventoryLevelResponse {
-  inventoryLevel: InventoryLevel
-}
-
-type Product {
-  _id: Int
-  sku: String!
-  name: String!
-  description: String
-  price: Int!
-  cost: Int!
-  categoryId: Int!
-  lowStockThreshold: Int!
-  createdAt: DateTime
-  updatedAt: DateTime
-  isActive: Boolean
-  category: Category
-  inventoryLevels: [InventoryLevel!]
-}
-
-type LoadProductResponse {
-  count: Int!
-  product: [Product!]!
-}
-
-type LoadProductByIdResponse {
-  product: Product
-}
-
-type CreateProductResponse {
-  product: Product
-}
-
-type UpdateProductResponse {
-  product: Product
-}
-
-type DeleteProductResponse {
-  product: Product
-}
-
-type RestoreProductResponse {
-  product: Product
-}
-
-type InventoryMovement {
-  _id: Int
-  productId: Int!
-  zoneId: Int!
-  type: InventoryMovementType!
-  quantity: Int!
-  note: String
-  userId: Int
-  createdAt: DateTime
-}
-
-"""Type of inventory movement: in, out, transfer, or adjust"""
-enum InventoryMovementType {
-  IN
-  OUT
-  TRANSFER
-  ADJUST
-}
-
-type LoadInventoryMovementResponse {
-  count: Int!
-  inventoryMovement: [InventoryMovement!]!
-}
-
-type LoadInventoryMovementByIdResponse {
-  inventoryMovement: InventoryMovement
-}
-
-type CreateInventoryMovementResponse {
-  inventoryMovement: InventoryMovement
 }
 
 type Query {
@@ -192,31 +89,17 @@ type Query {
   loadCategoryById(input: LoadCategoryByIdDto!): LoadCategoryByIdResponse
   loadZone(input: LoadZoneDto!): LoadZoneResponse!
   loadZoneById(input: LoadZoneByIdDto!): LoadZoneByIdResponse!
-  loadProduct(input: LoadProductDto): LoadProductResponse!
-  loadProductById(input: LoadProductByIdDto!): LoadProductByIdResponse
-  loadInventoryLevel(input: LoadInventoryLevelDto): LoadInventoryLevelResponse!
-  loadInventoryLevelById(input: LoadInventoryLevelByIdDto!): LoadInventoryLevelByIdResponse
-  loadInventoryLevelByProductAndZone(input: LoadInventoryLevelByProductAndZoneDto!): LoadInventoryLevelByIdResponse
-  loadInventoryMovement(input: LoadInventoryMovementDto): LoadInventoryMovementResponse!
-  loadInventoryMovementById(input: LoadInventoryMovementByIdDto!): LoadInventoryMovementByIdResponse
 }
 
 input LoadCategoryDto {
   page: Int
   limit: Int
-  isActive: ActiveStatus
+  isActive: String
   keyword: String
 }
 
-"""Filter for active, inactive, or all items"""
-enum ActiveStatus {
-  ACTIVE
-  INACTIVE
-  ALL
-}
-
 input LoadCategoryByIdDto {
-  _id: Int!
+  _id: String!
 }
 
 input LoadZoneDto {
@@ -226,44 +109,15 @@ input LoadZoneDto {
   keyword: String
 }
 
+"""Filter for active, inactive, or all items"""
+enum ActiveStatus {
+  active
+  inactive
+  all
+}
+
 input LoadZoneByIdDto {
-  _id: Int!
-}
-
-input LoadProductDto {
-  page: Int
-  limit: Int
-  isActive: ActiveStatus
-  keyword: String
-}
-
-input LoadProductByIdDto {
-  _id: Int!
-}
-
-input LoadInventoryLevelDto {
-  page: Int
-  limit: Int
-  productId: Int
-  zoneId: Int
-}
-
-input LoadInventoryLevelByIdDto {
-  _id: Int!
-}
-
-input LoadInventoryLevelByProductAndZoneDto {
-  productId: Int!
-  zoneId: Int!
-}
-
-input LoadInventoryMovementDto {
-  page: Int
-  limit: Int
-}
-
-input LoadInventoryMovementByIdDto {
-  _id: Int!
+  _id: String!
 }
 
 type Mutation {
@@ -276,111 +130,52 @@ type Mutation {
   deleteZone(input: DeleteZoneDto!): DeleteZoneResponse!
   restoreZone(input: RestoreZoneDto!): RestoreZoneResponse!
   login(loginData: AuthLoginArgs!): AuthLoginResponse!
-  createProduct(input: CreateProductDto!): CreateProductResponse!
-  updateProduct(input: UpdateProductDto!): UpdateProductResponse!
-  deleteProduct(input: DeleteProductDto!): DeleteProductResponse!
-  restoreProduct(input: RestoreProductDto!): RestoreProductResponse!
-  createInventoryLevel(input: CreateInventoryLevelDto!): CreateInventoryLevelResponse!
-  updateInventoryLevel(input: UpdateInventoryLevelDto!): UpdateInventoryLevelResponse!
-  createInventoryMovement(input: CreateInventoryMovementDto!): CreateInventoryMovementResponse!
 }
 
 input CreateCategoryDto {
   name: String!
   description: String
   photo: String
-  isActive: Boolean
+  isActive: String
 }
 
 input UpdateCategoryDto {
-  _id: Int!
+  _id: String!
   name: String
   description: String
   photo: String
-  isActive: Boolean
+  isActive: String
 }
 
 input DeleteCategoryDto {
-  _id: Int!
+  _id: String!
 }
 
 input RestoreCategoryDto {
-  _id: Int!
+  _id: String!
 }
 
 input CreateZoneDto {
   name: String!
-  description: String
-  isActive: Boolean
+  isActive: String
 }
 
 input UpdateZoneDto {
-  _id: Int!
+  _id: String!
   name: String
   description: String
-  isActive: Boolean
+  isActive: String
 }
 
 input DeleteZoneDto {
-  _id: Int!
+  _id: String!
 }
 
 input RestoreZoneDto {
-  _id: Int!
+  _id: String!
 }
 
 input AuthLoginArgs {
   username: String!
   password: String!
-}
-
-input CreateProductDto {
-  sku: String!
-  name: String!
-  description: String
-  price: Int!
-  cost: Int!
-  categoryId: Int!
-  lowStockThreshold: Int
-  isActive: Boolean
-}
-
-input UpdateProductDto {
-  _id: Int!
-  sku: String
-  name: String
-  description: String
-  price: Int
-  cost: Int
-  categoryId: Int
-  lowStockThreshold: Int
-  isActive: Boolean
-}
-
-input DeleteProductDto {
-  _id: Int!
-}
-
-input RestoreProductDto {
-  _id: Int!
-}
-
-input CreateInventoryLevelDto {
-  productId: Int!
-  zoneId: Int!
-  quantity: Int!
-}
-
-input UpdateInventoryLevelDto {
-  _id: Int!
-  quantity: Int!
-}
-
-input CreateInventoryMovementDto {
-  productId: Int!
-  zoneId: Int!
-  type: InventoryMovementType!
-  quantity: Int!
-  note: String
-  userId: Int
 }

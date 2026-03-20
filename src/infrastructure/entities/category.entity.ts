@@ -1,11 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 import { CategoryModel } from '../../domain/models/category.model';
-import { ProductEntity } from './product.entity';
+import { ActiveStatus } from '../../domain/enums/enum';
 
 @Entity('categories')
 export class CategoryEntity implements CategoryModel {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ unique: true })
   name: string;
@@ -25,11 +25,13 @@ export class CategoryEntity implements CategoryModel {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({ 
+      type: 'enum',
+      enum: ActiveStatus,
+      default: ActiveStatus.active 
+  })
+  isActive: ActiveStatus;
 
-  @OneToMany(() => ProductEntity, product => product.category)
-  products: ProductEntity[];
 
 
 }

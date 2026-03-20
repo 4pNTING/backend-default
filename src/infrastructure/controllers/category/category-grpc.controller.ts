@@ -53,7 +53,7 @@ export class CategoryGrpcController {
     }
 
     @GrpcMethod('CategoryService', 'Delete')
-    async delete(data: { id: number }) {
+    async delete(data: { id: string }) {
         return await this.deleteCategoryUseCase.execute(data);
     }
 }

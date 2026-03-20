@@ -1,6 +1,7 @@
 import { QueryRunner } from 'typeorm';
 import { ZoneEntity } from '@infrastructure/entities/zone.entity';
 import { ZoneModel, CreateZoneRequest, CreateZoneResponse } from '@domain/models/zone.model';
+import { ActiveStatus } from '@domain/enums/enum';
 
 export class CreateZoneAction extends ZoneModel {
     constructor(private readonly session: QueryRunner) {
@@ -14,7 +15,6 @@ export class CreateZoneAction extends ZoneModel {
 
             return this.buildResponse();
         } catch (error) {
-            console.error('ERROR CreateZoneAction.execute', error?.message);
             throw error instanceof Error ? error : new Error(error?.message);
         }
     }
@@ -22,13 +22,11 @@ export class CreateZoneAction extends ZoneModel {
     private async validateAndBuildParams(params: CreateZoneRequest): Promise<void> {
         try {
             this.name = params.name;
-            this.description = params.description;
-            this.isActive = params.isActive ?? true;
+            this.isActive = params.isActive ?? ActiveStatus.active;
 
             this.createdAt = new Date();
             this.updatedAt = new Date();
         } catch (error) {
-            console.error('ERROR validateAndBuildParams', error?.message);
             throw new Error(`Failed to build parameters: ${error?.message}`);
         }
     }
@@ -44,7 +42,6 @@ export class CreateZoneAction extends ZoneModel {
                 throw new Error('Failed to save zone into database');
             }
         } catch (error) {
-            console.error('ERROR persistZone', error?.message);
             throw new Error(`Failed to persist zone: ${error?.message}`);
         }
     }
@@ -54,13 +51,11 @@ export class CreateZoneAction extends ZoneModel {
             return {
                 id: this.id,
                 name: this.name,
-                description: this.description,
                 isActive: this.isActive,
                 createdAt: this.createdAt,
                 updatedAt: this.updatedAt
             };
         } catch (error) {
-            console.error('ERROR buildResponse', error?.message);
             throw new Error(`Failed to build response: ${error?.message}`);
         }
     }

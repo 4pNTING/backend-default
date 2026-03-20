@@ -2,6 +2,7 @@ import { IUserRepository } from '../../domain/repositories/user.repository.inter
 import { LoginRequest, LoginResponse } from '../../domain/models/user.model';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { UnauthorizedException } from '@nestjs/common';
 
 export class LoginUseCase {
     constructor(
@@ -12,19 +13,19 @@ export class LoginUseCase {
 
     async execute(request: LoginRequest): Promise<LoginResponse> {
         if (!request || !request.username || !request.password) {
-            return { success: false, message: 'Username and password are required' };
+            throw new UnauthorizedException('Username and password are required');
         }
 
         const user = await this.userRepository.findByUsername(request.username);
 
         if (!user || !user.password) {
-            return { success: false, message: 'Invalid username or password' };
+            throw new UnauthorizedException('Invalid username or password');
         }
 
         const isPasswordValid = await bcrypt.compare(request.password, user.password);
 
         if (!isPasswordValid) {
-            return { success: false, message: 'Invalid username or password' };
+            throw new UnauthorizedException('Invalid username or password');
         }
 
         const payload = {
@@ -39,9 +40,7 @@ export class LoginUseCase {
         const refreshToken = jwt.sign(payload, this.jwtSecret, { expiresIn: '7d' });
 
         return {
-            success: true,
-            _id: user.id.toString(),
-            message: 'Login successful',
+            _id: user.id,
             username: user.username,
             isActive: user.isActive,
             role: user.role,

@@ -13,17 +13,16 @@ export { ActiveStatus };
 
 @ObjectType()
 export class Zone {
-    @Field(() => Int, { nullable: true })
-    _id: number;
+    @Field({ nullable: true })
+    _id: string;
 
     @Field()
     name: string;
 
-    @Field({ nullable: true })
-    description?: string;
 
-    @Field({ nullable: true })
-    isActive?: boolean;
+
+    @Field(() => String, { nullable: true })
+    isActive?: ActiveStatus;
 
     @Field({ nullable: true })
     createdAt?: Date;
@@ -81,17 +80,14 @@ export class CreateZoneDto {
     @Field()
     name: string;
 
-    @Field({ nullable: true })
-    description?: string;
-
-    @Field({ nullable: true })
-    isActive?: boolean;
+    @Field(() => String, { nullable: true })
+    isActive?: ActiveStatus;
 }
 
 @InputType()
 export class UpdateZoneDto {
-    @Field(() => Int)
-    _id: number;
+    @Field()
+    _id: string;
 
     @Field({ nullable: true })
     name?: string;
@@ -99,27 +95,27 @@ export class UpdateZoneDto {
     @Field({ nullable: true })
     description?: string;
 
-    @Field({ nullable: true })
-    isActive?: boolean;
+    @Field(() => String, { nullable: true })
+    isActive?: ActiveStatus;
 }
 
 @InputType()
 export class LoadZoneByIdDto {
-    @Field(() => Int)
-    _id: number;
+    @Field()
+    _id: string;
 }
 
 
 @InputType()
 export class DeleteZoneDto {
-    @Field(() => Int)
-    _id: number;
+    @Field()
+    _id: string;
 }
 
 @InputType()
 export class RestoreZoneDto {
-    @Field(() => Int)
-    _id: number;
+    @Field()
+    _id: string;
 }
 
 @InputType()

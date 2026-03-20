@@ -23,14 +23,25 @@ let AuthController = class AuthController {
         this.loginUseCase = loginUseCase;
     }
     async login(data) {
-        const result = await this.loginUseCase.execute(data);
-        return {
-            success: result.success,
-            _id: result._id,
-            role: result.role,
-            message: result.message,
-            is_active: result.isActive,
-        };
+        try {
+            const result = await this.loginUseCase.execute(data);
+            return {
+                _id: result._id,
+                role: result.role,
+                is_active: result.isActive,
+                username: result.username,
+                token: result.token,
+                created_at: result.createdAt,
+                updated_at: result.updatedAt,
+            };
+        }
+        catch (error) {
+            console.error('Login Error:', error);
+            return {
+                success: false,
+                message: error.message || 'Internal Server Error',
+            };
+        }
     }
 };
 exports.AuthController = AuthController;

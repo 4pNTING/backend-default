@@ -1,13 +1,13 @@
-import { ActiveStatus } from '../../common/graphql/common.model';
+import { ActiveStatus } from '../../../domain/enums/enum';
 export { ActiveStatus };
 export declare class Category {
-    _id: number;
+    _id: string;
     name: string;
     description?: string;
     photo?: string;
     createdAt?: Date;
     updatedAt?: Date;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class LoadCategoryResponse {
     count: number;
@@ -32,23 +32,23 @@ export declare class CreateCategoryDto {
     name: string;
     description?: string;
     photo?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class UpdateCategoryDto {
-    _id: number;
+    _id: string;
     name?: string;
     description?: string;
     photo?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class LoadCategoryByIdDto {
-    _id: number;
+    _id: string;
 }
 export declare class DeleteCategoryDto {
-    _id: number;
+    _id: string;
 }
 export declare class RestoreCategoryDto {
-    _id: number;
+    _id: string;
 }
 export declare class LoadCategoryDto {
     page?: number;

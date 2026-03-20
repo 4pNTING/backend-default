@@ -13,8 +13,8 @@ export declare class CategoryController {
     private readonly loadCategoryByIdUseCase;
     constructor(createCategoryUseCase: CreateCategoryUseCase, updateCategoryUseCase: UpdateCategoryUseCase, deleteCategoryUseCase: DeleteCategoryUseCase, loadCategoryUseCase: LoadCategoryUseCase, loadCategoryByIdUseCase: LoadByIDCategoryUseCase);
     findAll(query: QueryProps): Promise<import("@domain/models/category.model").LoadAllCategoryResponse>;
-    findOne(id: number): Promise<import("@domain/models/category.model").LoadCategoryByIdResponse>;
+    findOne(id: string): Promise<import("@domain/models/category.model").LoadCategoryByIdResponse>;
     create(body: CreateCategoryRequest): Promise<import("@domain/models/category.model").CreateCategoryResponse>;
-    update(id: number, body: Omit<UpdateCategoryRequest, 'id'>): Promise<void>;
-    delete(id: number): Promise<void>;
+    update(id: string, body: Omit<UpdateCategoryRequest, 'id'>): Promise<void>;
+    delete(id: string): Promise<void>;
 }

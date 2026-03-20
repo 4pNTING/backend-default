@@ -13,16 +13,11 @@ class LoadAllCategoryAction {
                 const keyword = `%${query.search.q}%`;
                 qb.andWhere(`(category.name LIKE :keyword OR category.description LIKE :keyword)`, { keyword });
             }
-            if (query.condition && query.condition.length > 0) {
-                for (const cond of query.condition) {
-                    if (cond.field === 'isActive' && cond.value) {
-                        const isActive = cond.value === 'true';
-                        qb.andWhere('category.isActive = :isActive', { isActive });
-                    }
-                }
+            if (query.isActive !== undefined) {
+                qb.andWhere('category.isActive = :isActive', { isActive: query.isActive });
             }
-            const page = query.paginate?.page || 1;
-            const limit = query.paginate?.limit || 10;
+            const page = query.paginate?.page;
+            const limit = query.paginate?.limit;
             qb.skip((page - 1) * limit).take(limit);
             if (query.sort) {
                 qb.orderBy('category.id', query.sort > 0 ? 'ASC' : 'DESC');

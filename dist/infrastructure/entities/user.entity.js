@@ -11,12 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = void 0;
 const typeorm_1 = require("typeorm");
+const enum_1 = require("../../domain/enums/enum");
 let UserEntity = class UserEntity {
 };
 exports.UserEntity = UserEntity;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    __metadata("design:type", String)
 ], UserEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
@@ -27,24 +28,32 @@ __decorate([
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 'user' }),
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enum_1.Role,
+        default: enum_1.Role.USER
+    }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "role", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], UserEntity.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
+    (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], UserEntity.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.DeleteDateColumn)({ name: 'deleted_at' }),
+    (0, typeorm_1.DeleteDateColumn)(),
     __metadata("design:type", Date)
 ], UserEntity.prototype, "deletedAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: true, name: 'is_active' }),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enum_1.ActiveStatus,
+        default: enum_1.ActiveStatus.active
+    }),
+    __metadata("design:type", String)
 ], UserEntity.prototype, "isActive", void 0);
 exports.UserEntity = UserEntity = __decorate([
     (0, typeorm_1.Entity)('users')

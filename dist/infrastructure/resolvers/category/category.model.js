@@ -11,14 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadCategoryDto = exports.RestoreCategoryDto = exports.DeleteCategoryDto = exports.LoadCategoryByIdDto = exports.UpdateCategoryDto = exports.CreateCategoryDto = exports.RestoreCategoryResponse = exports.DeleteCategoryResponse = exports.UpdateCategoryResponse = exports.CreateCategoryResponse = exports.LoadCategoryByIdResponse = exports.LoadCategoryResponse = exports.Category = exports.ActiveStatus = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const common_model_1 = require("../../common/graphql/common.model");
-Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return common_model_1.ActiveStatus; } });
+const enum_1 = require("../../../domain/enums/enum");
+Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return enum_1.ActiveStatus; } });
 let Category = class Category {
 };
 exports.Category = Category;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
 ], Category.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)(),
@@ -41,8 +41,8 @@ __decorate([
     __metadata("design:type", Date)
 ], Category.prototype, "updatedAt", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    __metadata("design:type", String)
 ], Category.prototype, "isActive", void 0);
 exports.Category = Category = __decorate([
     (0, graphql_1.ObjectType)()
@@ -127,8 +127,8 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "photo", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "isActive", void 0);
 exports.CreateCategoryDto = CreateCategoryDto = __decorate([
     (0, graphql_1.InputType)()
@@ -137,8 +137,8 @@ let UpdateCategoryDto = class UpdateCategoryDto {
 };
 exports.UpdateCategoryDto = UpdateCategoryDto;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
@@ -153,8 +153,8 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "photo", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "isActive", void 0);
 exports.UpdateCategoryDto = UpdateCategoryDto = __decorate([
     (0, graphql_1.InputType)()
@@ -163,8 +163,8 @@ let LoadCategoryByIdDto = class LoadCategoryByIdDto {
 };
 exports.LoadCategoryByIdDto = LoadCategoryByIdDto;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
 ], LoadCategoryByIdDto.prototype, "_id", void 0);
 exports.LoadCategoryByIdDto = LoadCategoryByIdDto = __decorate([
     (0, graphql_1.InputType)()
@@ -173,8 +173,8 @@ let DeleteCategoryDto = class DeleteCategoryDto {
 };
 exports.DeleteCategoryDto = DeleteCategoryDto;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
 ], DeleteCategoryDto.prototype, "_id", void 0);
 exports.DeleteCategoryDto = DeleteCategoryDto = __decorate([
     (0, graphql_1.InputType)()
@@ -183,8 +183,8 @@ let RestoreCategoryDto = class RestoreCategoryDto {
 };
 exports.RestoreCategoryDto = RestoreCategoryDto;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
 ], RestoreCategoryDto.prototype, "_id", void 0);
 exports.RestoreCategoryDto = RestoreCategoryDto = __decorate([
     (0, graphql_1.InputType)()
@@ -201,7 +201,7 @@ __decorate([
     __metadata("design:type", Number)
 ], LoadCategoryDto.prototype, "limit", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
+    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "isActive", void 0);
 __decorate([

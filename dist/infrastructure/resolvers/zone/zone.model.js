@@ -9,26 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoadZoneDto = exports.RestoreZoneDto = exports.DeleteZoneDto = exports.LoadZoneByIdDto = exports.UpdateZoneDto = exports.CreateZoneDto = exports.RestoreZoneResponse = exports.DeleteZoneResponse = exports.UpdateZoneResponse = exports.CreateZoneResponse = exports.LoadZoneByIdResponse = exports.LoadZoneResponse = exports.Zone = void 0;
+exports.LoadZoneDto = exports.RestoreZoneDto = exports.DeleteZoneDto = exports.LoadZoneByIdDto = exports.UpdateZoneDto = exports.CreateZoneDto = exports.RestoreZoneResponse = exports.DeleteZoneResponse = exports.UpdateZoneResponse = exports.CreateZoneResponse = exports.LoadZoneByIdResponse = exports.LoadZoneResponse = exports.Zone = exports.ActiveStatus = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const common_model_1 = require("../../common/graphql/common.model");
+Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return common_model_1.ActiveStatus; } });
 let Zone = class Zone {
 };
 exports.Zone = Zone;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
 ], Zone.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Zone.prototype, "name", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
     __metadata("design:type", String)
-], Zone.prototype, "description", void 0);
-__decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", Boolean)
 ], Zone.prototype, "isActive", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
@@ -113,12 +111,8 @@ __decorate([
     __metadata("design:type", String)
 ], CreateZoneDto.prototype, "name", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
     __metadata("design:type", String)
-], CreateZoneDto.prototype, "description", void 0);
-__decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", Boolean)
 ], CreateZoneDto.prototype, "isActive", void 0);
 exports.CreateZoneDto = CreateZoneDto = __decorate([
     (0, graphql_1.InputType)()
@@ -127,8 +121,8 @@ let UpdateZoneDto = class UpdateZoneDto {
 };
 exports.UpdateZoneDto = UpdateZoneDto;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
 ], UpdateZoneDto.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
@@ -139,8 +133,8 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateZoneDto.prototype, "description", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", Boolean)
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
+    __metadata("design:type", String)
 ], UpdateZoneDto.prototype, "isActive", void 0);
 exports.UpdateZoneDto = UpdateZoneDto = __decorate([
     (0, graphql_1.InputType)()
@@ -149,8 +143,8 @@ let LoadZoneByIdDto = class LoadZoneByIdDto {
 };
 exports.LoadZoneByIdDto = LoadZoneByIdDto;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
 ], LoadZoneByIdDto.prototype, "_id", void 0);
 exports.LoadZoneByIdDto = LoadZoneByIdDto = __decorate([
     (0, graphql_1.InputType)()
@@ -159,8 +153,8 @@ let DeleteZoneDto = class DeleteZoneDto {
 };
 exports.DeleteZoneDto = DeleteZoneDto;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
 ], DeleteZoneDto.prototype, "_id", void 0);
 exports.DeleteZoneDto = DeleteZoneDto = __decorate([
     (0, graphql_1.InputType)()
@@ -169,8 +163,8 @@ let RestoreZoneDto = class RestoreZoneDto {
 };
 exports.RestoreZoneDto = RestoreZoneDto;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
 ], RestoreZoneDto.prototype, "_id", void 0);
 exports.RestoreZoneDto = RestoreZoneDto = __decorate([
     (0, graphql_1.InputType)()
@@ -187,7 +181,7 @@ __decorate([
     __metadata("design:type", Number)
 ], LoadZoneDto.prototype, "limit", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus),
     __metadata("design:type", String)
 ], LoadZoneDto.prototype, "isActive", void 0);
 __decorate([
@@ -195,7 +189,6 @@ __decorate([
     __metadata("design:type", String)
 ], LoadZoneDto.prototype, "keyword", void 0);
 exports.LoadZoneDto = LoadZoneDto = __decorate([
-    (0, graphql_1.InputType)(),
     (0, graphql_1.InputType)()
 ], LoadZoneDto);
 //# sourceMappingURL=zone.model.js.map

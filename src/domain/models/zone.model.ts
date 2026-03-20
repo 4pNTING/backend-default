@@ -1,9 +1,10 @@
+import { ActiveStatus } from '../enums/enum';
+
 // Base Model
 export class ZoneModel {
-    id: number;
+    id: string;
     name: string;
-    description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -13,8 +14,7 @@ export class ZoneModel {
 // ==============================
 export class CreateZoneRequest {
     name: string;
-    description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 
 export class CreateZoneResponse extends ZoneModel { }
@@ -23,34 +23,31 @@ export class CreateZoneResponse extends ZoneModel { }
 // UPDATE
 // ==============================
 export class UpdateZoneRequest {
-    id: number;
+    id: string;
     name?: string;
-    description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 
 export class UpdateZoneResponse {
-    id: number;
-    success: boolean;
+    id: string;
 }
 
 // ==============================
 // DELETE
 // ==============================
 export class DeleteZoneRequest {
-    id: number;
+    id: string;
 }
 
 export class DeleteZoneResponse {
-    id: number;
-    success: boolean;
+    id: string;
 }
 
 // ==============================
 // RESTORE
 // ==============================
 export class RestoreZoneRequest {
-    id: number;
+    id: string;
 }
 
 export class RestoreZoneResponse extends ZoneModel { }
@@ -71,7 +68,7 @@ export class LoadAllZoneResponse {
 // LOAD BY ID
 // ==============================
 export class LoadZoneByIdRequest {
-    id: number;
+    id: string;
 }
 
 export class LoadZoneByIdResponse extends ZoneModel { }

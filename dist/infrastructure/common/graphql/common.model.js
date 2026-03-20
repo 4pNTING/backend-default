@@ -9,17 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InStringDto = exports.InNumberDto = exports.ConditionDto = exports.PaginateDto = exports.SearchDto = exports.DateFilterDto = exports.ActiveStatus = void 0;
+exports.PaginateDto = exports.SearchDto = exports.DateFilterDto = exports.ActiveStatus = void 0;
 const graphql_1 = require("@nestjs/graphql");
-var ActiveStatus;
-(function (ActiveStatus) {
-    ActiveStatus["ACTIVE"] = "ACTIVE";
-    ActiveStatus["INACTIVE"] = "INACTIVE";
-    ActiveStatus["ALL"] = "ALL";
-})(ActiveStatus || (exports.ActiveStatus = ActiveStatus = {}));
-(0, graphql_1.registerEnumType)(ActiveStatus, {
-    name: 'ActiveStatus',
-});
+const enum_1 = require("../../../domain/enums/enum");
+Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return enum_1.ActiveStatus; } });
 let DateFilterDto = class DateFilterDto {
 };
 exports.DateFilterDto = DateFilterDto;
@@ -62,46 +55,4 @@ __decorate([
 exports.PaginateDto = PaginateDto = __decorate([
     (0, graphql_1.InputType)()
 ], PaginateDto);
-let ConditionDto = class ConditionDto {
-};
-exports.ConditionDto = ConditionDto;
-__decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], ConditionDto.prototype, "field", void 0);
-__decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], ConditionDto.prototype, "value", void 0);
-exports.ConditionDto = ConditionDto = __decorate([
-    (0, graphql_1.InputType)()
-], ConditionDto);
-let InNumberDto = class InNumberDto {
-};
-exports.InNumberDto = InNumberDto;
-__decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], InNumberDto.prototype, "field", void 0);
-__decorate([
-    (0, graphql_1.Field)(() => [Number], { nullable: true }),
-    __metadata("design:type", Array)
-], InNumberDto.prototype, "value", void 0);
-exports.InNumberDto = InNumberDto = __decorate([
-    (0, graphql_1.InputType)()
-], InNumberDto);
-let InStringDto = class InStringDto {
-};
-exports.InStringDto = InStringDto;
-__decorate([
-    (0, graphql_1.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], InStringDto.prototype, "field", void 0);
-__decorate([
-    (0, graphql_1.Field)(() => [String], { nullable: true }),
-    __metadata("design:type", Array)
-], InStringDto.prototype, "value", void 0);
-exports.InStringDto = InStringDto = __decorate([
-    (0, graphql_1.InputType)()
-], InStringDto);
 //# sourceMappingURL=common.model.js.map

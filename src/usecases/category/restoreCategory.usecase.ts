@@ -6,7 +6,7 @@ import { CategoryModel } from '../../domain/models/category.model';
 export class RestoreCategoryUseCase {
     constructor(private readonly categoryRepository: DatabaseCategoryRepository) { }
 
-    async execute(id: number): Promise<CategoryModel> {
+    async execute(id: string): Promise<CategoryModel> {
         // 1. Restore the category (set deletedAt = null)
         await this.categoryRepository.restore(id);
 

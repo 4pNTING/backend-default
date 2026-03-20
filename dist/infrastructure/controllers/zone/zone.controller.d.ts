@@ -15,9 +15,9 @@ export declare class ZoneController {
     private readonly restoreZoneUseCase;
     constructor(createZoneUseCase: CreateZoneUsecase, updateZoneUseCase: UpdateZoneUsecase, deleteZoneUseCase: DeleteZoneUsecase, loadAllZoneUseCase: LoadAllZoneUsecase, loadZoneByIdUseCase: LoadZoneByIdUsecase, restoreZoneUseCase: RestoreZoneUsecase);
     findAll(query: QueryProps): Promise<import("@domain/models/zone.model").LoadAllZoneResponse>;
-    findOne(id: number): Promise<import("@domain/models/zone.model").LoadZoneByIdResponse>;
+    findOne(id: string): Promise<import("@domain/models/zone.model").LoadZoneByIdResponse>;
     create(body: CreateZoneRequest): Promise<import("@domain/models/zone.model").CreateZoneResponse>;
-    update(id: number, body: Omit<UpdateZoneRequest, 'id'>): Promise<void>;
-    delete(id: number): Promise<void>;
-    restore(id: number): Promise<void>;
+    update(id: string, body: Omit<UpdateZoneRequest, 'id'>): Promise<void>;
+    delete(id: string): Promise<void>;
+    restore(id: string): Promise<void>;
 }

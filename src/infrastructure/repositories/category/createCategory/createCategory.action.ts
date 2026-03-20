@@ -1,6 +1,7 @@
 import { QueryRunner } from 'typeorm';
 import { CategoryEntity } from '@infrastructure/entities/category.entity';
 import { CategoryModel, CreateCategoryRequest, CreateCategoryResponse } from '@domain/models/category.model';
+import { ActiveStatus } from '@domain/enums/enum';
 
 export class CreateCategoryAction extends CategoryModel {
   constructor(private readonly session: QueryRunner) {
@@ -28,7 +29,7 @@ export class CreateCategoryAction extends CategoryModel {
       this.name = params.name;
       this.description = params.description;
       this.photo = params.photo;
-      this.isActive = params.isActive ?? true;
+      this.isActive = params.isActive ?? ActiveStatus.active;
 
       // Auto-generated fields for logic
       this.createdAt = new Date();

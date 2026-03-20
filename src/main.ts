@@ -12,14 +12,11 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
-      package: ['category', 'zone', 'auth', 'product', 'inventory_level', 'inventory_movement'],
+      package: ['category', 'zone', 'auth'],
       protoPath: [
         join(__dirname, '../src/proto/category.proto'),
         join(__dirname, '../src/proto/zone.proto'),
         join(__dirname, '../src/proto/auth.proto'),
-        join(__dirname, '../src/proto/product.proto'),
-        join(__dirname, '../src/proto/inventory_level.proto'),
-        join(__dirname, '../src/proto/inventory_movement.proto'),
       ], // Path ของไฟล์ .proto
       url: 'localhost:9897', // รันที่ Port 5000
     },
@@ -38,7 +35,5 @@ async function bootstrap() {
 
   // 4. เริ่มต้น HTTP Server
   await app.listen(3000);
-  console.log(`🚀 HTTP Server is running on: http://localhost:3000/api`);
-  console.log(`🚀 gRPC Service is running on: localhost:9897`);
 }
 bootstrap();

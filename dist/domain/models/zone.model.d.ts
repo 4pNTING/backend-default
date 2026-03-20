@@ -1,37 +1,33 @@
+import { ActiveStatus } from '../enums/enum';
 export declare class ZoneModel {
-    id: number;
+    id: string;
     name: string;
-    description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
     createdAt?: Date;
     updatedAt?: Date;
 }
 export declare class CreateZoneRequest {
     name: string;
-    description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class CreateZoneResponse extends ZoneModel {
 }
 export declare class UpdateZoneRequest {
-    id: number;
+    id: string;
     name?: string;
-    description?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class UpdateZoneResponse {
-    id: number;
-    success: boolean;
+    id: string;
 }
 export declare class DeleteZoneRequest {
-    id: number;
+    id: string;
 }
 export declare class DeleteZoneResponse {
-    id: number;
-    success: boolean;
+    id: string;
 }
 export declare class RestoreZoneRequest {
-    id: number;
+    id: string;
 }
 export declare class RestoreZoneResponse extends ZoneModel {
 }
@@ -42,7 +38,7 @@ export declare class LoadAllZoneResponse {
     total: number;
 }
 export declare class LoadZoneByIdRequest {
-    id: number;
+    id: string;
 }
 export declare class LoadZoneByIdResponse extends ZoneModel {
 }

@@ -13,7 +13,7 @@ export class LoadAllZoneAction {
             if (query.search?.q) {
                 const keyword = `%${query.search.q}%`;
                 qb.andWhere(
-                    `(zone.name LIKE :keyword OR zone.description LIKE :keyword)`,
+                    `(zone.name LIKE :keyword)`,
                     { keyword }
                 );
             }

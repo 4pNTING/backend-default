@@ -6,8 +6,8 @@ export { ActiveStatus };
 
 @ObjectType()
 export class Category {
-    @Field(() => Int, { nullable: true })
-    _id: number;
+    @Field({ nullable: true })
+    _id: string;
 
     @Field()
     name: string;
@@ -24,8 +24,8 @@ export class Category {
     @Field({ nullable: true })
     updatedAt?: Date;
 
-    @Field({ nullable: true })
-    isActive?: boolean;
+    @Field(() => String, { nullable: true })
+    isActive?: ActiveStatus;
     // เพิ่ม isActive หรือ deletedAt ถ้ามี soft delete
     // @Field({ nullable: true })
     // isActive?: boolean;
@@ -82,14 +82,14 @@ export class CreateCategoryDto {
     @Field({ nullable: true })
     photo?: string;
 
-    @Field({ nullable: true })
-    isActive?: boolean;
+    @Field(() => String, { nullable: true })
+    isActive?: ActiveStatus;
 }
 
 @InputType()
 export class UpdateCategoryDto {
-    @Field(() => Int)
-    _id: number;
+    @Field()
+    _id: string;
 
     @Field({ nullable: true })
     name?: string;
@@ -100,27 +100,27 @@ export class UpdateCategoryDto {
     @Field({ nullable: true })
     photo?: string;
 
-    @Field({ nullable: true })
-    isActive?: boolean;
+    @Field(() => String, { nullable: true })
+    isActive?: ActiveStatus;
 }
 
 @InputType()
 export class LoadCategoryByIdDto {
-    @Field(() => Int)
-    _id: number;
+    @Field()
+    _id: string;
 }
 
 
 @InputType()
 export class DeleteCategoryDto {
-    @Field(() => Int)
-    _id: number;
+    @Field()
+    _id: string;
 }
 
 @InputType()
 export class RestoreCategoryDto {
-    @Field(() => Int)
-    _id: number;
+    @Field()
+    _id: string;
 }
 
 @InputType()
@@ -132,7 +132,7 @@ export class LoadCategoryDto {
     @Field(() => Int, { nullable: true })
     limit?: number;
 
-    @Field(() => ActiveStatus, { nullable: true })
+    @Field(() => String, { nullable: true })
     isActive?: ActiveStatus;
 
     @Field({ nullable: true })

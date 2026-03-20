@@ -16,10 +16,8 @@ export class AuthController {
         try {
             const result = await this.loginUseCase.execute(data);
             return {
-                success: result.success,
                 _id: result._id,
                 role: result.role,
-                message: result.message,
                 is_active: result.isActive,
                 username: result.username,
                 token: result.token,

@@ -15,8 +15,56 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthResolver = void 0;
 const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
+const class_validator_1 = require("class-validator");
 const auth_usecases_proxy_module_1 = require("../../usecases-proxy/auth-usecases-proxy.module");
 const login_usecase_1 = require("../../../usecases/auth/login.usecase");
+const enum_1 = require("../../../domain/enums/enum");
+let AuthLoginArgs = class AuthLoginArgs {
+};
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], AuthLoginArgs.prototype, "username", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], AuthLoginArgs.prototype, "password", void 0);
+AuthLoginArgs = __decorate([
+    (0, graphql_1.InputType)()
+], AuthLoginArgs);
+let AuthLoginResponse = class AuthLoginResponse {
+};
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], AuthLoginResponse.prototype, "_id", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], AuthLoginResponse.prototype, "username", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], AuthLoginResponse.prototype, "role", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    __metadata("design:type", String)
+], AuthLoginResponse.prototype, "isActive", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], AuthLoginResponse.prototype, "token", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], AuthLoginResponse.prototype, "refreshToken", void 0);
+AuthLoginResponse = __decorate([
+    (0, graphql_1.ObjectType)()
+], AuthLoginResponse);
 let AuthResolver = class AuthResolver {
     constructor(loginUseCase) {
         this.loginUseCase = loginUseCase;
@@ -38,43 +86,4 @@ exports.AuthResolver = AuthResolver = __decorate([
     __param(0, (0, common_1.Inject)(auth_usecases_proxy_module_1.AuthUsecasesProxyModule.LOGIN_PROXY)),
     __metadata("design:paramtypes", [login_usecase_1.LoginUseCase])
 ], AuthResolver);
-const graphql_2 = require("@nestjs/graphql");
-let AuthLoginArgs = class AuthLoginArgs {
-};
-__decorate([
-    (0, graphql_2.Field)(),
-    __metadata("design:type", String)
-], AuthLoginArgs.prototype, "username", void 0);
-__decorate([
-    (0, graphql_2.Field)(),
-    __metadata("design:type", String)
-], AuthLoginArgs.prototype, "password", void 0);
-AuthLoginArgs = __decorate([
-    (0, graphql_2.InputType)()
-], AuthLoginArgs);
-let AuthLoginResponse = class AuthLoginResponse {
-};
-__decorate([
-    (0, graphql_2.Field)(),
-    __metadata("design:type", Boolean)
-], AuthLoginResponse.prototype, "success", void 0);
-__decorate([
-    (0, graphql_2.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], AuthLoginResponse.prototype, "_id", void 0);
-__decorate([
-    (0, graphql_2.Field)({ nullable: true }),
-    __metadata("design:type", String)
-], AuthLoginResponse.prototype, "role", void 0);
-__decorate([
-    (0, graphql_2.Field)(),
-    __metadata("design:type", String)
-], AuthLoginResponse.prototype, "message", void 0);
-__decorate([
-    (0, graphql_2.Field)({ nullable: true }),
-    __metadata("design:type", Boolean)
-], AuthLoginResponse.prototype, "isActive", void 0);
-AuthLoginResponse = __decorate([
-    (0, graphql_2.ObjectType)()
-], AuthLoginResponse);
 //# sourceMappingURL=auth.resolver.js.map

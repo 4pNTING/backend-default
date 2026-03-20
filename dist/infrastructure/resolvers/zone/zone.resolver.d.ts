@@ -4,7 +4,7 @@ import { DeleteZoneUsecase } from '../../../usecases/zone/deleteZone.usecase';
 import { LoadAllZoneUsecase } from '../../../usecases/zone/loadAllZone.usecase';
 import { LoadZoneByIdUsecase } from '../../../usecases/zone/loadZoneById.usecase';
 import { RestoreZoneUsecase } from '../../../usecases/zone/restoreZone.usecase';
-import { Zone, CreateZoneDto, UpdateZoneDto, DeleteZoneDto, LoadZoneDto, LoadZoneByIdDto, RestoreZoneDto } from './zone.model';
+import { Zone, CreateZoneDto, UpdateZoneDto, DeleteZoneDto, LoadZoneDto, LoadZoneByIdDto, RestoreZoneDto, ActiveStatus } from './zone.model';
 export declare class ZoneResolver {
     private readonly createZoneUsecase;
     private readonly updateZoneUsecase;
@@ -16,44 +16,40 @@ export declare class ZoneResolver {
     loadZone(input: LoadZoneDto): Promise<{
         count: number;
         zone: {
-            _id: number;
-            id: number;
+            _id: string;
+            id: string;
             name: string;
-            description?: string;
-            isActive?: boolean;
+            isActive?: ActiveStatus;
             createdAt?: Date;
             updatedAt?: Date;
         }[];
     }>;
     loadZoneById(input: LoadZoneByIdDto): Promise<{
         zone: {
-            _id: number;
-            id: number;
+            _id: string;
+            id: string;
             name: string;
-            description?: string;
-            isActive?: boolean;
+            isActive?: ActiveStatus;
             createdAt?: Date;
             updatedAt?: Date;
         };
     }>;
     createZone(input: CreateZoneDto): Promise<{
         zone: {
-            _id: number;
-            id: number;
+            _id: string;
+            id: string;
             name: string;
-            description?: string;
-            isActive?: boolean;
+            isActive?: ActiveStatus;
             createdAt?: Date;
             updatedAt?: Date;
         };
     }>;
     updateZone(input: UpdateZoneDto): Promise<{
         zone: {
-            _id: number;
-            id: number;
+            _id: string;
+            id: string;
             name: string;
-            description?: string;
-            isActive?: boolean;
+            isActive?: ActiveStatus;
             createdAt?: Date;
             updatedAt?: Date;
         };
@@ -63,11 +59,10 @@ export declare class ZoneResolver {
     }>;
     restoreZone(input: RestoreZoneDto): Promise<{
         zone: {
-            _id: number;
-            id: number;
+            _id: string;
+            id: string;
             name: string;
-            description?: string;
-            isActive?: boolean;
+            isActive?: ActiveStatus;
             createdAt?: Date;
             updatedAt?: Date;
         };

@@ -90,7 +90,7 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     }
   }
 
-  async restore(id: number): Promise<void> {
+  async restore(id: string): Promise<void> {
     const session = this.dataSource.createQueryRunner();
     await session.connect();
     await session.startTransaction();

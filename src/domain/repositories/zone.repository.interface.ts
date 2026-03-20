@@ -12,7 +12,7 @@ export interface IZoneRepository {
     create(params: CreateZoneRequest): Promise<CreateZoneResponse>;
     update(params: UpdateZoneRequest): Promise<void>;
     delete(params: DeleteZoneRequest): Promise<void>;
-    restore(id: number): Promise<void>;
+    restore(id: string): Promise<void>;
     findAll(query: QueryProps): Promise<LoadAllZoneResponse>;
     findById(params: LoadZoneByIdRequest): Promise<LoadZoneByIdResponse | null>;
 }

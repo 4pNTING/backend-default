@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Inject, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../common/jwt-auth.guard';
 import {
@@ -75,16 +75,8 @@ export class CategoryResolver {
                 };
             }
 
-            // 3. Filter (isActive via Enum)
             if (input.isActive) {
-                let isActiveValue: boolean | undefined;
-                if (input.isActive === ActiveStatus.ACTIVE) isActiveValue = true;
-                if (input.isActive === ActiveStatus.INACTIVE) isActiveValue = false;
-
-                if (isActiveValue !== undefined) {
-                    query.isActive = isActiveValue;
-                }
-                // If ALL, do nothing (fetch all)
+                query.isActive = input.isActive;
             }
         }
 

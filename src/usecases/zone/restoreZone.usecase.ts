@@ -3,7 +3,7 @@ import { IZoneRepository } from '../../domain/repositories/zone.repository.inter
 export class RestoreZoneUsecase {
     constructor(private readonly zoneRepository: IZoneRepository) { }
 
-    async execute(id: number): Promise<void> {
+    async execute(id: string): Promise<void> {
         return await this.zoneRepository.restore(id);
     }
 }

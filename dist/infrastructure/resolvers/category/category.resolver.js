@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const common_1 = require("@nestjs/common");
+const jwt_auth_guard_1 = require("../../common/jwt-auth.guard");
 const category_model_1 = require("./category.model");
 const category_usecases_proxy_module_1 = require("../../usecases-proxy/category-usecases-proxy.module");
 const createCategory_usecase_1 = require("../../../usecases/category/createCategory.usecase");
@@ -37,8 +38,8 @@ let CategoryResolver = class CategoryResolver {
         if (input) {
             if (input.page || input.limit) {
                 query.paginate = {
-                    page: input.page || 1,
-                    limit: input.limit || 10
+                    page: input.page,
+                    limit: input.limit
                 };
             }
             if (input.keyword) {
@@ -47,17 +48,7 @@ let CategoryResolver = class CategoryResolver {
                 };
             }
             if (input.isActive) {
-                let isActiveValue;
-                if (input.isActive === category_model_1.ActiveStatus.ACTIVE)
-                    isActiveValue = 'true';
-                if (input.isActive === category_model_1.ActiveStatus.INACTIVE)
-                    isActiveValue = 'false';
-                if (isActiveValue) {
-                    query.condition = [{
-                            field: 'isActive',
-                            value: isActiveValue
-                        }];
-                }
+                query.isActive = input.isActive;
             }
         }
         const result = await this.loadCategoryUseCase.execute(query);
@@ -150,6 +141,7 @@ __decorate([
 ], CategoryResolver.prototype, "restoreCategory", null);
 exports.CategoryResolver = CategoryResolver = __decorate([
     (0, graphql_1.Resolver)(() => category_model_1.Category),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Inject)(category_usecases_proxy_module_1.CategoryUsecasesProxyModule.CREATE_CATEGORY_PROXY)),
     __param(1, (0, common_1.Inject)(category_usecases_proxy_module_1.CategoryUsecasesProxyModule.UPDATE_CATEGORY_PROXY)),
     __param(2, (0, common_1.Inject)(category_usecases_proxy_module_1.CategoryUsecasesProxyModule.DELETE_CATEGORY_PROXY)),

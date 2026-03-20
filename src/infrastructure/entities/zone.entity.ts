@@ -1,19 +1,22 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { ZoneModel } from '../../domain/models/zone.model';
+import { ActiveStatus } from '../../domain/enums/enum';
 
 @Entity('zones')
 export class ZoneEntity implements ZoneModel {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column({ unique: true })
     name: string;
 
-    @Column({ nullable: true })
-    description: string;
 
-    @Column({ default: true })
-    isActive: boolean;
+    @Column({ 
+        type: 'enum',
+        enum: ActiveStatus,
+        default: ActiveStatus.active 
+    })
+    isActive: ActiveStatus;
 
     @CreateDateColumn()
     createdAt: Date;

@@ -25,6 +25,7 @@ const user_entity_1 = require("./infrastructure/entities/user.entity");
 const category_resolver_1 = require("./infrastructure/resolvers/category/category.resolver");
 const zone_resolver_1 = require("./infrastructure/resolvers/zone/zone.resolver");
 const auth_resolver_1 = require("./infrastructure/resolvers/auth/auth.resolver");
+const jwt_strategy_1 = require("./infrastructure/common/jwt.strategy");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -35,21 +36,29 @@ exports.AppModule = AppModule = __decorate([
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/schema.gql'),
-                sortSchema: true,
+                sortSchema: false,
                 playground: true,
                 path: '/api-gateway',
             }),
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: process.env.DB_HOST || 'localhost',
-                port: parseInt(process.env.DB_PORT) || 5435,
-                username: process.env.DB_USER,
-                password: process.env.DB_PASSWORD,
-                database: process.env.DB_NAME,
-                entities: [category_entity_1.CategoryEntity, zone_entity_1.ZoneEntity, user_entity_1.UserEntity],
-                synchronize: true,
-                autoLoadEntities: true,
-                logging: true,
+            typeorm_1.TypeOrmModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    type: 'postgres',
+                    host: configService.get('DB_HOST') || 'localhost',
+                    port: configService.get('DB_PORT') || 5435,
+                    username: configService.get('DB_USER'),
+                    password: configService.get('DB_PASSWORD'),
+                    database: configService.get('DB_NAME'),
+                    entities: [
+                        category_entity_1.CategoryEntity,
+                        zone_entity_1.ZoneEntity,
+                        user_entity_1.UserEntity
+                    ],
+                    synchronize: true,
+                    autoLoadEntities: true,
+                    logging: false,
+                }),
             }),
             repositories_module_1.RepositoriesModule,
             category_usecases_proxy_module_1.CategoryUsecasesProxyModule.register(),
@@ -60,7 +69,12 @@ exports.AppModule = AppModule = __decorate([
             zone_controller_1.ZoneController,
             auth_controller_1.AuthController,
         ],
-        providers: [category_resolver_1.CategoryResolver, zone_resolver_1.ZoneResolver, auth_resolver_1.AuthResolver],
+        providers: [
+            category_resolver_1.CategoryResolver,
+            zone_resolver_1.ZoneResolver,
+            auth_resolver_1.AuthResolver,
+            jwt_strategy_1.JwtStrategy
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

@@ -16,6 +16,6 @@ export declare class CategoryGrpcController {
     findAll(): Promise<import("@domain/models/category.model").LoadAllCategoryResponse>;
     update(data: UpdateCategoryRequest): Promise<void>;
     delete(data: {
-        id: number;
+        id: string;
     }): Promise<void>;
 }

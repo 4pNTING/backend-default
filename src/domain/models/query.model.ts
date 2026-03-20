@@ -18,6 +18,6 @@ export interface QueryProps {
   search?: Search;
   sort?: number;
   paginate?: Paginate;
-  isActive?: boolean;
+  isActive?: boolean | string;
   select?: string[];
 }

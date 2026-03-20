@@ -11,12 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryEntity = void 0;
 const typeorm_1 = require("typeorm");
+const enum_1 = require("../../domain/enums/enum");
 let CategoryEntity = class CategoryEntity {
 };
 exports.CategoryEntity = CategoryEntity;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    __metadata("design:type", String)
 ], CategoryEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
@@ -31,20 +32,24 @@ __decorate([
     __metadata("design:type", String)
 ], CategoryEntity.prototype, "photo", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], CategoryEntity.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
+    (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], CategoryEntity.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.DeleteDateColumn)({ name: 'deleted_at' }),
+    (0, typeorm_1.DeleteDateColumn)(),
     __metadata("design:type", Date)
 ], CategoryEntity.prototype, "deletedAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: true, name: 'is_active' }),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enum_1.ActiveStatus,
+        default: enum_1.ActiveStatus.active
+    }),
+    __metadata("design:type", String)
 ], CategoryEntity.prototype, "isActive", void 0);
 exports.CategoryEntity = CategoryEntity = __decorate([
     (0, typeorm_1.Entity)('categories')

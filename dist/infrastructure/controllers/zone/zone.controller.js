@@ -66,9 +66,9 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':id'),
     (0, microservices_1.GrpcMethod)('ZoneService', 'FindOne'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ZoneController.prototype, "findOne", null);
 __decorate([
@@ -84,28 +84,28 @@ __decorate([
     (0, common_1.Put)(':id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     (0, microservices_1.GrpcMethod)('ZoneService', 'Update'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], ZoneController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     (0, microservices_1.GrpcMethod)('ZoneService', 'Delete'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ZoneController.prototype, "delete", null);
 __decorate([
     (0, common_1.Post)(':id/restore'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     (0, microservices_1.GrpcMethod)('ZoneService', 'Restore'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ZoneController.prototype, "restore", null);
 exports.ZoneController = ZoneController = __decorate([
