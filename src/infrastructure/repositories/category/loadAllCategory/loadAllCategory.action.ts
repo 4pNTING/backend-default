@@ -24,6 +24,7 @@ export class LoadAllCategoryAction {
         qb.andWhere('category.isActive = :isActive', { isActive: query.isActive });
       }
 
+
       // 2. Pagination
       const page = query.paginate?.page;
       const limit = query.paginate?.limit;

@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
+import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
 import {
     DateFilterDto,
     SearchDto,
@@ -78,57 +79,80 @@ export class RestoreZoneResponse {
 @InputType()
 export class CreateZoneDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     name: string;
 
     @Field(() => String, { nullable: true })
+    @IsOptional()
     isActive?: ActiveStatus;
 }
 
 @InputType()
 export class UpdateZoneDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     name?: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     description?: string;
 
     @Field(() => String, { nullable: true })
+    @IsOptional()
     isActive?: ActiveStatus;
 }
 
 @InputType()
 export class LoadZoneByIdDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 }
+
 
 
 @InputType()
 export class DeleteZoneDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 }
 
 @InputType()
 export class RestoreZoneDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 }
 
 @InputType()
 export class LoadZoneDto {
     @Field(() => Int, { nullable: true })
+    @IsOptional()
     page?: number;
 
     @Field(() => Int, { nullable: true })
+    @IsOptional()
     limit?: number;
 
     @Field(() => ActiveStatus)
+    @IsOptional()
     isActive: ActiveStatus;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     keyword?: string;
 }
+

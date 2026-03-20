@@ -1,0 +1,1 @@
+{"version":3,"file":"loadCategory.usecase.js","sourceRoot":"","sources":["../../../../src/usecases/category/loadCategory.usecase.ts"],"names":[],"mappings":";;;AAIA,MAAa,mBAAmB;IAC9B,YAA6B,kBAAuC;QAAvC,uBAAkB,GAAlB,kBAAkB,CAAqB;IAAG,CAAC;IAExE,KAAK,CAAC,OAAO,CAAC,KAAiB;QAC7B,OAAO,MAAM,IAAI,CAAC,kBAAkB,CAAC,OAAO,CAAC,KAAK,CAAC,CAAC;IACtD,CAAC;CACF;AAND,kDAMC"}

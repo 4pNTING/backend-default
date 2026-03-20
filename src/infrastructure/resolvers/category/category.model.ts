@@ -124,7 +124,6 @@ export class RestoreCategoryDto {
 }
 
 @InputType()
-@InputType()
 export class LoadCategoryDto {
     @Field(() => Int, { nullable: true })
     page?: number;
@@ -138,3 +137,4 @@ export class LoadCategoryDto {
     @Field({ nullable: true })
     keyword?: string;
 }
+

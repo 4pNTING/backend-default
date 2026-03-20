@@ -65,9 +65,11 @@ export class ZoneResolver {
                 };
             }
 
+            // 3. Filter (isActive)
             if (input.isActive) {
                 query.isActive = input.isActive;
             }
+
         }
 
         const result = await this.loadAllZoneUsecase.execute(query);

@@ -22,6 +22,7 @@ export class LoadAllZoneAction {
                 qb.andWhere('zone.isActive = :isActive', { isActive: query.isActive });
             }
 
+
             const page = query.paginate?.page || 1;
             const limit = query.paginate?.limit || 10;
             qb.skip((page - 1) * limit).take(limit);
