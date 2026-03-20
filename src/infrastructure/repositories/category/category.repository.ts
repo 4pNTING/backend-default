@@ -80,7 +80,7 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     await session.connect();
     await session.startTransaction();
     try {
-      await session.manager.softDelete(CategoryEntity, params.id);
+      await session.manager.softDelete(CategoryEntity, params._id);
       await session.commitTransaction();
     } catch (error) {
       await session.rollbackTransaction();
@@ -90,12 +90,12 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     }
   }
 
-  async restore(id: string): Promise<void> {
+  async restore(_id: string): Promise<void> {
     const session = this.dataSource.createQueryRunner();
     await session.connect();
     await session.startTransaction();
     try {
-      await new RestoreCategoryAction(session).execute(id);
+      await new RestoreCategoryAction(session).execute(_id);
       await session.commitTransaction();
     } catch (error) {
       await session.rollbackTransaction();
@@ -143,7 +143,7 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     if (!entity) return null;
 
     return {
-      id: entity.id,
+      _id: entity._id,
       name: entity.name,
       description: entity.description,
       photo: entity.photo,

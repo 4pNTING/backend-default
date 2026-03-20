@@ -1,7 +1,7 @@
 import { Role, ActiveStatus } from '../enums/enum';
 
 export class UserModel {
-    id: string;
+    _id: string;
     username: string;
     password: string;
     role?: Role;

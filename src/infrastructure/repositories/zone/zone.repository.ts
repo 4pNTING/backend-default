@@ -63,7 +63,7 @@ export class DatabaseZoneRepository implements IZoneRepository {
         await session.connect();
         await session.startTransaction();
         try {
-            await new DeleteZoneAction(session).execute(params.id);
+            await new DeleteZoneAction(session).execute(params._id);
             await session.commitTransaction();
         } catch (error) {
             await session.rollbackTransaction();
@@ -73,12 +73,12 @@ export class DatabaseZoneRepository implements IZoneRepository {
         }
     }
 
-    async restore(id: string): Promise<void> {
+    async restore(_id: string): Promise<void> {
         const session = this.dataSource.createQueryRunner();
         await session.connect();
         await session.startTransaction();
         try {
-            await new RestoreZoneAction(session).execute(id);
+            await new RestoreZoneAction(session).execute(_id);
             await session.commitTransaction();
         } catch (error) {
             await session.rollbackTransaction();
@@ -114,6 +114,6 @@ export class DatabaseZoneRepository implements IZoneRepository {
         // However, findByName isn't transactional usually.
         const entity = await this.zoneEntityRepository.findOne({ where: { name } });
         if (!entity) return null;
-        return entity;
+        return entity as any;
     }
 }

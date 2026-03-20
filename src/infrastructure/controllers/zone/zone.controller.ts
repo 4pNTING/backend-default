@@ -66,7 +66,7 @@ export class ZoneController {
     @Get(':id')
     @GrpcMethod('ZoneService', 'FindOne')
     async findOne(@Param('id') id: string) {
-        return await this.loadZoneByIdUseCase.execute({ id });
+        return await this.loadZoneByIdUseCase.execute({ _id: id });
     }
 
     // ==========================================
@@ -87,9 +87,9 @@ export class ZoneController {
     @GrpcMethod('ZoneService', 'Update')
     async update(
         @Param('id') id: string,
-        @Body() body: Omit<UpdateZoneRequest, 'id'>
+        @Body() body: Omit<UpdateZoneRequest, '_id'>
     ) {
-        const request: UpdateZoneRequest = { id, ...body };
+        const request: UpdateZoneRequest = { _id: id, ...body };
         return await this.updateZoneUseCase.execute(request);
     }
 
@@ -100,7 +100,7 @@ export class ZoneController {
     @HttpCode(HttpStatus.OK)
     @GrpcMethod('ZoneService', 'Delete')
     async delete(@Param('id') id: string) {
-        const request: DeleteZoneRequest = { id };
+        const request: DeleteZoneRequest = { _id: id };
         return await this.deleteZoneUseCase.execute(request);
     }
 

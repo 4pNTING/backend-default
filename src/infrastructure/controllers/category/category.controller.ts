@@ -55,7 +55,7 @@ export class CategoryController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.loadCategoryByIdUseCase.execute({ id });
+    return await this.loadCategoryByIdUseCase.execute({ _id: id });
   }
 
   @Post()
@@ -68,17 +68,17 @@ export class CategoryController {
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
-    @Body() body: Omit<UpdateCategoryRequest, 'id'> // รับ Body ไม่รวม ID
+    @Body() body: Omit<UpdateCategoryRequest, '_id'> // รับ Body ไม่รวม ID
   ) {
     // รวม ID จาก Param เข้ากับ Body
-    const request: UpdateCategoryRequest = { id, ...body };
+    const request: UpdateCategoryRequest = { _id: id, ...body };
     return await this.updateCategoryUseCase.execute(request);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param('id') id: string) {
-    const request: DeleteCategoryRequest = { id };
+    const request: DeleteCategoryRequest = { _id: id };
     return await this.deleteCategoryUseCase.execute(request);
   }
 }

@@ -9,11 +9,11 @@ export class DeleteCategoryValidation extends DeleteCategoryRequest {
 
   public async execute(params: DeleteCategoryRequest): Promise<void> {
     try {
-      this.id = params.id;
-      
-      const exist = await this.categoryRepository.findOne({ where: { id: this.id } });
+      this._id = params._id;
+
+      const exist = await this.categoryRepository.findOne({ where: { _id: this._id } });
       if (!exist) {
-        throw new Error(`Category ID ${this.id} not found`);
+        throw new Error(`Category ID ${this._id} not found`);
       }
     } catch (error) {
       throw error instanceof Error ? error : new Error(String(error));

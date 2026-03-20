@@ -7,7 +7,7 @@ export class UpdateCategoryAction {
 
   public async execute(params: UpdateCategoryRequest): Promise<void> {
     try {
-      await this.session.manager.update(CategoryEntity, params.id, {
+      await this.session.manager.update(CategoryEntity, params._id, {
         name: params.name,
         description: params.description,
         photo: params.photo,

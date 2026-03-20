@@ -6,9 +6,9 @@ export class UpdateZoneAction {
     constructor(private readonly session: QueryRunner) { }
 
     public async execute(params: UpdateZoneRequest): Promise<void> {
+        console.log('--- UpdateZoneAction PARAMS ---', params);
         try {
-
-            await this.session.manager.update(ZoneEntity, params.id, {
+            await this.session.manager.update(ZoneEntity, params._id, {
                 name: params.name,
                 isActive: params.isActive,
                 updatedAt: new Date()

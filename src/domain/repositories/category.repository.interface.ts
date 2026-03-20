@@ -16,5 +16,5 @@ export interface ICategoryRepository {
   findAll(query: QueryProps): Promise<LoadAllCategoryResponse>;
   findById(params: LoadCategoryByIdRequest): Promise<LoadCategoryByIdResponse | null>;
   findByName(name: string): Promise<LoadCategoryByIdResponse | null>;
-  restore(id: string): Promise<void>;
+  restore(_id: string): Promise<void>;
 }

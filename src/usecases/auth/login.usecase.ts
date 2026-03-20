@@ -29,7 +29,7 @@ export class LoginUseCase {
         }
 
         const payload = {
-            id: user.id,
+            id: user._id,
             username: user.username,
             role: user.role
         };
@@ -40,7 +40,7 @@ export class LoginUseCase {
         const refreshToken = jwt.sign(payload, this.jwtSecret, { expiresIn: '7d' });
 
         return {
-            _id: user.id,
+            _id: user._id,
             username: user.username,
             isActive: user.isActive,
             role: user.role,

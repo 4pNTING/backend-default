@@ -6,11 +6,11 @@ import { CategoryModel } from '../../domain/models/category.model';
 export class RestoreCategoryUseCase {
     constructor(private readonly categoryRepository: DatabaseCategoryRepository) { }
 
-    async execute(id: string): Promise<CategoryModel> {
+    async execute(_id: string): Promise<CategoryModel> {
         // 1. Restore the category (set deletedAt = null)
-        await this.categoryRepository.restore(id);
-
+        await this.categoryRepository.restore(_id);
+        
         // 2. Return the restored category
-        return await this.categoryRepository.findById({ id });
+        return await this.categoryRepository.findById({ _id });
     }
 }

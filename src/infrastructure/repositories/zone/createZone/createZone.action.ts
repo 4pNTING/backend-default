@@ -9,6 +9,7 @@ export class CreateZoneAction extends ZoneModel {
     }
 
     public async execute(params: CreateZoneRequest): Promise<CreateZoneResponse> {
+        console.log('--- CreateZoneAction execute params ---', JSON.stringify(params));
         try {
             await this.validateAndBuildParams(params);
             await this.persistZone();
@@ -33,11 +34,16 @@ export class CreateZoneAction extends ZoneModel {
 
     private async persistZone(): Promise<void> {
         try {
-            const entity = this.session.manager.create(ZoneEntity, this);
+            const entity = this.session.manager.create(ZoneEntity, {
+                name: this.name,
+                isActive: this.isActive,
+                createdAt: this.createdAt,
+                updatedAt: this.updatedAt
+            });
             const savedEntity = await this.session.manager.save(ZoneEntity, entity);
 
             if (savedEntity) {
-                this.id = savedEntity.id;
+                this._id = (savedEntity as any)._id; 
             } else {
                 throw new Error('Failed to save zone into database');
             }
@@ -49,7 +55,7 @@ export class CreateZoneAction extends ZoneModel {
     private buildResponse(): CreateZoneResponse {
         try {
             return {
-                id: this.id,
+                _id: this._id,
                 name: this.name,
                 isActive: this.isActive,
                 createdAt: this.createdAt,

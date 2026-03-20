@@ -82,15 +82,9 @@ export class CategoryResolver {
 
         const result = await this.loadCategoryUseCase.execute(query);
 
-        // Map result items: id -> _id
-        const items = result.items.map(item => ({
-            ...item,
-            _id: item.id // Map id to _id
-        }));
-
         return {
             count: result.total,
-            category: items,
+            category: result.items,
         };
     }
 
@@ -98,10 +92,10 @@ export class CategoryResolver {
     async loadCategoryById(
         @Args('input') input: LoadCategoryByIdDto
     ) {
-        const result = await this.loadCategoryByIdUseCase.execute({ id: input._id });
+        const result = await this.loadCategoryByIdUseCase.execute({ _id: input._id });
         if (!result) return { category: null };
         return {
-            category: { ...result, _id: result.id }
+            category: result
         };
     }
 
@@ -115,7 +109,7 @@ export class CategoryResolver {
     ) {
         const result = await this.createCategoryUseCase.execute(input);
         return {
-            category: { ...result, _id: result.id }
+            category: result
         };
     }
 
@@ -123,13 +117,12 @@ export class CategoryResolver {
     async updateCategory(
         @Args('input') input: UpdateCategoryDto
     ) {
-        const { _id, ...data } = input;
-        await this.updateCategoryUseCase.execute({ id: _id, ...data });
+        await this.updateCategoryUseCase.execute(input);
 
         // Load fresh data
-        const updatedCategory = await this.loadCategoryByIdUseCase.execute({ id: _id });
+        const updatedCategory = await this.loadCategoryByIdUseCase.execute({ _id: input._id });
         return {
-            category: updatedCategory ? { ...updatedCategory, _id: updatedCategory.id } : null
+            category: updatedCategory
         };
     }
 
@@ -137,9 +130,9 @@ export class CategoryResolver {
     async deleteCategory(
         @Args('input') input: DeleteCategoryDto
     ) {
-        await this.deleteCategoryUseCase.execute({ id: input._id });
+        await this.deleteCategoryUseCase.execute(input);
         return {
-            category: { _id: input._id } as Category
+            category: { _id: input._id }
         };
     }
 
@@ -150,7 +143,7 @@ export class CategoryResolver {
         const result = await this.restoreCategoryUseCase.execute(input._id);
 
         return {
-            category: result ? { ...result, _id: result.id } : null
+            category: result
         };
     }
 }

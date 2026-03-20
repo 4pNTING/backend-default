@@ -31,9 +31,9 @@ export class LoadAllCategoryAction {
 
       // 3. Sort
       if (query.sort) {
-        qb.orderBy('category.id', query.sort > 0 ? 'ASC' : 'DESC');
+        qb.orderBy('category._id', query.sort > 0 ? 'ASC' : 'DESC');
       } else {
-        qb.orderBy('category.id', 'DESC'); // Default Sort
+        qb.orderBy('category._id', 'DESC'); // Default Sort
       }
 
       // Execute Query

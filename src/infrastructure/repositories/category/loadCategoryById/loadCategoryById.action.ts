@@ -8,7 +8,7 @@ export class LoadCategoryByIdAction {
   public async execute(params: LoadCategoryByIdRequest): Promise<LoadCategoryByIdResponse | null> {
     try {
       const entity = await this.session.manager.findOne(CategoryEntity, {
-        where: { id: params.id }
+        where: { _id: params._id }
       });
 
       if (!entity) return null;

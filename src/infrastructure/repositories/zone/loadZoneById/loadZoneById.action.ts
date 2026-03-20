@@ -8,7 +8,7 @@ export class LoadZoneByIdAction {
     public async execute(params: LoadZoneByIdRequest): Promise<LoadZoneByIdResponse | null> {
         try {
             const entity = await this.session.manager.findOne(ZoneEntity, {
-                where: { id: params.id }
+                where: { _id: params._id }
             });
 
             if (!entity) return null;

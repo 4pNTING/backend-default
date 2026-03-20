@@ -5,7 +5,7 @@ import { Role, ActiveStatus } from '../../domain/enums/enum';
 @Entity('users')
 export class UserEntity implements UserModel {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    _id: string;
 
     @Column({ unique: true })
     username: string;
@@ -29,10 +29,10 @@ export class UserEntity implements UserModel {
     @DeleteDateColumn()
     deletedAt: Date;
 
-    @Column({ 
+    @Column({
         type: 'enum',
         enum: ActiveStatus,
-        default: ActiveStatus.active 
+        default: ActiveStatus.active
     })
     isActive: ActiveStatus;
 }

@@ -8,7 +8,7 @@ export class LoadCategoryByIdValidation extends LoadCategoryByIdRequest {
   }
 
   public async execute(params: LoadCategoryByIdRequest): Promise<void> {
-    if (!params.id) {
+    if (!params._id) {
       throw new Error('Category ID is required');
     }
   }

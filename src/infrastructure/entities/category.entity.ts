@@ -5,7 +5,7 @@ import { ActiveStatus } from '../../domain/enums/enum';
 @Entity('categories')
 export class CategoryEntity implements CategoryModel {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  _id: string;
 
   @Column({ unique: true })
   name: string;
@@ -25,10 +25,10 @@ export class CategoryEntity implements CategoryModel {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @Column({ 
-      type: 'enum',
-      enum: ActiveStatus,
-      default: ActiveStatus.active 
+  @Column({
+    type: 'enum',
+    enum: ActiveStatus,
+    default: ActiveStatus.active
   })
   isActive: ActiveStatus;
 

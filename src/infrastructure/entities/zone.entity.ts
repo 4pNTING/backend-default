@@ -5,7 +5,7 @@ import { ActiveStatus } from '../../domain/enums/enum';
 @Entity('zones')
 export class ZoneEntity implements ZoneModel {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    _id: string;
 
     @Column({ unique: true })
     name: string;

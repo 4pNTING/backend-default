@@ -9,7 +9,7 @@ export class UpdateCategoryValidation extends UpdateCategoryRequest {
 
   public async execute(params: UpdateCategoryRequest): Promise<void> {
     try {
-      this.id = params.id;
+      this._id = params._id;
       this.name = params.name;
       this.description = params.description;
       this.photo = params.photo;
@@ -20,20 +20,20 @@ export class UpdateCategoryValidation extends UpdateCategoryRequest {
   }
 
   private async validateParams(): Promise<void> {
-    if (!this.id) {
+    if (!this._id) {
       throw new Error('Category ID is required');
     }
 
-    const exist = await this.categoryRepository.findOne({ where: { id: this.id } });
+    const exist = await this.categoryRepository.findOne({ where: { _id: this._id } });
     if (!exist) {
-      throw new Error(`Category ID ${this.id} not found`);
+      throw new Error(`Category ID ${this._id} not found`);
     }
 
     if (this.name) {
       const duplicate = await this.categoryRepository.findOne({
         where: {
           name: this.name,
-          id: Not(this.id)
+          _id: Not(this._id)
         }
       });
 

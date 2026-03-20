@@ -2,7 +2,7 @@ import { ActiveStatus } from '../enums/enum';
 
 // Base Model
 export class CategoryModel {
-  id: string;
+  _id: string;
   name: string;
   description?: string;
   photo?: string;
@@ -22,7 +22,7 @@ export class CreateCategoryRequest {
 export class CreateCategoryResponse extends CategoryModel { }
 
 export class UpdateCategoryRequest {
-  id: string;
+  _id: string;
   name?: string;
   description?: string;
   photo?: string;
@@ -30,17 +30,15 @@ export class UpdateCategoryRequest {
 }
 
 export class UpdateCategoryResponse {
-  id: string;
-  success: boolean;
+  _id: string;
 }
 
 export class DeleteCategoryRequest {
-  id: string;
+  _id: string;
 }
 
 export class DeleteCategoryResponse {
-  id: string;
-  success: boolean;
+  _id: string;
 }
 
 export class LoadAllCategoryRequest {
@@ -52,7 +50,7 @@ export class LoadAllCategoryResponse {
 }
 
 export class LoadCategoryByIdRequest {
-  id: string;
+  _id: string;
 }
 
 export class LoadCategoryByIdResponse extends CategoryModel { }

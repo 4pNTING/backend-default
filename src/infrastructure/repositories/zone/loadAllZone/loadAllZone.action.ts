@@ -27,9 +27,9 @@ export class LoadAllZoneAction {
             qb.skip((page - 1) * limit).take(limit);
 
             if (query.sort) {
-                qb.orderBy('zone.id', query.sort > 0 ? 'ASC' : 'DESC');
+                qb.orderBy('zone._id', query.sort > 0 ? 'ASC' : 'DESC');
             } else {
-                qb.orderBy('zone.id', 'DESC');
+                qb.orderBy('zone._id', 'DESC');
             }
 
             const [entities, total] = await qb.getManyAndCount();

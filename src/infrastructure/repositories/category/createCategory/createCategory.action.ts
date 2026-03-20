@@ -47,11 +47,18 @@ export class CreateCategoryAction extends CategoryModel {
   private async persistCategory(): Promise<void> {
     try {
       // ใช้ save เพื่อให้ TypeORM คืนค่า ID กลับมาหลังบันทึก
-      const entity = this.session.manager.create(CategoryEntity, this);
+      const entity = this.session.manager.create(CategoryEntity, {
+        name: this.name,
+        description: this.description,
+        photo: this.photo,
+        isActive: this.isActive,
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt
+      });
       const savedEntity = await this.session.manager.save(CategoryEntity, entity);
 
       if (savedEntity) {
-        this.id = savedEntity.id;
+        this._id = (savedEntity as any)._id;
       } else {
         throw new Error('Failed to save category into database');
       }
@@ -68,7 +75,7 @@ export class CreateCategoryAction extends CategoryModel {
   private buildResponse(): CreateCategoryResponse {
     try {
       return {
-        id: this.id,
+        _id: this._id,
         name: this.name,
         description: this.description,
         photo: this.photo,

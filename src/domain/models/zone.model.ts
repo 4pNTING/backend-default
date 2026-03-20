@@ -2,7 +2,7 @@ import { ActiveStatus } from '../enums/enum';
 
 // Base Model
 export class ZoneModel {
-    id: string;
+    _id: string;
     name: string;
     isActive?: ActiveStatus;
     createdAt?: Date;
@@ -23,31 +23,31 @@ export class CreateZoneResponse extends ZoneModel { }
 // UPDATE
 // ==============================
 export class UpdateZoneRequest {
-    id: string;
+    _id: string;
     name?: string;
     isActive?: ActiveStatus;
 }
 
 export class UpdateZoneResponse {
-    id: string;
+    _id: string;
 }
 
 // ==============================
 // DELETE
 // ==============================
 export class DeleteZoneRequest {
-    id: string;
+    _id: string;
 }
 
 export class DeleteZoneResponse {
-    id: string;
+    _id: string;
 }
 
 // ==============================
 // RESTORE
 // ==============================
 export class RestoreZoneRequest {
-    id: string;
+    _id: string;
 }
 
 export class RestoreZoneResponse extends ZoneModel { }
@@ -68,7 +68,7 @@ export class LoadAllZoneResponse {
 // LOAD BY ID
 // ==============================
 export class LoadZoneByIdRequest {
-    id: string;
+    _id: string;
 }
 
 export class LoadZoneByIdResponse extends ZoneModel { }

@@ -71,14 +71,9 @@ export class ZoneResolver {
         }
 
         const result = await this.loadAllZoneUsecase.execute(query);
-        // Map id -> _id
-        const items = result.items.map(item => ({
-            ...item,
-            _id: item.id
-        }));
         return {
             count: result.total,
-            zone: items,
+            zone: result.items,
         };
     }
 
@@ -86,41 +81,39 @@ export class ZoneResolver {
     async loadZoneById(
         @Args('input') input: LoadZoneByIdDto,
     ) {
-        const result = await this.loadZoneByIdUsecase.execute({ id: input._id });
+        const result = await this.loadZoneByIdUsecase.execute({ _id: input._id });
         if (!result) return { zone: null };
-        return { zone: { ...result, _id: result.id } };
+        return { zone: result };
     }
 
     @Mutation(() => CreateZoneResponse)
     async createZone(
         @Args('input') input: CreateZoneDto,
     ) {
+        console.log('--- RESOLVER createZone input ---', JSON.stringify(input));
         const result = await this.createZoneUsecase.execute(input);
-        return { zone: { ...result, _id: result.id } };
+        return { zone: result };
     }
 
     @Mutation(() => UpdateZoneResponse)
     async updateZone(
         @Args('input') input: UpdateZoneDto,
     ) {
+        console.log('--- MEGA UPDATE ZONE DEBUG ---', JSON.stringify(input));
         // execute returns void
-        await this.updateZoneUsecase.execute({
-            id: input._id,
-            name: input.name,
-            isActive: input.isActive
-        });
+        await this.updateZoneUsecase.execute(input);
 
         // Fetch updated
-        const updated = await this.loadZoneByIdUsecase.execute({ id: input._id });
-        return { zone: updated ? { ...updated, _id: updated.id } : null };
+        const updated = await this.loadZoneByIdUsecase.execute({ _id: input._id });
+        return { zone: updated };
     }
 
     @Mutation(() => DeleteZoneResponse)
     async deleteZone(
         @Args('input') input: DeleteZoneDto,
     ) {
-        await this.deleteZoneUsecase.execute({ id: input._id });
-        return { zone: { _id: input._id, name: '' } as Zone }; // Return partial for ID confirmation
+        await this.deleteZoneUsecase.execute({ _id: input._id });
+        return { zone: { _id: input._id } }; // Return partial for ID confirmation
     }
 
     @Mutation(() => RestoreZoneResponse)
@@ -128,7 +121,7 @@ export class ZoneResolver {
         @Args('input') input: RestoreZoneDto,
     ) {
         await this.restoreZoneUsecase.execute(input._id);
-        const restored = await this.loadZoneByIdUsecase.execute({ id: input._id });
-        return { zone: restored ? { ...restored, _id: restored.id } : null };
+        const restored = await this.loadZoneByIdUsecase.execute({ _id: input._id });
+        return { zone: restored };
     }
 }
