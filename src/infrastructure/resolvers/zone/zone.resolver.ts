@@ -70,6 +70,14 @@ export class ZoneResolver {
                 query.isActive = input.isActive;
             }
 
+            // 4. Sort
+            if (input.sortField) {
+                query.sortField = input.sortField;
+            }
+            if (input.sortDirection) {
+                query.sortDirection = input.sortDirection;
+            }
+
         }
 
         const result = await this.loadAllZoneUsecase.execute(query);
@@ -92,7 +100,6 @@ export class ZoneResolver {
     async createZone(
         @Args('input') input: CreateZoneDto,
     ) {
-        console.log('--- RESOLVER createZone input ---', JSON.stringify(input));
         const result = await this.createZoneUsecase.execute(input);
         return { zone: result };
     }
@@ -101,7 +108,6 @@ export class ZoneResolver {
     async updateZone(
         @Args('input') input: UpdateZoneDto,
     ) {
-        console.log('--- MEGA UPDATE ZONE DEBUG ---', JSON.stringify(input));
         // execute returns void
         await this.updateZoneUsecase.execute(input);
 

@@ -154,5 +154,15 @@ export class LoadZoneDto {
     @IsString()
     @IsOptional()
     keyword?: string;
+
+    @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
+    sortField?: string;
+
+    @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
+    sortDirection?: string;
 }
 

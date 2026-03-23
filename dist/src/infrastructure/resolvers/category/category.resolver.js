@@ -50,6 +50,12 @@ let CategoryResolver = class CategoryResolver {
             if (input.isActive) {
                 query.isActive = input.isActive;
             }
+            if (input.sortField) {
+                query.sortField = input.sortField;
+            }
+            if (input.sortDirection) {
+                query.sortDirection = input.sortDirection;
+            }
         }
         const result = await this.loadCategoryUseCase.execute(query);
         return {

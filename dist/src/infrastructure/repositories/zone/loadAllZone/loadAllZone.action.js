@@ -19,7 +19,11 @@ class LoadAllZoneAction {
             const page = query.paginate?.page || 1;
             const limit = query.paginate?.limit || 10;
             qb.skip((page - 1) * limit).take(limit);
-            if (query.sort) {
+            if (query.sortField) {
+                const direction = query.sortDirection === 'ASC' ? 'ASC' : 'DESC';
+                qb.orderBy(`zone.${query.sortField}`, direction);
+            }
+            else if (query.sort) {
                 qb.orderBy('zone._id', query.sort > 0 ? 'ASC' : 'DESC');
             }
             else {

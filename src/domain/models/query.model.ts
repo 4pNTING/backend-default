@@ -20,4 +20,6 @@ export interface QueryProps {
   paginate?: Paginate;
   isActive?: boolean | string;
   select?: string[];
+  sortField?: string;
+  sortDirection?: string;
 }

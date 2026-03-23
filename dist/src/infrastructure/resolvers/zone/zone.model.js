@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadZoneDto = exports.RestoreZoneDto = exports.DeleteZoneDto = exports.LoadZoneByIdDto = exports.UpdateZoneDto = exports.CreateZoneDto = exports.RestoreZoneResponse = exports.DeleteZoneResponse = exports.UpdateZoneResponse = exports.CreateZoneResponse = exports.LoadZoneByIdResponse = exports.LoadZoneResponse = exports.Zone = exports.ActiveStatus = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const class_validator_1 = require("class-validator");
 const common_model_1 = require("../../common/graphql/common.model");
 Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return common_model_1.ActiveStatus; } });
 let Zone = class Zone {
@@ -108,10 +109,13 @@ let CreateZoneDto = class CreateZoneDto {
 exports.CreateZoneDto = CreateZoneDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateZoneDto.prototype, "name", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateZoneDto.prototype, "isActive", void 0);
 exports.CreateZoneDto = CreateZoneDto = __decorate([
@@ -122,18 +126,25 @@ let UpdateZoneDto = class UpdateZoneDto {
 exports.UpdateZoneDto = UpdateZoneDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdateZoneDto.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateZoneDto.prototype, "name", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateZoneDto.prototype, "description", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateZoneDto.prototype, "isActive", void 0);
 exports.UpdateZoneDto = UpdateZoneDto = __decorate([
@@ -144,6 +155,8 @@ let LoadZoneByIdDto = class LoadZoneByIdDto {
 exports.LoadZoneByIdDto = LoadZoneByIdDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoadZoneByIdDto.prototype, "_id", void 0);
 exports.LoadZoneByIdDto = LoadZoneByIdDto = __decorate([
@@ -154,6 +167,8 @@ let DeleteZoneDto = class DeleteZoneDto {
 exports.DeleteZoneDto = DeleteZoneDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], DeleteZoneDto.prototype, "_id", void 0);
 exports.DeleteZoneDto = DeleteZoneDto = __decorate([
@@ -164,6 +179,8 @@ let RestoreZoneDto = class RestoreZoneDto {
 exports.RestoreZoneDto = RestoreZoneDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], RestoreZoneDto.prototype, "_id", void 0);
 exports.RestoreZoneDto = RestoreZoneDto = __decorate([
@@ -174,20 +191,37 @@ let LoadZoneDto = class LoadZoneDto {
 exports.LoadZoneDto = LoadZoneDto;
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], LoadZoneDto.prototype, "page", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], LoadZoneDto.prototype, "limit", void 0);
 __decorate([
     (0, graphql_1.Field)(() => common_model_1.ActiveStatus),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadZoneDto.prototype, "isActive", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadZoneDto.prototype, "keyword", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], LoadZoneDto.prototype, "sortField", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], LoadZoneDto.prototype, "sortDirection", void 0);
 exports.LoadZoneDto = LoadZoneDto = __decorate([
     (0, graphql_1.InputType)()
 ], LoadZoneDto);

@@ -50,4 +50,6 @@ export declare class LoadZoneDto {
     limit?: number;
     isActive: ActiveStatus;
     keyword?: string;
+    sortField?: string;
+    sortDirection?: string;
 }

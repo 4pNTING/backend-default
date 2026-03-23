@@ -96,6 +96,8 @@ input LoadCategoryDto {
   limit: Int
   isActive: String
   keyword: String
+  sortField: String
+  sortDirection: String
 }
 
 input LoadCategoryByIdDto {
@@ -107,6 +109,8 @@ input LoadZoneDto {
   limit: Int
   isActive: ActiveStatus!
   keyword: String
+  sortField: String
+  sortDirection: String
 }
 
 """Filter for active, inactive, or all items"""

@@ -31,7 +31,10 @@ export class LoadAllCategoryAction {
       qb.skip((page - 1) * limit).take(limit);
 
       // 3. Sort
-      if (query.sort) {
+      if (query.sortField) {
+        const direction = query.sortDirection === 'ASC' ? 'ASC' : 'DESC';
+        qb.orderBy(`category.${query.sortField}`, direction);
+      } else if (query.sort) {
         qb.orderBy('category._id', query.sort > 0 ? 'ASC' : 'DESC');
       } else {
         qb.orderBy('category._id', 'DESC'); // Default Sort

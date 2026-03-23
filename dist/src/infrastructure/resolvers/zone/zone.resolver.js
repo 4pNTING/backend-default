@@ -47,14 +47,13 @@ let ZoneResolver = class ZoneResolver {
                 };
             }
             if (input.isActive) {
-                let isActiveValue;
-                if (input.isActive === zone_model_1.ActiveStatus.active)
-                    isActiveValue = true;
-                if (input.isActive === zone_model_1.ActiveStatus.inactive)
-                    isActiveValue = false;
-                if (isActiveValue !== undefined) {
-                    query.isActive = isActiveValue;
-                }
+                query.isActive = input.isActive;
+            }
+            if (input.sortField) {
+                query.sortField = input.sortField;
+            }
+            if (input.sortDirection) {
+                query.sortDirection = input.sortDirection;
             }
         }
         const result = await this.loadAllZoneUsecase.execute(query);
@@ -70,12 +69,10 @@ let ZoneResolver = class ZoneResolver {
         return { zone: result };
     }
     async createZone(input) {
-        console.log('--- RESOLVER createZone input ---', JSON.stringify(input));
         const result = await this.createZoneUsecase.execute(input);
         return { zone: result };
     }
     async updateZone(input) {
-        console.log('--- MEGA UPDATE ZONE DEBUG ---', JSON.stringify(input));
         await this.updateZoneUsecase.execute(input);
         const updated = await this.loadZoneByIdUsecase.execute({ _id: input._id });
         return { zone: updated };

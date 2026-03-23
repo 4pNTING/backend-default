@@ -55,4 +55,6 @@ export declare class LoadCategoryDto {
     limit?: number;
     isActive?: ActiveStatus;
     keyword?: string;
+    sortField?: string;
+    sortDirection?: string;
 }

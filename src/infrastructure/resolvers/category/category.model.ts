@@ -136,5 +136,11 @@ export class LoadCategoryDto {
 
     @Field({ nullable: true })
     keyword?: string;
+
+    @Field({ nullable: true })
+    sortField?: string;
+
+    @Field({ nullable: true })
+    sortDirection?: string;
 }
 

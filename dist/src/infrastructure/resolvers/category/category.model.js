@@ -208,8 +208,15 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "keyword", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], LoadCategoryDto.prototype, "sortField", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], LoadCategoryDto.prototype, "sortDirection", void 0);
 exports.LoadCategoryDto = LoadCategoryDto = __decorate([
-    (0, graphql_1.InputType)(),
     (0, graphql_1.InputType)()
 ], LoadCategoryDto);
 //# sourceMappingURL=category.model.js.map
