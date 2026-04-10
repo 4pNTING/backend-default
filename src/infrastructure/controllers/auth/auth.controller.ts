@@ -1,10 +1,10 @@
-import { Controller, Inject } from '@nestjs/common';
+﻿import { Controller, Inject, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { AuthUsecasesProxyModule } from '../../usecases-proxy/auth-usecases-proxy.module';
 import { LoginUseCase } from '../../../usecases/auth/login.usecase';
 import { LoginRequest, LoginResponse } from '../../../domain/models/user.model';
 
-@Controller()
+@Controller('api/auth')
 export class AuthController {
     constructor(
         @Inject(AuthUsecasesProxyModule.LOGIN_PROXY)
@@ -30,6 +30,28 @@ export class AuthController {
                 success: false,
                 message: error.message || 'Internal Server Error',
             };
+        }
+    }
+
+    @Post('login')
+    async loginRest(@Body() data: LoginRequest): Promise<any> {
+        try {
+            const result = await this.loginUseCase.execute(data);
+            return {
+                token: result.token,
+                user: {
+                  _id: result._id,
+                  username: result.username,
+                  role: result.role,
+                  isActive: result.isActive,
+                }
+            };
+        } catch (error) {
+            console.error('REST Login Error:', error);
+            throw new HttpException({
+                success: false,
+                message: error.message || 'Internal Server Error',
+            }, HttpStatus.UNAUTHORIZED);
         }
     }
 }

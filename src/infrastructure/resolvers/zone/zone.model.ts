@@ -34,9 +34,6 @@ export class Zone {
 
 @ObjectType()
 export class LoadZoneResponse {
-    @Field(() => Int)
-    count: number;
-
     @Field(() => [Zone])
     zone: Zone[];
 }

@@ -11,7 +11,7 @@ import { CategoryUsecasesProxyModule } from './infrastructure/usecases-proxy/cat
 import { ZoneUsecasesProxyModule } from './infrastructure/usecases-proxy/zone-usecases-proxy.module';
 import { AuthUsecasesProxyModule } from './infrastructure/usecases-proxy/auth-usecases-proxy.module';
 
-// import { CategoryController } from './infrastructure/controllers/category/category.controller';
+import { CategoryController } from './infrastructure/controllers/category/category.controller';
 import { ZoneController } from './infrastructure/controllers/zone/zone.controller';
 import { AuthController } from './infrastructure/controllers/auth/auth.controller';
 
@@ -35,6 +35,11 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
             sortSchema: false,
             playground: true,
             path: '/api-gateway',
+            formatError: (error) => {
+                return {
+                    message: error.message,
+                };
+            },
         }),
 
         // 2. Database Connection (Postgres)
@@ -67,7 +72,7 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
     ],
     controllers: [
         // 4. Register Controllers
-        // CategoryController,
+        CategoryController,
         ZoneController,
         AuthController,
     ],

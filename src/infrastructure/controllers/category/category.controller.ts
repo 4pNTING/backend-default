@@ -25,6 +25,7 @@ import { UpdateCategoryUseCase } from '@usecases/category/updateCategory.usecase
 import { DeleteCategoryUseCase } from '@usecases/category/deleteCategory.usecase';
 import { LoadCategoryUseCase } from '@usecases/category/loadCategory.usecase';
 import { LoadByIDCategoryUseCase } from '@usecases/category/loadByIDCategory.usecase';
+import { RestoreCategoryUseCase } from '@usecases/category/restoreCategory.usecase';
 
 @Controller('categories')
 export class CategoryController {
@@ -43,6 +44,9 @@ export class CategoryController {
 
     @Inject(CategoryUsecasesProxyModule.LOAD_BY_ID_CATEGORY_PROXY)
     private readonly loadCategoryByIdUseCase: LoadByIDCategoryUseCase,
+
+    @Inject(CategoryUsecasesProxyModule.RESTORE_CATEGORY_PROXY)
+    private readonly restoreCategoryUseCase: RestoreCategoryUseCase,
   ) { }
 
 
@@ -80,5 +84,11 @@ export class CategoryController {
   async delete(@Param('id') id: string) {
     const request: DeleteCategoryRequest = { _id: id };
     return await this.deleteCategoryUseCase.execute(request);
+  }
+
+  @Post(':id/restore')
+  @HttpCode(HttpStatus.OK)
+  async restore(@Param('id') id: string) {
+    return await this.restoreCategoryUseCase.execute(id);
   }
 }

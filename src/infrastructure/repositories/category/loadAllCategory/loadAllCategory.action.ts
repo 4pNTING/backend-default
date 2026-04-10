@@ -41,9 +41,9 @@ export class LoadAllCategoryAction {
       }
 
       // Execute Query
-      const [entities, total] = await qb.getManyAndCount();
+      const entities = await qb.getMany();
 
-      return { items: entities, total };
+      return { items: entities };
 
     } catch (error) {
       console.error('ERROR LoadAllCategoryAction', error?.message);

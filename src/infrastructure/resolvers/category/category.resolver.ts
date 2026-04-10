@@ -91,7 +91,6 @@ export class CategoryResolver {
         const result = await this.loadCategoryUseCase.execute(query);
 
         return {
-            count: result.total,
             category: result.items,
         };
     }

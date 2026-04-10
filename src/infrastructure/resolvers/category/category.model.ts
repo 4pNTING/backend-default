@@ -33,9 +33,6 @@ export class Category {
 
 @ObjectType()
 export class LoadCategoryResponse {
-    @Field(() => Int)
-    count: number;
-
     @Field(() => [Category])
     category: Category[];
 }

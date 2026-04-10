@@ -36,9 +36,9 @@ export class LoadAllZoneAction {
                 qb.orderBy('zone._id', 'DESC');
             }
 
-            const [entities, total] = await qb.getManyAndCount();
+            const entities = await qb.getMany();
 
-            return { items: entities, total };
+            return { items: entities };
 
         } catch (error) {
             throw error instanceof Error ? error : new Error(error?.message);

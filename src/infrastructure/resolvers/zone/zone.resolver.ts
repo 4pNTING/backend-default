@@ -82,7 +82,6 @@ export class ZoneResolver {
 
         const result = await this.loadAllZoneUsecase.execute(query);
         return {
-            count: result.total,
             zone: result.items,
         };
     }
