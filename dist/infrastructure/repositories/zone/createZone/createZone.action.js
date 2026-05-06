@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateZoneAction = void 0;
-const zone_entity_1 = require("@infrastructure/entities/zone.entity");
-const zone_model_1 = require("@domain/models/zone.model");
+const zone_entity_1 = require("../../../../src/infrastructure/entities/zone.entity");
+const zone_model_1 = require("../../../../src/domain/models/zone.model");
 class CreateZoneAction extends zone_model_1.ZoneModel {
     constructor(session) {
         super();

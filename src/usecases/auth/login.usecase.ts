@@ -19,21 +19,14 @@ export class LoginUseCase {
         const user = await this.userRepository.findByUsername(request.username);
 
         if (!user || !user.password) {
-            console.log("❌ [Backend] User not found or no password for:", request.username);
             throw new UnauthorizedException('Invalid username or password');
         }
-
-        console.log("👤 [Backend] User found:", user.username);
-        console.log("🔐 [Backend] DB Password Hash:", user.password);
 
         const isPasswordValid = await bcrypt.compare(request.password, user.password);
 
         if (!isPasswordValid) {
-            console.log("🚫 [Backend] Password mismatch for:", request.username);
             throw new UnauthorizedException('Invalid username or password');
         }
-        
-        console.log("✅ [Backend] Login successful for:", request.username);
 
         const payload = {
             id: user._id,
@@ -42,7 +35,7 @@ export class LoginUseCase {
         };
 
         const accessToken = jwt.sign(payload, this.jwtSecret, { expiresIn: this.jwtExpiration as jwt.SignOptions['expiresIn'] });
-        
+
         // Generate Refresh Token
         const refreshToken = jwt.sign(payload, this.jwtSecret, { expiresIn: '7d' });
 

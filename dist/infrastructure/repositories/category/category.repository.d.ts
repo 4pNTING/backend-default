@@ -1,8 +1,8 @@
 import { DataSource, Repository } from 'typeorm';
-import { CategoryEntity } from '@infrastructure/entities/category.entity';
-import { ICategoryRepository } from '@domain/repositories/category.repository.interface';
-import { CreateCategoryRequest, CreateCategoryResponse, UpdateCategoryRequest, DeleteCategoryRequest, LoadAllCategoryResponse, LoadCategoryByIdRequest, LoadCategoryByIdResponse } from '@domain/models/category.model';
-import { QueryProps } from '@domain/models/query.model';
+import { CategoryEntity } from '../../../src/infrastructure/entities/category.entity';
+import { ICategoryRepository } from '../../../src/domain/repositories/category.repository.interface';
+import { CreateCategoryRequest, CreateCategoryResponse, UpdateCategoryRequest, DeleteCategoryRequest, LoadAllCategoryResponse, LoadCategoryByIdRequest, LoadCategoryByIdResponse } from '../../../src/domain/models/category.model';
+import { QueryProps } from '../../../src/domain/models/query.model';
 export declare class DatabaseCategoryRepository implements ICategoryRepository {
     private readonly categoryEntity;
     private readonly dataSource;

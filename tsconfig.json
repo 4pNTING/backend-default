@@ -9,7 +9,7 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -21,10 +21,10 @@
     
     // ✅ เพิ่มตรงนี้ครับ
     "paths": {
-      "@domain/*": ["src/domain/*"],
-      "@usecases/*": ["src/usecases/*"],
-      "@infrastructure/*": ["src/infrastructure/*"],
-      "@shared/*": ["src/shared/*"]
+      "@domain/*": ["domain/*"],
+      "@usecases/*": ["usecases/*"],
+      "@infrastructure/*": ["infrastructure/*"],
+      "@shared/*": ["shared/*"]
     }
   }
 }

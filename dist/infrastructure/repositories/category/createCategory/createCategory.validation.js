@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCategoryValidation = void 0;
-const category_model_1 = require("@domain/models/category.model");
+const category_model_1 = require("../../../../src/domain/models/category.model");
 class CreateCategoryValidation extends category_model_1.CreateCategoryRequest {
     constructor(categoryRepository) {
         super();

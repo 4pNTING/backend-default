@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
-import { CategoryEntity } from '@infrastructure/entities/category.entity';
-import { QueryProps } from '@domain/models/query.model';
+import { CategoryEntity } from '../../../../src/infrastructure/entities/category.entity';
+import { QueryProps } from '../../../../src/domain/models/query.model';
 export declare class LoadAllCategoryValidation {
     private readonly categoryRepository;
     constructor(categoryRepository: Repository<CategoryEntity>);

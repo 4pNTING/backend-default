@@ -13,6 +13,8 @@ services:
       POSTGRES_DB: postgres # ชื่อ Database
     volumes:
       - postgres_data_v2:/var/lib/postgresql/data
+    networks:
+      - share-container-network
     restart: always
 
   # 2. Redis (เผื่อใช้ Caching หรือ Session ในอนาคต)
@@ -21,6 +23,8 @@ services:
     container_name: pos_redis
     ports:
       - "6379:6379"
+    networks:
+      - share-container-network
     restart: always
 
   # 3. PgAdmin (หน้าเว็บสำหรับจัดการ Database - Optional)
@@ -34,6 +38,34 @@ services:
       - "5050:80"
     depends_on:
       - postgres
+    networks:
+      - share-container-network
+
+  # 4. Backend Service (NestJS)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pos_backend
+    ports:
+      - "3000:3000"
+      - "9897:9897"
+    environment:
+      - DB_HOST=192.168.100.247
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=123456789
+      - DB_NAME=postgres
+      - PORT=3000
+      - JWT_SECRET=super-secret-key-12345
+      - JWT_EXPIRATION=24h
+    networks:
+      - share-container-network
+    restart: always
 
 volumes:
   postgres_data_v2:
+
+networks:
+  share-container-network:
+    external: true

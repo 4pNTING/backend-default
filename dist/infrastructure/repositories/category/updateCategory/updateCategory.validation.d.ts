@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
-import { CategoryEntity } from '@infrastructure/entities/category.entity';
-import { UpdateCategoryRequest } from '@domain/models/category.model';
+import { CategoryEntity } from '../../../../src/infrastructure/entities/category.entity';
+import { UpdateCategoryRequest } from '../../../../src/domain/models/category.model';
 export declare class UpdateCategoryValidation extends UpdateCategoryRequest {
     private readonly categoryRepository;
     constructor(categoryRepository: Repository<CategoryEntity>);

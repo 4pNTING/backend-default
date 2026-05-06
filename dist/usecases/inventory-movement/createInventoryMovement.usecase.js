@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateInventoryMovementUseCase = void 0;
-const enum_1 = require("@domain/enums/enum");
+const enum_1 = require("../../src/domain/enums/enum");
 class CreateInventoryMovementUseCase {
     constructor(inventoryMovementRepository, inventoryLevelRepository) {
         this.inventoryMovementRepository = inventoryMovementRepository;
