@@ -50,41 +50,41 @@ let CategoryResolver = class CategoryResolver {
             if (input.isActive) {
                 query.isActive = input.isActive;
             }
+            if (input.sortField) {
+                query.sortField = input.sortField;
+            }
+            if (input.sortDirection) {
+                query.sortDirection = input.sortDirection;
+            }
         }
         const result = await this.loadCategoryUseCase.execute(query);
-        const items = result.items.map(item => ({
-            ...item,
-            _id: item.id
-        }));
         return {
-            count: result.total,
-            category: items,
+            category: result.items,
         };
     }
     async loadCategoryById(input) {
-        const result = await this.loadCategoryByIdUseCase.execute({ id: input._id });
+        const result = await this.loadCategoryByIdUseCase.execute({ _id: input._id });
         if (!result)
             return { category: null };
         return {
-            category: { ...result, _id: result.id }
+            category: result
         };
     }
     async createCategory(input) {
         const result = await this.createCategoryUseCase.execute(input);
         return {
-            category: { ...result, _id: result.id }
+            category: result
         };
     }
     async updateCategory(input) {
-        const { _id, ...data } = input;
-        await this.updateCategoryUseCase.execute({ id: _id, ...data });
-        const updatedCategory = await this.loadCategoryByIdUseCase.execute({ id: _id });
+        await this.updateCategoryUseCase.execute(input);
+        const updatedCategory = await this.loadCategoryByIdUseCase.execute({ _id: input._id });
         return {
-            category: updatedCategory ? { ...updatedCategory, _id: updatedCategory.id } : null
+            category: updatedCategory
         };
     }
     async deleteCategory(input) {
-        await this.deleteCategoryUseCase.execute({ id: input._id });
+        await this.deleteCategoryUseCase.execute(input);
         return {
             category: { _id: input._id }
         };
@@ -92,7 +92,7 @@ let CategoryResolver = class CategoryResolver {
     async restoreCategory(input) {
         const result = await this.restoreCategoryUseCase.execute(input._id);
         return {
-            category: result ? { ...result, _id: result.id } : null
+            category: result
         };
     }
 };

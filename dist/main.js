@@ -5,6 +5,7 @@ const app_module_1 = require("./app.module");
 const common_1 = require("@nestjs/common");
 const microservices_1 = require("@nestjs/microservices");
 const path_1 = require("path");
+const all_exceptions_filter_1 = require("./infrastructure/common/filter/all-exceptions.filter");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.connectMicroservice({
@@ -12,13 +13,14 @@ async function bootstrap() {
         options: {
             package: ['category', 'zone', 'auth'],
             protoPath: [
-                (0, path_1.join)(__dirname, '../src/proto/category.proto'),
-                (0, path_1.join)(__dirname, '../src/proto/zone.proto'),
-                (0, path_1.join)(__dirname, '../src/proto/auth.proto'),
+                (0, path_1.join)(__dirname, './proto/category.proto'),
+                (0, path_1.join)(__dirname, './proto/zone.proto'),
+                (0, path_1.join)(__dirname, './proto/auth.proto'),
             ],
             url: 'localhost:9897',
         },
     });
+    app.useGlobalFilters(new all_exceptions_filter_1.AllExceptionsFilter());
     app.useGlobalPipes(new common_1.ValidationPipe({
         transform: true,
         whitelist: true,

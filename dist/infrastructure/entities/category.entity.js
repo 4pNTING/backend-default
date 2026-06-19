@@ -18,7 +18,7 @@ exports.CategoryEntity = CategoryEntity;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
-], CategoryEntity.prototype, "id", void 0);
+], CategoryEntity.prototype, "_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)

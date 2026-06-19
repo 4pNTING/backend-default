@@ -23,10 +23,13 @@ const deleteZone_action_1 = require("./deleteZone/deleteZone.action");
 const restoreZone_action_1 = require("./restoreZone/restoreZone.action");
 const loadAllZone_action_1 = require("./loadAllZone/loadAllZone.action");
 const loadZoneById_action_1 = require("./loadZoneById/loadZoneById.action");
+const redis_service_1 = require("../../cache/redis.service");
+const cache_keys_constants_1 = require("../../cache/cache-keys.constants");
 let DatabaseZoneRepository = class DatabaseZoneRepository {
-    constructor(zoneEntityRepository, dataSource) {
+    constructor(zoneEntityRepository, dataSource, redisService) {
         this.zoneEntityRepository = zoneEntityRepository;
         this.dataSource = dataSource;
+        this.redisService = redisService;
     }
     async create(params) {
         const session = this.dataSource.createQueryRunner();
@@ -35,6 +38,7 @@ let DatabaseZoneRepository = class DatabaseZoneRepository {
         try {
             const result = await new createZone_action_1.CreateZoneAction(session).execute(params);
             await session.commitTransaction();
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ZONE_LIST);
             return result;
         }
         catch (error) {
@@ -52,6 +56,10 @@ let DatabaseZoneRepository = class DatabaseZoneRepository {
         try {
             await new updateZone_action_1.UpdateZoneAction(session).execute(params);
             await session.commitTransaction();
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ZONE_LIST);
+            if (params._id) {
+                await this.redisService.del(cache_keys_constants_1.CacheKeys.ZONE_BY_ID(params._id));
+            }
         }
         catch (error) {
             await session.rollbackTransaction();
@@ -66,8 +74,10 @@ let DatabaseZoneRepository = class DatabaseZoneRepository {
         await session.connect();
         await session.startTransaction();
         try {
-            await new deleteZone_action_1.DeleteZoneAction(session).execute(params.id);
+            await new deleteZone_action_1.DeleteZoneAction(session).execute(params._id);
             await session.commitTransaction();
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ZONE_LIST);
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ZONE_BY_ID(params._id));
         }
         catch (error) {
             await session.rollbackTransaction();
@@ -77,13 +87,15 @@ let DatabaseZoneRepository = class DatabaseZoneRepository {
             await session.release();
         }
     }
-    async restore(id) {
+    async restore(_id) {
         const session = this.dataSource.createQueryRunner();
         await session.connect();
         await session.startTransaction();
         try {
-            await new restoreZone_action_1.RestoreZoneAction(session).execute(id);
+            await new restoreZone_action_1.RestoreZoneAction(session).execute(_id);
             await session.commitTransaction();
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ZONE_LIST);
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ZONE_BY_ID(_id));
         }
         catch (error) {
             await session.rollbackTransaction();
@@ -94,20 +106,32 @@ let DatabaseZoneRepository = class DatabaseZoneRepository {
         }
     }
     async findAll(query) {
+        const cached = await this.redisService.get(cache_keys_constants_1.CacheKeys.ZONE_LIST);
+        if (cached)
+            return cached;
         const session = this.dataSource.createQueryRunner();
         await session.connect();
         try {
-            return await new loadAllZone_action_1.LoadAllZoneAction(session).execute(query);
+            const result = await new loadAllZone_action_1.LoadAllZoneAction(session).execute(query);
+            await this.redisService.set(cache_keys_constants_1.CacheKeys.ZONE_LIST, result);
+            return result;
         }
         finally {
             await session.release();
         }
     }
     async findById(params) {
+        const cached = await this.redisService.get(cache_keys_constants_1.CacheKeys.ZONE_BY_ID(params._id));
+        if (cached)
+            return cached;
         const session = this.dataSource.createQueryRunner();
         await session.connect();
         try {
-            return await new loadZoneById_action_1.LoadZoneByIdAction(session).execute(params);
+            const result = await new loadZoneById_action_1.LoadZoneByIdAction(session).execute(params);
+            if (result) {
+                await this.redisService.set(cache_keys_constants_1.CacheKeys.ZONE_BY_ID(params._id), result);
+            }
+            return result;
         }
         finally {
             await session.release();
@@ -125,6 +149,7 @@ exports.DatabaseZoneRepository = DatabaseZoneRepository = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(zone_entity_1.ZoneEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.DataSource])
+        typeorm_2.DataSource,
+        redis_service_1.RedisService])
 ], DatabaseZoneRepository);
 //# sourceMappingURL=zone.repository.js.map

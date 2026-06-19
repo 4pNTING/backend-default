@@ -43,6 +43,27 @@ let AuthController = class AuthController {
             };
         }
     }
+    async loginRest(data) {
+        try {
+            const result = await this.loginUseCase.execute(data);
+            return {
+                token: result.token,
+                user: {
+                    _id: result._id,
+                    username: result.username,
+                    role: result.role,
+                    isActive: result.isActive,
+                }
+            };
+        }
+        catch (error) {
+            console.error('REST Login Error:', error);
+            throw new common_1.HttpException({
+                success: false,
+                message: error.message || 'Internal Server Error',
+            }, common_1.HttpStatus.UNAUTHORIZED);
+        }
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -51,8 +72,15 @@ __decorate([
     __metadata("design:paramtypes", [user_model_1.LoginRequest]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('login'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_model_1.LoginRequest]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "loginRest", null);
 exports.AuthController = AuthController = __decorate([
-    (0, common_1.Controller)(),
+    (0, common_1.Controller)('api/auth'),
     __param(0, (0, common_1.Inject)(auth_usecases_proxy_module_1.AuthUsecasesProxyModule.LOGIN_PROXY)),
     __metadata("design:paramtypes", [login_usecase_1.LoginUseCase])
 ], AuthController);

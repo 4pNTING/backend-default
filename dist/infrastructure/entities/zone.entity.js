@@ -18,7 +18,7 @@ exports.ZoneEntity = ZoneEntity;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
-], ZoneEntity.prototype, "id", void 0);
+], ZoneEntity.prototype, "_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)

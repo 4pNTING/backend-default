@@ -1,19 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestoreZoneAction = void 0;
-const zone_entity_1 = require("../../../../src/infrastructure/entities/zone.entity");
-const enum_1 = require("../../../../src/domain/enums/enum");
+const zone_entity_1 = require("@infrastructure/entities/zone.entity");
+const enum_1 = require("@domain/enums/enum");
 class RestoreZoneAction {
     constructor(session) {
         this.session = session;
     }
-    async execute(id) {
+    async execute(_id) {
         try {
-            await this.session.manager.restore(zone_entity_1.ZoneEntity, id);
-            await this.session.manager.update(zone_entity_1.ZoneEntity, id, { isActive: enum_1.ActiveStatus.active });
+            await this.session.manager.restore(zone_entity_1.ZoneEntity, _id);
+            await this.session.manager.update(zone_entity_1.ZoneEntity, _id, { isActive: enum_1.ActiveStatus.active });
         }
         catch (error) {
-            console.error('ERROR RestoreZoneAction', error?.message);
             throw error instanceof Error ? error : new Error(error?.message);
         }
     }

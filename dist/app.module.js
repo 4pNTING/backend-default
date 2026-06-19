@@ -17,15 +17,21 @@ const repositories_module_1 = require("./infrastructure/repositories/repositorie
 const category_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/category-usecases-proxy.module");
 const zone_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/zone-usecases-proxy.module");
 const auth_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/auth-usecases-proxy.module");
+const category_controller_1 = require("./infrastructure/controllers/category/category.controller");
 const zone_controller_1 = require("./infrastructure/controllers/zone/zone.controller");
 const auth_controller_1 = require("./infrastructure/controllers/auth/auth.controller");
+const currency_controller_1 = require("./infrastructure/controllers/currency/currency.controller");
 const category_entity_1 = require("./infrastructure/entities/category.entity");
 const zone_entity_1 = require("./infrastructure/entities/zone.entity");
 const user_entity_1 = require("./infrastructure/entities/user.entity");
+const currency_entity_1 = require("./infrastructure/entities/currency.entity");
 const category_resolver_1 = require("./infrastructure/resolvers/category/category.resolver");
 const zone_resolver_1 = require("./infrastructure/resolvers/zone/zone.resolver");
 const auth_resolver_1 = require("./infrastructure/resolvers/auth/auth.resolver");
+const currency_resolver_1 = require("./infrastructure/resolvers/currency/currency.resolver");
+const currency_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/currency-usecases-proxy.module");
 const jwt_strategy_1 = require("./infrastructure/common/jwt.strategy");
+const redis_module_1 = require("./infrastructure/cache/redis.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -33,12 +39,18 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({ isGlobal: true }),
+            redis_module_1.RedisModule,
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/schema.gql'),
                 sortSchema: false,
                 playground: true,
                 path: '/api-gateway',
+                formatError: (error) => {
+                    return {
+                        message: error.message,
+                    };
+                },
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
@@ -53,7 +65,8 @@ exports.AppModule = AppModule = __decorate([
                     entities: [
                         category_entity_1.CategoryEntity,
                         zone_entity_1.ZoneEntity,
-                        user_entity_1.UserEntity
+                        user_entity_1.UserEntity,
+                        currency_entity_1.CurrencyEntity
                     ],
                     synchronize: true,
                     autoLoadEntities: true,
@@ -64,15 +77,19 @@ exports.AppModule = AppModule = __decorate([
             category_usecases_proxy_module_1.CategoryUsecasesProxyModule.register(),
             zone_usecases_proxy_module_1.ZoneUsecasesProxyModule.register(),
             auth_usecases_proxy_module_1.AuthUsecasesProxyModule.register(),
+            currency_usecases_proxy_module_1.CurrencyUsecasesProxyModule.register(),
         ],
         controllers: [
+            category_controller_1.CategoryController,
             zone_controller_1.ZoneController,
             auth_controller_1.AuthController,
+            currency_controller_1.CurrencyController,
         ],
         providers: [
             category_resolver_1.CategoryResolver,
             zone_resolver_1.ZoneResolver,
             auth_resolver_1.AuthResolver,
+            currency_resolver_1.CurrencyResolver,
             jwt_strategy_1.JwtStrategy
         ],
     })

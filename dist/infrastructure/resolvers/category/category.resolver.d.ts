@@ -1,4 +1,4 @@
-import { Category, CreateCategoryDto, UpdateCategoryDto, LoadCategoryDto, LoadCategoryByIdDto, DeleteCategoryDto, RestoreCategoryDto, ActiveStatus } from './category.model';
+import { CreateCategoryDto, UpdateCategoryDto, LoadCategoryDto, LoadCategoryByIdDto, DeleteCategoryDto, RestoreCategoryDto } from './category.model';
 import { CreateCategoryUseCase } from '../../../usecases/category/createCategory.usecase';
 import { UpdateCategoryUseCase } from '../../../usecases/category/updateCategory.usecase';
 import { DeleteCategoryUseCase } from '../../../usecases/category/deleteCategory.usecase';
@@ -14,67 +14,23 @@ export declare class CategoryResolver {
     private readonly restoreCategoryUseCase;
     constructor(createCategoryUseCase: CreateCategoryUseCase, updateCategoryUseCase: UpdateCategoryUseCase, deleteCategoryUseCase: DeleteCategoryUseCase, loadCategoryUseCase: LoadCategoryUseCase, loadCategoryByIdUseCase: LoadByIDCategoryUseCase, restoreCategoryUseCase: RestoreCategoryUseCase);
     loadCategory(input: LoadCategoryDto): Promise<{
-        count: number;
-        category: {
-            _id: string;
-            id: string;
-            name: string;
-            description?: string;
-            photo?: string;
-            createdAt?: Date;
-            updatedAt?: Date;
-            isActive?: ActiveStatus;
-        }[];
+        category: import("../../../domain/models/category.model").CategoryModel[];
     }>;
     loadCategoryById(input: LoadCategoryByIdDto): Promise<{
-        category: {
-            _id: string;
-            id: string;
-            name: string;
-            description?: string;
-            photo?: string;
-            createdAt?: Date;
-            updatedAt?: Date;
-            isActive?: ActiveStatus;
-        };
+        category: import("../../../domain/models/category.model").LoadCategoryByIdResponse;
     }>;
     createCategory(input: CreateCategoryDto): Promise<{
-        category: {
-            _id: string;
-            id: string;
-            name: string;
-            description?: string;
-            photo?: string;
-            createdAt?: Date;
-            updatedAt?: Date;
-            isActive?: ActiveStatus;
-        };
+        category: import("../../../domain/models/category.model").CreateCategoryResponse;
     }>;
     updateCategory(input: UpdateCategoryDto): Promise<{
-        category: {
-            _id: string;
-            id: string;
-            name: string;
-            description?: string;
-            photo?: string;
-            createdAt?: Date;
-            updatedAt?: Date;
-            isActive?: ActiveStatus;
-        };
+        category: import("../../../domain/models/category.model").LoadCategoryByIdResponse;
     }>;
     deleteCategory(input: DeleteCategoryDto): Promise<{
-        category: Category;
-    }>;
-    restoreCategory(input: RestoreCategoryDto): Promise<{
         category: {
             _id: string;
-            id: string;
-            name: string;
-            description?: string;
-            photo?: string;
-            createdAt?: Date;
-            updatedAt?: Date;
-            isActive?: ActiveStatus;
         };
+    }>;
+    restoreCategory(input: RestoreCategoryDto): Promise<{
+        category: import("../../../domain/models/category.model").CategoryModel;
     }>;
 }

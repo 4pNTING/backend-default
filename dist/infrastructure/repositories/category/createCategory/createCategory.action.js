@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCategoryAction = void 0;
-const category_entity_1 = require("../../../../src/infrastructure/entities/category.entity");
-const category_model_1 = require("../../../../src/domain/models/category.model");
+const category_entity_1 = require("@infrastructure/entities/category.entity");
+const category_model_1 = require("@domain/models/category.model");
+const enum_1 = require("@domain/enums/enum");
 class CreateCategoryAction extends category_model_1.CategoryModel {
     constructor(session) {
         super();
@@ -24,7 +25,7 @@ class CreateCategoryAction extends category_model_1.CategoryModel {
             this.name = params.name;
             this.description = params.description;
             this.photo = params.photo;
-            this.isActive = params.isActive ?? true;
+            this.isActive = params.isActive ?? enum_1.ActiveStatus.active;
             this.createdAt = new Date();
             this.updatedAt = new Date();
         }
@@ -35,10 +36,17 @@ class CreateCategoryAction extends category_model_1.CategoryModel {
     }
     async persistCategory() {
         try {
-            const entity = this.session.manager.create(category_entity_1.CategoryEntity, this);
+            const entity = this.session.manager.create(category_entity_1.CategoryEntity, {
+                name: this.name,
+                description: this.description,
+                photo: this.photo,
+                isActive: this.isActive,
+                createdAt: this.createdAt,
+                updatedAt: this.updatedAt
+            });
             const savedEntity = await this.session.manager.save(category_entity_1.CategoryEntity, entity);
             if (savedEntity) {
-                this.id = savedEntity.id;
+                this._id = savedEntity._id;
             }
             else {
                 throw new Error('Failed to save category into database');
@@ -52,7 +60,7 @@ class CreateCategoryAction extends category_model_1.CategoryModel {
     buildResponse() {
         try {
             return {
-                id: this.id,
+                _id: this._id,
                 name: this.name,
                 description: this.description,
                 photo: this.photo,

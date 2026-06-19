@@ -1,6 +1,7 @@
 import { Repository, Not } from 'typeorm';
 import { CategoryEntity } from '@infrastructure/entities/category.entity';
 import { UpdateCategoryRequest } from '@domain/models/category.model';
+import { BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
 
 export class UpdateCategoryValidation extends UpdateCategoryRequest {
   constructor(private readonly categoryRepository: Repository<CategoryEntity>) {
@@ -15,18 +16,18 @@ export class UpdateCategoryValidation extends UpdateCategoryRequest {
       this.photo = params.photo;
       await this.validateParams();
     } catch (error) {
-      throw error instanceof Error ? error : new Error(String(error));
+      throw error;
     }
   }
 
   private async validateParams(): Promise<void> {
     if (!this._id) {
-      throw new Error('Category ID is required');
+      throw new BadRequestException('Category ID is required');
     }
 
     const exist = await this.categoryRepository.findOne({ where: { _id: this._id } });
     if (!exist) {
-      throw new Error(`Category ID ${this._id} not found`);
+      throw new NotFoundException(`Category ID ${this._id} not found`);
     }
 
     if (this.name) {
@@ -38,7 +39,7 @@ export class UpdateCategoryValidation extends UpdateCategoryRequest {
       });
 
       if (duplicate) {
-        throw new Error(`Category name "${this.name}" is already taken.`);
+        throw new ConflictException('Category name already exists.');
       }
     }
   }

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "ignoreDeprecations": "5.0",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -19,7 +20,7 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
     
-    // ✅ เพิ่มตรงนี้ครับ
+  
     "paths": {
       "@domain/*": ["domain/*"],
       "@usecases/*": ["usecases/*"],

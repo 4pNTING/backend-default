@@ -1,8 +1,8 @@
 import { Repository } from 'typeorm';
 import { CategoryEntity } from '@infrastructure/entities/category.entity';
 import { CreateCategoryRequest } from '@domain/models/category.model';
+import { BadRequestException, ConflictException } from '@nestjs/common';
 
-// ต้องมีคำว่า export class ถึงจะนับเป็น Module
 export class CreateCategoryValidation extends CreateCategoryRequest {
   constructor(private readonly categoryRepository: Repository<CategoryEntity>) {
     super();
@@ -13,7 +13,7 @@ export class CreateCategoryValidation extends CreateCategoryRequest {
       await this.buildParams(params);
       await this.validateParams();
     } catch (error) {
-      throw error instanceof Error ? error : new Error(String(error));
+      throw error;
     }
   }
 
@@ -23,15 +23,14 @@ export class CreateCategoryValidation extends CreateCategoryRequest {
       this.description = params.description;
       this.photo = params.photo;
     } catch (error) {
-      console.log('ERROR buildParams', error?.message);
-      throw new Error(error?.message || 'Unknown error');
+      throw error;
     }
   }
 
   private async validateParams(): Promise<void> {
     try {
       if (!this.name || this.name.trim() === '') {
-        throw new Error('Category name is required');
+        throw new BadRequestException('Category name is required');
       }
 
       const exist = await this.categoryRepository.findOne({ 
@@ -39,12 +38,10 @@ export class CreateCategoryValidation extends CreateCategoryRequest {
       });
       
       if (exist) {
-        throw new Error(`Category name "${this.name}" already exists.`);
+        throw new ConflictException('Category name already exists.');
       }
-
     } catch (error) {
-      console.log('ERROR validateParams', error?.message);
-      throw error instanceof Error ? error : new Error(error?.message);
+      throw error;
     }
   }
 }

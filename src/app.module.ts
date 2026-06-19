@@ -14,20 +14,28 @@ import { AuthUsecasesProxyModule } from './infrastructure/usecases-proxy/auth-us
 import { CategoryController } from './infrastructure/controllers/category/category.controller';
 import { ZoneController } from './infrastructure/controllers/zone/zone.controller';
 import { AuthController } from './infrastructure/controllers/auth/auth.controller';
+import { CurrencyController } from './infrastructure/controllers/currency/currency.controller';
 
 import { CategoryEntity } from './infrastructure/entities/category.entity';
 import { ZoneEntity } from './infrastructure/entities/zone.entity';
 import { UserEntity } from './infrastructure/entities/user.entity';
+import { CurrencyEntity } from './infrastructure/entities/currency.entity';
 
 import { CategoryResolver } from './infrastructure/resolvers/category/category.resolver';
 import { ZoneResolver } from './infrastructure/resolvers/zone/zone.resolver';
 import { AuthResolver } from './infrastructure/resolvers/auth/auth.resolver';
+import { CurrencyResolver } from './infrastructure/resolvers/currency/currency.resolver';
+import { CurrencyUsecasesProxyModule } from './infrastructure/usecases-proxy/currency-usecases-proxy.module';
 import { JwtStrategy } from './infrastructure/common/jwt.strategy';
+import { RedisModule } from './infrastructure/cache/redis.module';
 
 @Module({
     imports: [
         // 1. Config Environment (อ่านไฟล์ .env)
         ConfigModule.forRoot({ isGlobal: true }),
+
+        // 2. Redis Cache (Global Module)
+        RedisModule,
 
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
@@ -56,7 +64,8 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
                 entities: [
                     CategoryEntity,
                     ZoneEntity,
-                    UserEntity
+                    UserEntity,
+                    CurrencyEntity
                 ],
                 synchronize: true,
                 autoLoadEntities: true,
@@ -69,17 +78,20 @@ import { JwtStrategy } from './infrastructure/common/jwt.strategy';
         CategoryUsecasesProxyModule.register(), // Load Dynamic Module
         ZoneUsecasesProxyModule.register(),
         AuthUsecasesProxyModule.register(),
+        CurrencyUsecasesProxyModule.register(),
     ],
     controllers: [
         // 4. Register Controllers
         CategoryController,
         ZoneController,
         AuthController,
+        CurrencyController,
     ],
     providers: [
         CategoryResolver,
         ZoneResolver,
         AuthResolver,
+        CurrencyResolver,
         JwtStrategy
     ],
 })

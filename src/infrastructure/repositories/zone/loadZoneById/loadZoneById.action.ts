@@ -16,7 +16,7 @@ export class LoadZoneByIdAction {
             // Return entity directly
             return entity;
         } catch (error) {
-            console.error('ERROR LoadZoneByIdAction', error?.message);
+     
             throw error instanceof Error ? error : new Error(error?.message);
         }
     }

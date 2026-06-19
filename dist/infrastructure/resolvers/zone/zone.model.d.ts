@@ -8,7 +8,6 @@ export declare class Zone {
     updatedAt?: Date;
 }
 export declare class LoadZoneResponse {
-    count: number;
     zone: Zone[];
 }
 export declare class LoadZoneByIdResponse {
@@ -50,4 +49,6 @@ export declare class LoadZoneDto {
     limit?: number;
     isActive: ActiveStatus;
     keyword?: string;
+    sortField?: string;
+    sortDirection?: string;
 }

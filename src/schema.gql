@@ -82,11 +82,42 @@ type AuthLoginResponse {
   refreshToken: String
 }
 
+type Currency {
+  _id: String
+  code: String!
+  name: String!
+  isActive: Boolean!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type LoadCurrencyResponse {
+  currency: [Currency!]!
+}
+
+type LoadCurrencyByIdResponse {
+  currency: Currency
+}
+
+type CreateCurrencyResponse {
+  currency: Currency
+}
+
+type UpdateCurrencyResponse {
+  currency: Currency
+}
+
+type DeleteCurrencyResponse {
+  _id: String!
+}
+
 type Query {
   loadCategory(input: LoadCategoryDto): LoadCategoryResponse!
   loadCategoryById(input: LoadCategoryByIdDto!): LoadCategoryByIdResponse
   loadZone(input: LoadZoneDto!): LoadZoneResponse!
   loadZoneById(input: LoadZoneByIdDto!): LoadZoneByIdResponse!
+  loadCurrencies: LoadCurrencyResponse!
+  loadCurrencyById(input: LoadCurrencyByIdDto!): LoadCurrencyByIdResponse!
 }
 
 input LoadCategoryDto {
@@ -122,6 +153,10 @@ input LoadZoneByIdDto {
   _id: String!
 }
 
+input LoadCurrencyByIdDto {
+  _id: String!
+}
+
 type Mutation {
   createCategory(input: CreateCategoryDto!): CreateCategoryResponse!
   updateCategory(input: UpdateCategoryDto!): UpdateCategoryResponse!
@@ -132,6 +167,9 @@ type Mutation {
   deleteZone(input: DeleteZoneDto!): DeleteZoneResponse!
   restoreZone(input: RestoreZoneDto!): RestoreZoneResponse!
   login(loginData: AuthLoginArgs!): AuthLoginResponse!
+  createCurrency(input: CreateCurrencyDto!): CreateCurrencyResponse!
+  updateCurrency(input: UpdateCurrencyDto!): UpdateCurrencyResponse!
+  deleteCurrency(input: DeleteCurrencyDto!): DeleteCurrencyResponse!
 }
 
 input CreateCategoryDto {
@@ -180,4 +218,21 @@ input RestoreZoneDto {
 input AuthLoginArgs {
   username: String!
   password: String!
+}
+
+input CreateCurrencyDto {
+  code: String!
+  name: String!
+  isActive: Boolean! = true
+}
+
+input UpdateCurrencyDto {
+  _id: String!
+  code: String
+  name: String
+  isActive: Boolean
+}
+
+input DeleteCurrencyDto {
+  _id: String!
 }

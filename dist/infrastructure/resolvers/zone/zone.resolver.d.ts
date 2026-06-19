@@ -4,7 +4,7 @@ import { DeleteZoneUsecase } from '../../../usecases/zone/deleteZone.usecase';
 import { LoadAllZoneUsecase } from '../../../usecases/zone/loadAllZone.usecase';
 import { LoadZoneByIdUsecase } from '../../../usecases/zone/loadZoneById.usecase';
 import { RestoreZoneUsecase } from '../../../usecases/zone/restoreZone.usecase';
-import { Zone, CreateZoneDto, UpdateZoneDto, DeleteZoneDto, LoadZoneDto, LoadZoneByIdDto, RestoreZoneDto, ActiveStatus } from './zone.model';
+import { CreateZoneDto, UpdateZoneDto, DeleteZoneDto, LoadZoneDto, LoadZoneByIdDto, RestoreZoneDto } from './zone.model';
 export declare class ZoneResolver {
     private readonly createZoneUsecase;
     private readonly updateZoneUsecase;
@@ -14,57 +14,23 @@ export declare class ZoneResolver {
     private readonly restoreZoneUsecase;
     constructor(createZoneUsecase: CreateZoneUsecase, updateZoneUsecase: UpdateZoneUsecase, deleteZoneUsecase: DeleteZoneUsecase, loadAllZoneUsecase: LoadAllZoneUsecase, loadZoneByIdUsecase: LoadZoneByIdUsecase, restoreZoneUsecase: RestoreZoneUsecase);
     loadZone(input: LoadZoneDto): Promise<{
-        count: number;
-        zone: {
-            _id: string;
-            id: string;
-            name: string;
-            isActive?: ActiveStatus;
-            createdAt?: Date;
-            updatedAt?: Date;
-        }[];
+        zone: import("../../../domain/models/zone.model").ZoneModel[];
     }>;
     loadZoneById(input: LoadZoneByIdDto): Promise<{
-        zone: {
-            _id: string;
-            id: string;
-            name: string;
-            isActive?: ActiveStatus;
-            createdAt?: Date;
-            updatedAt?: Date;
-        };
+        zone: import("../../../domain/models/zone.model").LoadZoneByIdResponse;
     }>;
     createZone(input: CreateZoneDto): Promise<{
-        zone: {
-            _id: string;
-            id: string;
-            name: string;
-            isActive?: ActiveStatus;
-            createdAt?: Date;
-            updatedAt?: Date;
-        };
+        zone: import("../../../domain/models/zone.model").CreateZoneResponse;
     }>;
     updateZone(input: UpdateZoneDto): Promise<{
-        zone: {
-            _id: string;
-            id: string;
-            name: string;
-            isActive?: ActiveStatus;
-            createdAt?: Date;
-            updatedAt?: Date;
-        };
+        zone: import("../../../domain/models/zone.model").LoadZoneByIdResponse;
     }>;
     deleteZone(input: DeleteZoneDto): Promise<{
-        zone: Zone;
-    }>;
-    restoreZone(input: RestoreZoneDto): Promise<{
         zone: {
             _id: string;
-            id: string;
-            name: string;
-            isActive?: ActiveStatus;
-            createdAt?: Date;
-            updatedAt?: Date;
         };
+    }>;
+    restoreZone(input: RestoreZoneDto): Promise<{
+        zone: import("../../../domain/models/zone.model").LoadZoneByIdResponse;
     }>;
 }

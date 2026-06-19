@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import { AllExceptionsFilter } from './infrastructure/common/filter/all-exceptions.filter';
 
 async function bootstrap() {
   // 1. สร้าง App ปกติ (HTTP)
@@ -14,15 +15,16 @@ async function bootstrap() {
     options: {
       package: ['category', 'zone', 'auth'],
       protoPath: [
-        join(__dirname, '../src/proto/category.proto'),
-        join(__dirname, '../src/proto/zone.proto'),
-        join(__dirname, '../src/proto/auth.proto'),
+        join(__dirname, './proto/category.proto'),
+        join(__dirname, './proto/zone.proto'),
+        join(__dirname, './proto/auth.proto'),
       ], // Path ของไฟล์ .proto
       url: 'localhost:9897', // รันที่ Port 5000
     },
   });
 
   // ตั้งค่า HTTP เหมือนเดิม
+  app.useGlobalFilters(new AllExceptionsFilter());
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
     whitelist: true,

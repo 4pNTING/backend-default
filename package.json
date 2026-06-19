@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "POS Backend with gRPC and TypeORM",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run copy:proto",
+    "copy:proto": "xcopy src\\proto dist\\proto /Y /I",
     "start": "node dist/main.js",
     "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
     "dev:start": "npm run start:dev",
@@ -26,6 +27,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.3",
     "graphql": "^16.6.0",
+    "ioredis": "^5.11.1",
     "jsonwebtoken": "^9.0.3",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",

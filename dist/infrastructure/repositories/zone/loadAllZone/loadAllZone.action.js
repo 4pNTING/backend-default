@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadAllZoneAction = void 0;
-const zone_entity_1 = require("../../../../src/infrastructure/entities/zone.entity");
+const zone_entity_1 = require("@infrastructure/entities/zone.entity");
 class LoadAllZoneAction {
     constructor(session) {
         this.session = session;
@@ -19,14 +19,18 @@ class LoadAllZoneAction {
             const page = query.paginate?.page || 1;
             const limit = query.paginate?.limit || 10;
             qb.skip((page - 1) * limit).take(limit);
-            if (query.sort) {
-                qb.orderBy('zone.id', query.sort > 0 ? 'ASC' : 'DESC');
+            if (query.sortField) {
+                const direction = query.sortDirection === 'ASC' ? 'ASC' : 'DESC';
+                qb.orderBy(`zone.${query.sortField}`, direction);
+            }
+            else if (query.sort) {
+                qb.orderBy('zone._id', query.sort > 0 ? 'ASC' : 'DESC');
             }
             else {
-                qb.orderBy('zone.id', 'DESC');
+                qb.orderBy('zone._id', 'DESC');
             }
-            const [entities, total] = await qb.getManyAndCount();
-            return { items: entities, total };
+            const entities = await qb.getMany();
+            return { items: entities };
         }
         catch (error) {
             throw error instanceof Error ? error : new Error(error?.message);

@@ -2,5 +2,5 @@ import { IZoneRepository } from '../../domain/repositories/zone.repository.inter
 export declare class RestoreZoneUsecase {
     private readonly zoneRepository;
     constructor(zoneRepository: IZoneRepository);
-    execute(id: string): Promise<void>;
+    execute(_id: string): Promise<void>;
 }

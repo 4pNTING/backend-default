@@ -1,6 +1,6 @@
 import { ActiveStatus } from '../enums/enum';
 export declare class ZoneModel {
-    id: string;
+    _id: string;
     name: string;
     isActive?: ActiveStatus;
     createdAt?: Date;
@@ -13,21 +13,21 @@ export declare class CreateZoneRequest {
 export declare class CreateZoneResponse extends ZoneModel {
 }
 export declare class UpdateZoneRequest {
-    id: string;
+    _id: string;
     name?: string;
     isActive?: ActiveStatus;
 }
 export declare class UpdateZoneResponse {
-    id: string;
+    _id: string;
 }
 export declare class DeleteZoneRequest {
-    id: string;
+    _id: string;
 }
 export declare class DeleteZoneResponse {
-    id: string;
+    _id: string;
 }
 export declare class RestoreZoneRequest {
-    id: string;
+    _id: string;
 }
 export declare class RestoreZoneResponse extends ZoneModel {
 }
@@ -35,10 +35,9 @@ export declare class LoadAllZoneRequest {
 }
 export declare class LoadAllZoneResponse {
     items: ZoneModel[];
-    total: number;
 }
 export declare class LoadZoneByIdRequest {
-    id: string;
+    _id: string;
 }
 export declare class LoadZoneByIdResponse extends ZoneModel {
 }

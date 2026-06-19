@@ -41,7 +41,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Category.prototype, "updatedAt", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], Category.prototype, "isActive", void 0);
 exports.Category = Category = __decorate([
@@ -50,10 +50,6 @@ exports.Category = Category = __decorate([
 let LoadCategoryResponse = class LoadCategoryResponse {
 };
 exports.LoadCategoryResponse = LoadCategoryResponse;
-__decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
-], LoadCategoryResponse.prototype, "count", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [Category]),
     __metadata("design:type", Array)
@@ -127,7 +123,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "photo", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "isActive", void 0);
 exports.CreateCategoryDto = CreateCategoryDto = __decorate([
@@ -153,7 +149,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "photo", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "isActive", void 0);
 exports.UpdateCategoryDto = UpdateCategoryDto = __decorate([
@@ -201,15 +197,22 @@ __decorate([
     __metadata("design:type", Number)
 ], LoadCategoryDto.prototype, "limit", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "isActive", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "keyword", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], LoadCategoryDto.prototype, "sortField", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], LoadCategoryDto.prototype, "sortDirection", void 0);
 exports.LoadCategoryDto = LoadCategoryDto = __decorate([
-    (0, graphql_1.InputType)(),
     (0, graphql_1.InputType)()
 ], LoadCategoryDto);
 //# sourceMappingURL=category.model.js.map

@@ -56,14 +56,14 @@ class LoginUseCase {
             throw new common_1.UnauthorizedException('Invalid username or password');
         }
         const payload = {
-            id: user.id,
+            id: user._id,
             username: user.username,
             role: user.role
         };
         const accessToken = jwt.sign(payload, this.jwtSecret, { expiresIn: this.jwtExpiration });
         const refreshToken = jwt.sign(payload, this.jwtSecret, { expiresIn: '7d' });
         return {
-            _id: user.id,
+            _id: user._id,
             username: user.username,
             isActive: user.isActive,
             role: user.role,

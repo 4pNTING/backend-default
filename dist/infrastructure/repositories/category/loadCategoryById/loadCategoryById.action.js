@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadCategoryByIdAction = void 0;
-const category_entity_1 = require("../../../../src/infrastructure/entities/category.entity");
+const category_entity_1 = require("@infrastructure/entities/category.entity");
 class LoadCategoryByIdAction {
     constructor(session) {
         this.session = session;
@@ -9,7 +9,7 @@ class LoadCategoryByIdAction {
     async execute(params) {
         try {
             const entity = await this.session.manager.findOne(category_entity_1.CategoryEntity, {
-                where: { id: params.id }
+                where: { _id: params._id }
             });
             if (!entity)
                 return null;

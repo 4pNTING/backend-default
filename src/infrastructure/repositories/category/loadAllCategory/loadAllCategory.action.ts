@@ -10,7 +10,7 @@ export class LoadAllCategoryAction {
     try {
       const qb = this.session.manager.createQueryBuilder(CategoryEntity, 'category');
 
-      // 1. Search (ค้นหาจากชื่อ หรือ คำอธิบาย)
+      // 1. Search 
       if (query.search?.q) {
         const keyword = `%${query.search.q}%`;
         qb.andWhere(
@@ -46,7 +46,6 @@ export class LoadAllCategoryAction {
       return { items: entities };
 
     } catch (error) {
-      console.error('ERROR LoadAllCategoryAction', error?.message);
       throw error instanceof Error ? error : new Error(error?.message);
     }
   }

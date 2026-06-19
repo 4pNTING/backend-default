@@ -10,7 +10,6 @@ export declare class Category {
     isActive?: ActiveStatus;
 }
 export declare class LoadCategoryResponse {
-    count: number;
     category: Category[];
 }
 export declare class LoadCategoryByIdResponse {
@@ -55,4 +54,6 @@ export declare class LoadCategoryDto {
     limit?: number;
     isActive?: ActiveStatus;
     keyword?: string;
+    sortField?: string;
+    sortDirection?: string;
 }

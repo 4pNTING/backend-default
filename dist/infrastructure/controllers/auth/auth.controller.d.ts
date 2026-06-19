@@ -4,4 +4,5 @@ export declare class AuthController {
     private readonly loginUseCase;
     constructor(loginUseCase: LoginUseCase);
     login(data: LoginRequest): Promise<any>;
+    loginRest(data: LoginRequest): Promise<any>;
 }

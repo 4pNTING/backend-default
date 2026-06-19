@@ -16,9 +16,9 @@ let RestoreCategoryUseCase = class RestoreCategoryUseCase {
     constructor(categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-    async execute(id) {
-        await this.categoryRepository.restore(id);
-        return await this.categoryRepository.findById({ id });
+    async execute(_id) {
+        await this.categoryRepository.restore(_id);
+        return await this.categoryRepository.findById({ _id });
     }
 };
 exports.RestoreCategoryUseCase = RestoreCategoryUseCase;

@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 import { CategoryEntity } from '@infrastructure/entities/category.entity';
 import { LoadCategoryByIdRequest } from '@domain/models/category.model';
+import { BadRequestException } from '@nestjs/common';
 
 export class LoadCategoryByIdValidation extends LoadCategoryByIdRequest {
   constructor(private readonly categoryRepository: Repository<CategoryEntity>) {
@@ -9,7 +10,7 @@ export class LoadCategoryByIdValidation extends LoadCategoryByIdRequest {
 
   public async execute(params: LoadCategoryByIdRequest): Promise<void> {
     if (!params._id) {
-      throw new Error('Category ID is required');
+      throw new BadRequestException('Category ID is required');
     }
   }
 }

@@ -3,5 +3,5 @@ import { CategoryModel } from '../../domain/models/category.model';
 export declare class RestoreCategoryUseCase {
     private readonly categoryRepository;
     constructor(categoryRepository: DatabaseCategoryRepository);
-    execute(id: string): Promise<CategoryModel>;
+    execute(_id: string): Promise<CategoryModel>;
 }

@@ -15,14 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZoneController = void 0;
 const common_1 = require("@nestjs/common");
 const microservices_1 = require("@nestjs/microservices");
-const zone_model_1 = require("../../../src/domain/models/zone.model");
+const zone_model_1 = require("@domain/models/zone.model");
 const zone_usecases_proxy_module_1 = require("../../usecases-proxy/zone-usecases-proxy.module");
-const createZone_usecase_1 = require("../../../src/usecases/zone/createZone.usecase");
-const updateZone_usecase_1 = require("../../../src/usecases/zone/updateZone.usecase");
-const deleteZone_usecase_1 = require("../../../src/usecases/zone/deleteZone.usecase");
-const loadAllZone_usecase_1 = require("../../../src/usecases/zone/loadAllZone.usecase");
-const loadZoneById_usecase_1 = require("../../../src/usecases/zone/loadZoneById.usecase");
-const restoreZone_usecase_1 = require("../../../src/usecases/zone/restoreZone.usecase");
+const createZone_usecase_1 = require("@usecases/zone/createZone.usecase");
+const updateZone_usecase_1 = require("@usecases/zone/updateZone.usecase");
+const deleteZone_usecase_1 = require("@usecases/zone/deleteZone.usecase");
+const loadAllZone_usecase_1 = require("@usecases/zone/loadAllZone.usecase");
+const loadZoneById_usecase_1 = require("@usecases/zone/loadZoneById.usecase");
+const restoreZone_usecase_1 = require("@usecases/zone/restoreZone.usecase");
 let ZoneController = class ZoneController {
     constructor(createZoneUseCase, updateZoneUseCase, deleteZoneUseCase, loadAllZoneUseCase, loadZoneByIdUseCase, restoreZoneUseCase) {
         this.createZoneUseCase = createZoneUseCase;
@@ -36,17 +36,17 @@ let ZoneController = class ZoneController {
         return await this.loadAllZoneUseCase.execute(query);
     }
     async findOne(id) {
-        return await this.loadZoneByIdUseCase.execute({ id });
+        return await this.loadZoneByIdUseCase.execute({ _id: id });
     }
     async create(body) {
         return await this.createZoneUseCase.execute(body);
     }
     async update(id, body) {
-        const request = { id, ...body };
+        const request = { _id: id, ...body };
         return await this.updateZoneUseCase.execute(request);
     }
     async delete(id) {
-        const request = { id };
+        const request = { _id: id };
         return await this.deleteZoneUseCase.execute(request);
     }
     async restore(id) {

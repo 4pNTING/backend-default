@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateCategoryAction = void 0;
-const category_entity_1 = require("../../../../src/infrastructure/entities/category.entity");
+const category_entity_1 = require("@infrastructure/entities/category.entity");
 class UpdateCategoryAction {
     constructor(session) {
         this.session = session;
     }
     async execute(params) {
         try {
-            await this.session.manager.update(category_entity_1.CategoryEntity, params.id, {
+            await this.session.manager.update(category_entity_1.CategoryEntity, params._id, {
                 name: params.name,
                 description: params.description,
                 photo: params.photo,

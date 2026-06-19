@@ -49,44 +49,41 @@ let ZoneResolver = class ZoneResolver {
             if (input.isActive) {
                 query.isActive = input.isActive;
             }
+            if (input.sortField) {
+                query.sortField = input.sortField;
+            }
+            if (input.sortDirection) {
+                query.sortDirection = input.sortDirection;
+            }
         }
         const result = await this.loadAllZoneUsecase.execute(query);
-        const items = result.items.map(item => ({
-            ...item,
-            _id: item.id
-        }));
         return {
-            count: result.total,
-            zone: items,
+            zone: result.items,
         };
     }
     async loadZoneById(input) {
-        const result = await this.loadZoneByIdUsecase.execute({ id: input._id });
+        const result = await this.loadZoneByIdUsecase.execute({ _id: input._id });
         if (!result)
             return { zone: null };
-        return { zone: { ...result, _id: result.id } };
+        return { zone: result };
     }
     async createZone(input) {
         const result = await this.createZoneUsecase.execute(input);
-        return { zone: { ...result, _id: result.id } };
+        return { zone: result };
     }
     async updateZone(input) {
-        await this.updateZoneUsecase.execute({
-            id: input._id,
-            name: input.name,
-            isActive: input.isActive
-        });
-        const updated = await this.loadZoneByIdUsecase.execute({ id: input._id });
-        return { zone: updated ? { ...updated, _id: updated.id } : null };
+        await this.updateZoneUsecase.execute(input);
+        const updated = await this.loadZoneByIdUsecase.execute({ _id: input._id });
+        return { zone: updated };
     }
     async deleteZone(input) {
-        await this.deleteZoneUsecase.execute({ id: input._id });
-        return { zone: { _id: input._id, name: '' } };
+        await this.deleteZoneUsecase.execute({ _id: input._id });
+        return { zone: { _id: input._id } };
     }
     async restoreZone(input) {
         await this.restoreZoneUsecase.execute(input._id);
-        const restored = await this.loadZoneByIdUsecase.execute({ id: input._id });
-        return { zone: restored ? { ...restored, _id: restored.id } : null };
+        const restored = await this.loadZoneByIdUsecase.execute({ _id: input._id });
+        return { zone: restored };
     }
 };
 exports.ZoneResolver = ZoneResolver;

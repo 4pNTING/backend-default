@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCategoryValidation = void 0;
-const category_model_1 = require("../../../../src/domain/models/category.model");
+const category_model_1 = require("@domain/models/category.model");
+const common_1 = require("@nestjs/common");
 class CreateCategoryValidation extends category_model_1.CreateCategoryRequest {
     constructor(categoryRepository) {
         super();
@@ -13,7 +14,7 @@ class CreateCategoryValidation extends category_model_1.CreateCategoryRequest {
             await this.validateParams();
         }
         catch (error) {
-            throw error instanceof Error ? error : new Error(String(error));
+            throw error;
         }
     }
     async buildParams(params) {
@@ -23,25 +24,23 @@ class CreateCategoryValidation extends category_model_1.CreateCategoryRequest {
             this.photo = params.photo;
         }
         catch (error) {
-            console.log('ERROR buildParams', error?.message);
-            throw new Error(error?.message || 'Unknown error');
+            throw error;
         }
     }
     async validateParams() {
         try {
             if (!this.name || this.name.trim() === '') {
-                throw new Error('Category name is required');
+                throw new common_1.BadRequestException('Category name is required');
             }
             const exist = await this.categoryRepository.findOne({
                 where: { name: this.name }
             });
             if (exist) {
-                throw new Error(`Category name "${this.name}" already exists.`);
+                throw new common_1.ConflictException('Category name already exists.');
             }
         }
         catch (error) {
-            console.log('ERROR validateParams', error?.message);
-            throw error instanceof Error ? error : new Error(error?.message);
+            throw error;
         }
     }
 }

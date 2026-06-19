@@ -1,14 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateZoneAction = void 0;
-const zone_entity_1 = require("../../../../src/infrastructure/entities/zone.entity");
-const zone_model_1 = require("../../../../src/domain/models/zone.model");
+const zone_entity_1 = require("@infrastructure/entities/zone.entity");
+const zone_model_1 = require("@domain/models/zone.model");
+const enum_1 = require("@domain/enums/enum");
 class CreateZoneAction extends zone_model_1.ZoneModel {
     constructor(session) {
         super();
         this.session = session;
     }
     async execute(params) {
+        console.log('--- CreateZoneAction execute params ---', JSON.stringify(params));
         try {
             await this.validateAndBuildParams(params);
             await this.persistZone();
@@ -21,7 +23,7 @@ class CreateZoneAction extends zone_model_1.ZoneModel {
     async validateAndBuildParams(params) {
         try {
             this.name = params.name;
-            this.isActive = params.isActive ?? 'active';
+            this.isActive = params.isActive ?? enum_1.ActiveStatus.active;
             this.createdAt = new Date();
             this.updatedAt = new Date();
         }
@@ -31,10 +33,15 @@ class CreateZoneAction extends zone_model_1.ZoneModel {
     }
     async persistZone() {
         try {
-            const entity = this.session.manager.create(zone_entity_1.ZoneEntity, this);
+            const entity = this.session.manager.create(zone_entity_1.ZoneEntity, {
+                name: this.name,
+                isActive: this.isActive,
+                createdAt: this.createdAt,
+                updatedAt: this.updatedAt
+            });
             const savedEntity = await this.session.manager.save(zone_entity_1.ZoneEntity, entity);
             if (savedEntity) {
-                this.id = savedEntity.id;
+                this._id = savedEntity._id;
             }
             else {
                 throw new Error('Failed to save zone into database');
@@ -47,7 +54,7 @@ class CreateZoneAction extends zone_model_1.ZoneModel {
     buildResponse() {
         try {
             return {
-                id: this.id,
+                _id: this._id,
                 name: this.name,
                 isActive: this.isActive,
                 createdAt: this.createdAt,

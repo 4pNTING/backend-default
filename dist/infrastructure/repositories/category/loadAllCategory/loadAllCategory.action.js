@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadAllCategoryAction = void 0;
-const category_entity_1 = require("../../../../src/infrastructure/entities/category.entity");
+const category_entity_1 = require("@infrastructure/entities/category.entity");
 class LoadAllCategoryAction {
     constructor(session) {
         this.session = session;
@@ -19,17 +19,20 @@ class LoadAllCategoryAction {
             const page = query.paginate?.page;
             const limit = query.paginate?.limit;
             qb.skip((page - 1) * limit).take(limit);
-            if (query.sort) {
-                qb.orderBy('category.id', query.sort > 0 ? 'ASC' : 'DESC');
+            if (query.sortField) {
+                const direction = query.sortDirection === 'ASC' ? 'ASC' : 'DESC';
+                qb.orderBy(`category.${query.sortField}`, direction);
+            }
+            else if (query.sort) {
+                qb.orderBy('category._id', query.sort > 0 ? 'ASC' : 'DESC');
             }
             else {
-                qb.orderBy('category.id', 'DESC');
+                qb.orderBy('category._id', 'DESC');
             }
-            const [entities, total] = await qb.getManyAndCount();
-            return { items: entities, total };
+            const entities = await qb.getMany();
+            return { items: entities };
         }
         catch (error) {
-            console.error('ERROR LoadAllCategoryAction', error?.message);
             throw error instanceof Error ? error : new Error(error?.message);
         }
     }
