@@ -4,7 +4,7 @@
   "description": "POS Backend with gRPC and TypeORM",
   "scripts": {
     "build": "tsc && npm run copy:proto",
-    "copy:proto": "xcopy src\\proto dist\\proto /Y /I",
+    "copy:proto": "node copy-proto.js",
     "start": "node dist/main.js",
     "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
     "dev:start": "npm run start:dev",

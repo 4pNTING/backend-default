@@ -8,9 +8,9 @@ services:
     ports:
       - "5435:5432"
     environment:
-      POSTGRES_USER: user # ต้องตรงกับ app.module.ts
-      POSTGRES_PASSWORD: 123456789 # ต้องตรงกับ app.module.ts
-      POSTGRES_DB: postgres # ชื่อ Database
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - postgres_data_v2:/var/lib/postgresql/data
     networks:
@@ -50,15 +50,14 @@ services:
     ports:
       - "3000:3000"
       - "9897:9897"
+    env_file:
+      - .env
     environment:
-      - DB_HOST=192.168.100.247
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=123456789
-      - DB_NAME=postgres
-      - PORT=3000
-      - JWT_SECRET=super-secret-key-12345
-      - JWT_EXPIRATION=24h
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      - postgres
+      - redis
     networks:
       - share-container-network
     restart: always
