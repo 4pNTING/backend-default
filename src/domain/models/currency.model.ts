@@ -19,7 +19,8 @@ export class CreateCurrencyRequest {
     name: string;
 
     @IsBoolean()
-    isActive: boolean;
+    @IsOptional()
+    isActive?: boolean;
 }
 
 export class UpdateCurrencyRequest {

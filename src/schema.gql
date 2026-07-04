@@ -111,6 +111,169 @@ type DeleteCurrencyResponse {
   _id: String!
 }
 
+type Table {
+  _id: String
+  number: String!
+  zoneId: String!
+  capacity: Int!
+  status: String!
+  isActive: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type LoadTableResponse {
+  table: [Table!]!
+}
+
+type LoadTableByIdResponse {
+  table: Table
+}
+
+type CreateTableResponse {
+  table: Table
+}
+
+type UpdateTableResponse {
+  table: Table
+}
+
+type DeleteTableResponse {
+  table: Table
+}
+
+type RestoreTableResponse {
+  table: Table
+}
+
+type MenuItem {
+  _id: String
+  name: String!
+  description: String
+  photo: String
+  price: Float!
+  categoryId: String!
+  isActive: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type LoadMenuItemResponse {
+  menuItem: [MenuItem!]!
+}
+
+type LoadMenuItemByIdResponse {
+  menuItem: MenuItem
+}
+
+type CreateMenuItemResponse {
+  menuItem: MenuItem
+}
+
+type UpdateMenuItemResponse {
+  menuItem: MenuItem
+}
+
+type DeleteMenuItemResponse {
+  menuItem: MenuItem
+}
+
+type MenuOption {
+  _id: String
+  menuItemId: String!
+  name: String!
+  extraPrice: Float!
+  isActive: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type LoadMenuOptionResponse {
+  menuOption: [MenuOption!]!
+}
+
+type CreateMenuOptionResponse {
+  menuOption: MenuOption
+}
+
+type UpdateMenuOptionResponse {
+  menuOption: MenuOption
+}
+
+type DeleteMenuOptionResponse {
+  _id: String!
+}
+
+type OrderItem {
+  _id: String
+  orderId: String!
+  menuItemId: String!
+  menuItemName: String!
+  quantity: Int!
+  unitPrice: Float!
+  totalPrice: Float!
+  note: String
+}
+
+type Order {
+  _id: String
+  orderNumber: String!
+  tableId: String!
+  staffId: String!
+  status: String!
+  note: String
+  subTotal: Float!
+  discount: Float!
+  total: Float!
+  items: [OrderItem!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type LoadOrderResponse {
+  order: [Order!]!
+}
+
+type LoadOrderByIdResponse {
+  order: Order
+}
+
+type CreateOrderResponse {
+  order: Order
+}
+
+type UpdateOrderResponse {
+  order: Order
+}
+
+type AddOrderItemResponse {
+  orderId: String!
+  item: OrderItem
+}
+
+type CancelOrderResponse {
+  _id: String!
+}
+
+type Payment {
+  _id: String
+  orderId: String!
+  currencyId: String!
+  method: String!
+  amount: Float!
+  change: Float!
+  paidAt: DateTime!
+  createdAt: DateTime
+}
+
+type PaymentResponse {
+  payment: Payment
+}
+
+type LoadPaymentResponse {
+  payment: [Payment!]!
+}
+
 type Query {
   loadCategory(input: LoadCategoryDto): LoadCategoryResponse!
   loadCategoryById(input: LoadCategoryByIdDto!): LoadCategoryByIdResponse
@@ -118,6 +281,15 @@ type Query {
   loadZoneById(input: LoadZoneByIdDto!): LoadZoneByIdResponse!
   loadCurrencies: LoadCurrencyResponse!
   loadCurrencyById(input: LoadCurrencyByIdDto!): LoadCurrencyByIdResponse!
+  loadTable(input: LoadTableDto): LoadTableResponse!
+  loadTableById(input: LoadTableByIdDto!): LoadTableByIdResponse
+  loadMenuItem(input: LoadMenuItemDto): LoadMenuItemResponse!
+  loadMenuItemById(input: LoadMenuItemByIdDto!): LoadMenuItemByIdResponse
+  loadMenuOptionByMenuItem(input: LoadMenuOptionByMenuItemDto!): LoadMenuOptionResponse!
+  loadOrder(input: LoadOrderDto): LoadOrderResponse!
+  loadOrderById(input: LoadOrderByIdDto!): LoadOrderByIdResponse
+  loadOrderByTable(input: LoadOrderByTableDto!): LoadOrderResponse!
+  loadPaymentByOrder(input: LoadPaymentByOrderDto!): LoadPaymentResponse!
 }
 
 input LoadCategoryDto {
@@ -157,6 +329,57 @@ input LoadCurrencyByIdDto {
   _id: String!
 }
 
+input LoadTableDto {
+  page: Int
+  limit: Int
+  zoneId: String
+  isActive: String
+  keyword: String
+  sortField: String
+  sortDirection: String
+}
+
+input LoadTableByIdDto {
+  _id: String!
+}
+
+input LoadMenuItemDto {
+  page: Int
+  limit: Int
+  categoryId: String
+  isActive: String
+  keyword: String
+  sortField: String
+  sortDirection: String
+}
+
+input LoadMenuItemByIdDto {
+  _id: String!
+}
+
+input LoadMenuOptionByMenuItemDto {
+  menuItemId: String!
+}
+
+input LoadOrderDto {
+  page: Int
+  limit: Int
+  tableId: String
+  status: String
+}
+
+input LoadOrderByIdDto {
+  _id: String!
+}
+
+input LoadOrderByTableDto {
+  tableId: String!
+}
+
+input LoadPaymentByOrderDto {
+  orderId: String!
+}
+
 type Mutation {
   createCategory(input: CreateCategoryDto!): CreateCategoryResponse!
   updateCategory(input: UpdateCategoryDto!): UpdateCategoryResponse!
@@ -170,6 +393,22 @@ type Mutation {
   createCurrency(input: CreateCurrencyDto!): CreateCurrencyResponse!
   updateCurrency(input: UpdateCurrencyDto!): UpdateCurrencyResponse!
   deleteCurrency(input: DeleteCurrencyDto!): DeleteCurrencyResponse!
+  createTable(input: CreateTableDto!): CreateTableResponse!
+  updateTable(input: UpdateTableDto!): UpdateTableResponse!
+  deleteTable(input: DeleteTableDto!): DeleteTableResponse!
+  restoreTable(input: RestoreTableDto!): RestoreTableResponse!
+  createMenuItem(input: CreateMenuItemDto!): CreateMenuItemResponse!
+  updateMenuItem(input: UpdateMenuItemDto!): UpdateMenuItemResponse!
+  deleteMenuItem(input: DeleteMenuItemDto!): DeleteMenuItemResponse!
+  createMenuOption(input: CreateMenuOptionDto!): CreateMenuOptionResponse!
+  updateMenuOption(input: UpdateMenuOptionDto!): UpdateMenuOptionResponse!
+  deleteMenuOption(input: DeleteMenuOptionDto!): DeleteMenuOptionResponse!
+  createOrder(input: CreateOrderDto!): CreateOrderResponse!
+  addOrderItem(input: AddOrderItemDto!): AddOrderItemResponse!
+  removeOrderItem(input: RemoveOrderItemDto!): UpdateOrderResponse!
+  updateOrderStatus(input: UpdateOrderStatusDto!): UpdateOrderResponse!
+  cancelOrder(input: CancelOrderDto!): CancelOrderResponse!
+  processPayment(input: ProcessPaymentDto!): PaymentResponse!
 }
 
 input CreateCategoryDto {
@@ -235,4 +474,108 @@ input UpdateCurrencyDto {
 
 input DeleteCurrencyDto {
   _id: String!
+}
+
+input CreateTableDto {
+  number: String!
+  zoneId: String!
+  capacity: Int
+  status: String
+  isActive: String
+}
+
+input UpdateTableDto {
+  _id: String!
+  number: String
+  zoneId: String
+  capacity: Int
+  status: String
+  isActive: String
+}
+
+input DeleteTableDto {
+  _id: String!
+}
+
+input RestoreTableDto {
+  _id: String!
+}
+
+input CreateMenuItemDto {
+  name: String!
+  description: String
+  photo: String
+  price: Float!
+  categoryId: String!
+  isActive: String
+}
+
+input UpdateMenuItemDto {
+  _id: String!
+  name: String
+  description: String
+  photo: String
+  price: Float
+  categoryId: String
+  isActive: String
+}
+
+input DeleteMenuItemDto {
+  _id: String!
+}
+
+input CreateMenuOptionDto {
+  menuItemId: String!
+  name: String!
+  extraPrice: Float
+  isActive: String
+}
+
+input UpdateMenuOptionDto {
+  _id: String!
+  name: String
+  extraPrice: Float
+  isActive: String
+}
+
+input DeleteMenuOptionDto {
+  _id: String!
+}
+
+input CreateOrderDto {
+  tableId: String!
+  staffId: String!
+  note: String
+  discount: Float
+}
+
+input AddOrderItemDto {
+  orderId: String!
+  menuItemId: String!
+  menuItemName: String!
+  quantity: Int!
+  unitPrice: Float!
+  note: String
+}
+
+input RemoveOrderItemDto {
+  orderItemId: String!
+  orderId: String!
+}
+
+input UpdateOrderStatusDto {
+  _id: String!
+  status: String!
+}
+
+input CancelOrderDto {
+  _id: String!
+  reason: String
+}
+
+input ProcessPaymentDto {
+  orderId: String!
+  currencyId: String!
+  method: String!
+  amount: Float!
 }

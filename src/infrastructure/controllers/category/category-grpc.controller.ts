@@ -1,11 +1,6 @@
-import { Controller, Inject } from '@nestjs/common';
-import { GrpcMethod } from '@nestjs/microservices';
-import {
-    CreateCategoryRequest,
-    UpdateCategoryRequest,
-    LoadCategoryByIdRequest
-} from '@domain/models/category.model';
-
+import {Controller,Inject} from '@nestjs/common';
+import {GrpcMethod} from '@nestjs/microservices';
+import {CreateCategoryRequest,UpdateCategoryRequest,LoadCategoryByIdRequest} from '@domain/models/category.model';
 import { CategoryUsecasesProxyModule } from '../../usecases-proxy/category-usecases-proxy.module';
 import { CreateCategoryUseCase } from '@usecases/category/createCategory.usecase';
 import { UpdateCategoryUseCase } from '@usecases/category/updateCategory.usecase';

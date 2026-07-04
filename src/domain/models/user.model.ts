@@ -1,4 +1,5 @@
 import { Role, ActiveStatus } from '../enums/enum';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UserModel {
     _id: string;
@@ -11,7 +12,12 @@ export class UserModel {
 }
 
 export class LoginRequest {
+    @IsString()
+    @IsNotEmpty()
     username: string;
+
+    @IsString()
+    @IsNotEmpty()
     password: string;
 }
 

@@ -8,7 +8,6 @@ export class DeleteZoneAction {
         try {
             await this.session.manager.softDelete(ZoneEntity, _id);
         } catch (error) {
-            console.error('ERROR DeleteZoneAction', error?.message);
             throw error instanceof Error ? error : new Error(error?.message);
         }
     }

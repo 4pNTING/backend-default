@@ -1,19 +1,5 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Put,
-    Delete,
-    Body,
-    Param,
-    Inject,
-    HttpCode,
-    HttpStatus
-} from '@nestjs/common';
-import {
-    CreateCurrencyRequest,
-    UpdateCurrencyRequest
-} from '../../../domain/models/currency.model';
+import {Controller,Get,Post,Put,Delete,Body,Param,Inject,HttpCode,HttpStatus} from '@nestjs/common';
+import {CreateCurrencyRequest,UpdateCurrencyRequest} from '../../../domain/models/currency.model';
 import { CurrencyUsecasesProxyModule } from '../../usecases-proxy/currency-usecases-proxy.module';
 import { CreateCurrencyUsecase } from '../../../usecases/currency/createCurrency.usecase';
 import { UpdateCurrencyUsecase } from '../../../usecases/currency/updateCurrency.usecase';

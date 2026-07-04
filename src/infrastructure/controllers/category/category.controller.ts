@@ -1,21 +1,5 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Body,
-  Param,
-  Inject,
-  ParseIntPipe,
-  HttpCode,
-  HttpStatus
-} from '@nestjs/common';
-import {
-  CreateCategoryRequest,
-  UpdateCategoryRequest,
-  DeleteCategoryRequest
-} from '@domain/models/category.model';
+import {Controller,Get,Post,Put,Delete,Body,Param,Inject,HttpCode,HttpStatus} from '@nestjs/common';
+import {CreateCategoryRequest,UpdateCategoryRequest,DeleteCategoryRequest} from '@domain/models/category.model';
 import { QueryProps } from '@domain/models/query.model';
 
 // Import Proxy Module & UseCases
@@ -72,9 +56,8 @@ export class CategoryController {
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
-    @Body() body: Omit<UpdateCategoryRequest, '_id'> // รับ Body ไม่รวม ID
+    @Body() body: Omit<UpdateCategoryRequest, '_id'>
   ) {
-    // รวม ID จาก Param เข้ากับ Body
     const request: UpdateCategoryRequest = { _id: id, ...body };
     return await this.updateCategoryUseCase.execute(request);
   }
