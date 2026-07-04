@@ -1,22 +1,6 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Put,
-    Delete,
-    Body,
-    Param,
-    Inject,
-    ParseIntPipe,
-    HttpCode,
-    HttpStatus
-} from '@nestjs/common';
+import {Controller,Get,Post,Put,Delete,Body,Param,Inject,ParseIntPipe,HttpCode,HttpStatus} from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import {
-    CreateZoneRequest,
-    UpdateZoneRequest,
-    DeleteZoneRequest
-} from '@domain/models/zone.model';
+import {CreateZoneRequest,UpdateZoneRequest,DeleteZoneRequest} from '@domain/models/zone.model';
 import { QueryProps } from '@domain/models/query.model';
 
 // Import Proxy Module & UseCases
@@ -50,28 +34,19 @@ export class ZoneController {
         private readonly restoreZoneUseCase: RestoreZoneUsecase,
     ) { }
 
-    // ==========================================
-    // GET: Get All (Basic) or Search
-    // ==========================================
-    @Post('search') // Use POST to send QueryProps (Filter/Sort) easily
+    @Post('search') 
     @HttpCode(HttpStatus.OK)
     @GrpcMethod('ZoneService', 'FindAll')
     async findAll(@Body() query: QueryProps) {
         return await this.loadAllZoneUseCase.execute(query);
     }
 
-    // ==========================================
-    // GET: Get By ID
-    // ==========================================
     @Get(':id')
     @GrpcMethod('ZoneService', 'FindOne')
     async findOne(@Param('id') id: string) {
         return await this.loadZoneByIdUseCase.execute({ _id: id });
     }
 
-    // ==========================================
-    // POST: Create
-    // ==========================================
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @GrpcMethod('ZoneService', 'Create')
@@ -79,9 +54,6 @@ export class ZoneController {
         return await this.createZoneUseCase.execute(body);
     }
 
-    // ==========================================
-    // PUT: Update
-    // ==========================================
     @Put(':id')
     @HttpCode(HttpStatus.OK)
     @GrpcMethod('ZoneService', 'Update')
@@ -93,9 +65,6 @@ export class ZoneController {
         return await this.updateZoneUseCase.execute(request);
     }
 
-    // ==========================================
-    // DELETE: Delete
-    // ==========================================
     @Delete(':id')
     @HttpCode(HttpStatus.OK)
     @GrpcMethod('ZoneService', 'Delete')
@@ -104,9 +73,6 @@ export class ZoneController {
         return await this.deleteZoneUseCase.execute(request);
     }
 
-    // ==========================================
-    // POST: Restore
-    // ==========================================
     @Post(':id/restore')
     @HttpCode(HttpStatus.OK)
     @GrpcMethod('ZoneService', 'Restore')

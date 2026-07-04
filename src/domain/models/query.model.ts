@@ -22,4 +22,9 @@ export interface QueryProps {
   select?: string[];
   sortField?: string;
   sortDirection?: string;
+  // ─── Extended filters for POS modules ───────────────
+  zoneId?: string;       // Table: filter by zone
+  categoryId?: string;   // MenuItem: filter by category
+  tableId?: string;      // Order: filter by table
+  status?: string;       // Order: filter by status
 }
