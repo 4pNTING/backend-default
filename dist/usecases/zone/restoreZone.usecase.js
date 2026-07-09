@@ -5,8 +5,8 @@ class RestoreZoneUsecase {
     constructor(zoneRepository) {
         this.zoneRepository = zoneRepository;
     }
-    async execute(id) {
-        return await this.zoneRepository.restore(id);
+    async execute(_id) {
+        return await this.zoneRepository.restore(_id);
     }
 }
 exports.RestoreZoneUsecase = RestoreZoneUsecase;

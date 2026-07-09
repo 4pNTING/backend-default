@@ -86,7 +86,7 @@ type Currency {
   _id: String
   code: String!
   name: String!
-  isActive: Boolean!
+  isActive: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -277,9 +277,9 @@ type LoadPaymentResponse {
 type Query {
   loadCategory(input: LoadCategoryDto): LoadCategoryResponse!
   loadCategoryById(input: LoadCategoryByIdDto!): LoadCategoryByIdResponse
-  loadZone(input: LoadZoneDto!): LoadZoneResponse!
+  loadZone(input: LoadZoneDto): LoadZoneResponse!
   loadZoneById(input: LoadZoneByIdDto!): LoadZoneByIdResponse!
-  loadCurrencies: LoadCurrencyResponse!
+  loadCurrencies(input: LoadCurrencyDto): LoadCurrencyResponse!
   loadCurrencyById(input: LoadCurrencyByIdDto!): LoadCurrencyByIdResponse!
   loadTable(input: LoadTableDto): LoadTableResponse!
   loadTableById(input: LoadTableByIdDto!): LoadTableByIdResponse
@@ -295,20 +295,7 @@ type Query {
 input LoadCategoryDto {
   page: Int
   limit: Int
-  isActive: String
-  keyword: String
-  sortField: String
-  sortDirection: String
-}
-
-input LoadCategoryByIdDto {
-  _id: String!
-}
-
-input LoadZoneDto {
-  page: Int
-  limit: Int
-  isActive: ActiveStatus!
+  isActive: ActiveStatus
   keyword: String
   sortField: String
   sortDirection: String
@@ -321,8 +308,30 @@ enum ActiveStatus {
   all
 }
 
+input LoadCategoryByIdDto {
+  _id: String!
+}
+
+input LoadZoneDto {
+  page: Int
+  limit: Int
+  isActive: ActiveStatus
+  keyword: String
+  sortField: String
+  sortDirection: String
+}
+
 input LoadZoneByIdDto {
   _id: String!
+}
+
+input LoadCurrencyDto {
+  page: Int
+  limit: Int
+  isActive: ActiveStatus
+  keyword: String
+  sortField: String
+  sortDirection: String
 }
 
 input LoadCurrencyByIdDto {
@@ -462,14 +471,14 @@ input AuthLoginArgs {
 input CreateCurrencyDto {
   code: String!
   name: String!
-  isActive: Boolean! = true
+  isActive: String
 }
 
 input UpdateCurrencyDto {
   _id: String!
   code: String
   name: String
-  isActive: Boolean
+  isActive: ActiveStatus
 }
 
 input DeleteCurrencyDto {

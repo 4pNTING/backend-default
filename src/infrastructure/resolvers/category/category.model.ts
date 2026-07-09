@@ -1,6 +1,6 @@
-import { ObjectType, Field, InputType, Int } from '@nestjs/graphql';
-import { DateFilterDto, PaginateDto, SearchDto } from '../../common/graphql/common.model';
-import { ActiveStatus } from '../../../domain/enums/enum';
+import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
+import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
+import { ActiveStatus } from '../../common/graphql/common.model';
 
 export { ActiveStatus };
 
@@ -26,9 +26,6 @@ export class Category {
 
     @Field(() => String, { nullable: true })
     isActive?: ActiveStatus;
-    // เพิ่ม isActive หรือ deletedAt ถ้ามี soft delete
-    // @Field({ nullable: true })
-    // isActive?: boolean;
 }
 
 @ObjectType()
@@ -71,39 +68,55 @@ export class RestoreCategoryResponse {
 @InputType()
 export class CreateCategoryDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     name: string;
 
     @Field({ nullable: true })
+    @IsOptional()
     description?: string;
 
     @Field({ nullable: true })
+    @IsOptional()
     photo?: string;
 
     @Field(() => String, { nullable: true })
+    @IsOptional()
     isActive?: ActiveStatus;
 }
 
 @InputType()
 export class UpdateCategoryDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     name?: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     description?: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     photo?: string;
 
     @Field(() => String, { nullable: true })
+    @IsOptional()
     isActive?: ActiveStatus;
 }
 
 @InputType()
 export class LoadCategoryByIdDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 }
 
@@ -111,33 +124,46 @@ export class LoadCategoryByIdDto {
 @InputType()
 export class DeleteCategoryDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 }
 
 @InputType()
 export class RestoreCategoryDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 }
 
 @InputType()
 export class LoadCategoryDto {
     @Field(() => Int, { nullable: true })
+    @IsOptional()
     page?: number;
 
     @Field(() => Int, { nullable: true })
+    @IsOptional()
     limit?: number;
 
-    @Field(() => String, { nullable: true })
+    @Field(() => ActiveStatus, { nullable: true })
+    @IsOptional()
     isActive?: ActiveStatus;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     keyword?: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     sortField?: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     sortDirection?: string;
 }
 

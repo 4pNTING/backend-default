@@ -27,8 +27,8 @@ let DatabaseUserRepository = class DatabaseUserRepository {
             return null;
         return user;
     }
-    async findById(id) {
-        const user = await this.userRepository.findOne({ where: { id } });
+    async findById(_id) {
+        const user = await this.userRepository.findOne({ where: { _id } });
         if (!user)
             return null;
         return user;

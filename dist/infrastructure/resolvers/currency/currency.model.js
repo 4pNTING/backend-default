@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteCurrencyDto = exports.LoadCurrencyByIdDto = exports.UpdateCurrencyDto = exports.CreateCurrencyDto = exports.DeleteCurrencyResponse = exports.UpdateCurrencyResponse = exports.CreateCurrencyResponse = exports.LoadCurrencyByIdResponse = exports.LoadCurrencyResponse = exports.Currency = void 0;
+exports.LoadCurrencyDto = exports.DeleteCurrencyDto = exports.LoadCurrencyByIdDto = exports.UpdateCurrencyDto = exports.CreateCurrencyDto = exports.DeleteCurrencyResponse = exports.UpdateCurrencyResponse = exports.CreateCurrencyResponse = exports.LoadCurrencyByIdResponse = exports.LoadCurrencyResponse = exports.Currency = exports.ActiveStatus = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const class_validator_1 = require("class-validator");
+const common_model_1 = require("../../common/graphql/common.model");
+Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return common_model_1.ActiveStatus; } });
 let Currency = class Currency {
 };
 exports.Currency = Currency;
@@ -28,8 +30,8 @@ __decorate([
     __metadata("design:type", String)
 ], Currency.prototype, "name", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => Boolean),
-    __metadata("design:type", Boolean)
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
 ], Currency.prototype, "isActive", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
@@ -108,9 +110,9 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCurrencyDto.prototype, "name", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => Boolean, { defaultValue: true }),
-    (0, class_validator_1.IsBoolean)(),
-    __metadata("design:type", Boolean)
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
 ], CreateCurrencyDto.prototype, "isActive", void 0);
 exports.CreateCurrencyDto = CreateCurrencyDto = __decorate([
     (0, graphql_1.InputType)()
@@ -136,10 +138,9 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCurrencyDto.prototype, "name", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => Boolean, { nullable: true }),
-    (0, class_validator_1.IsBoolean)(),
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], UpdateCurrencyDto.prototype, "isActive", void 0);
 exports.UpdateCurrencyDto = UpdateCurrencyDto = __decorate([
     (0, graphql_1.InputType)()
@@ -166,4 +167,43 @@ __decorate([
 exports.DeleteCurrencyDto = DeleteCurrencyDto = __decorate([
     (0, graphql_1.InputType)()
 ], DeleteCurrencyDto);
+let LoadCurrencyDto = class LoadCurrencyDto {
+};
+exports.LoadCurrencyDto = LoadCurrencyDto;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], LoadCurrencyDto.prototype, "page", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], LoadCurrencyDto.prototype, "limit", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], LoadCurrencyDto.prototype, "isActive", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], LoadCurrencyDto.prototype, "keyword", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], LoadCurrencyDto.prototype, "sortField", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], LoadCurrencyDto.prototype, "sortDirection", void 0);
+exports.LoadCurrencyDto = LoadCurrencyDto = __decorate([
+    (0, graphql_1.InputType)()
+], LoadCurrencyDto);
 //# sourceMappingURL=currency.model.js.map

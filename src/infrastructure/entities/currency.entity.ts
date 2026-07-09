@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { CurrencyModel } from '../../domain/models/currency.model';
+import { ActiveStatus } from '../../domain/enums/enum';
 
 @Entity('currencies')
 export class CurrencyEntity implements CurrencyModel {
@@ -12,8 +13,12 @@ export class CurrencyEntity implements CurrencyModel {
     @Column()
     name: string;
 
-    @Column({ default: true })
-    isActive: boolean;
+    @Column({ 
+        type: 'enum',
+        enum: ActiveStatus,
+        default: ActiveStatus.active 
+    })
+    isActive: ActiveStatus;
 
     @CreateDateColumn()
     createdAt: Date;

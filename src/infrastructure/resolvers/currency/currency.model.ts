@@ -1,5 +1,13 @@
-import { Field, ObjectType, InputType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 import { IsString, IsOptional, IsNotEmpty, IsBoolean } from 'class-validator';
+import {
+    DateFilterDto,
+    SearchDto,
+    ActiveStatus
+} from '../../common/graphql/common.model';
+
+export { ActiveStatus };
+
 
 @ObjectType()
 export class Currency {
@@ -12,8 +20,8 @@ export class Currency {
     @Field()
     name: string;
 
-    @Field(() => Boolean)
-    isActive: boolean;
+    @Field(() => String, { nullable: true })
+    isActive?: ActiveStatus;
 
     @Field({ nullable: true })
     createdAt?: Date;
@@ -63,10 +71,9 @@ export class CreateCurrencyDto {
     @IsString()
     @IsNotEmpty()
     name: string;
-
-    @Field(() => Boolean, { defaultValue: true })
-    @IsBoolean()
-    isActive: boolean;
+ @Field(() => String, { nullable: true })
+    @IsOptional()
+    isActive?: ActiveStatus;
 }
 
 @InputType()
@@ -85,10 +92,9 @@ export class UpdateCurrencyDto {
     @IsOptional()
     name?: string;
 
-    @Field(() => Boolean, { nullable: true })
-    @IsBoolean()
+    @Field(() => ActiveStatus, { nullable: true })
     @IsOptional()
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 
 @InputType()
@@ -103,4 +109,34 @@ export class DeleteCurrencyDto {
     @Field()
     @IsNotEmpty()
     _id: string;
+}
+
+@InputType()
+export class LoadCurrencyDto {
+    @Field(() => Int, { nullable: true })
+    @IsOptional()
+    page?: number;
+
+    @Field(() => Int, { nullable: true })
+    @IsOptional()
+    limit?: number;
+
+    @Field(() => ActiveStatus, { nullable: true })
+    @IsOptional()
+    isActive?: ActiveStatus;
+
+    @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
+    keyword?: string;
+
+    @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
+    sortField?: string;
+
+    @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
+    sortDirection?: string;
 }

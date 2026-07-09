@@ -1,10 +1,11 @@
-import { IsString, IsNotEmpty, IsBoolean, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { ActiveStatus } from '../enums/enum';
 
 export class CurrencyModel {
     _id: string;
     code: string;
     name: string;
-    isActive: boolean;
+    isActive: ActiveStatus;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -18,9 +19,8 @@ export class CreateCurrencyRequest {
     @IsNotEmpty()
     name: string;
 
-    @IsBoolean()
     @IsOptional()
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 
 export class UpdateCurrencyRequest {
@@ -36,9 +36,8 @@ export class UpdateCurrencyRequest {
     @IsOptional()
     name?: string;
 
-    @IsBoolean()
     @IsOptional()
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 
 export class LoadAllCurrencyResponse {

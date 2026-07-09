@@ -1,15 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestoreCategoryAction = void 0;
-const category_entity_1 = require("../../../../src/infrastructure/entities/category.entity");
+const category_entity_1 = require("@infrastructure/entities/category.entity");
+const enum_1 = require("@domain/enums/enum");
 class RestoreCategoryAction {
     constructor(session) {
         this.session = session;
     }
-    async execute(id) {
+    async execute(_id) {
         try {
-            await this.session.manager.restore(category_entity_1.CategoryEntity, id);
-            await this.session.manager.update(category_entity_1.CategoryEntity, id, { isActive: true });
+            await this.session.manager.restore(category_entity_1.CategoryEntity, _id);
+            await this.session.manager.update(category_entity_1.CategoryEntity, _id, { isActive: enum_1.ActiveStatus.active });
         }
         catch (error) {
             console.error('ERROR RestoreCategoryAction', error?.message);

@@ -196,7 +196,7 @@ __decorate([
     __metadata("design:type", Number)
 ], LoadZoneDto.prototype, "limit", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => common_model_1.ActiveStatus),
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadZoneDto.prototype, "isActive", void 0);

@@ -36,10 +36,9 @@ let AuthController = class AuthController {
             };
         }
         catch (error) {
-            console.error('Login Error:', error);
             return {
                 success: false,
-                message: error.message || 'Internal Server Error',
+                message: error.message,
             };
         }
     }
@@ -47,20 +46,20 @@ let AuthController = class AuthController {
         try {
             const result = await this.loginUseCase.execute(data);
             return {
-                token: result.token,
                 user: {
                     _id: result._id,
                     username: result.username,
                     role: result.role,
                     isActive: result.isActive,
+                    token: result.token,
+                    refreshToken: result.refreshToken
                 }
             };
         }
         catch (error) {
-            console.error('REST Login Error:', error);
             throw new common_1.HttpException({
                 success: false,
-                message: error.message || 'Internal Server Error',
+                message: error.message,
             }, common_1.HttpStatus.UNAUTHORIZED);
         }
     }

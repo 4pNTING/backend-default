@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CurrencyEntity = void 0;
 const typeorm_1 = require("typeorm");
+const enum_1 = require("../../domain/enums/enum");
 let CurrencyEntity = class CurrencyEntity {
 };
 exports.CurrencyEntity = CurrencyEntity;
@@ -27,8 +28,12 @@ __decorate([
     __metadata("design:type", String)
 ], CurrencyEntity.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: true }),
-    __metadata("design:type", Boolean)
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enum_1.ActiveStatus,
+        default: enum_1.ActiveStatus.active
+    }),
+    __metadata("design:type", String)
 ], CurrencyEntity.prototype, "isActive", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),

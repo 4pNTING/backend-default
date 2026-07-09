@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InventoryMovementType = exports.ActiveStatus = exports.Role = void 0;
+exports.PaymentMethod = exports.OrderStatus = exports.TableStatus = exports.InventoryMovementType = exports.ActiveStatus = exports.Role = void 0;
 const graphql_1 = require("@nestjs/graphql");
 var Role;
 (function (Role) {
     Role["USER"] = "user";
     Role["MANAGER"] = "manager";
     Role["ADMIN"] = "admin";
+    Role["STAFF"] = "staff";
 })(Role || (exports.Role = Role = {}));
 var ActiveStatus;
 (function (ActiveStatus) {
@@ -28,5 +29,40 @@ var InventoryMovementType;
 (0, graphql_1.registerEnumType)(InventoryMovementType, {
     name: 'InventoryMovementType',
     description: 'Type of inventory movement: in, out, transfer, or adjust',
+});
+var TableStatus;
+(function (TableStatus) {
+    TableStatus["available"] = "available";
+    TableStatus["occupied"] = "occupied";
+    TableStatus["reserved"] = "reserved";
+    TableStatus["bill"] = "bill";
+})(TableStatus || (exports.TableStatus = TableStatus = {}));
+(0, graphql_1.registerEnumType)(TableStatus, {
+    name: 'TableStatus',
+    description: 'Status of a restaurant table',
+});
+var OrderStatus;
+(function (OrderStatus) {
+    OrderStatus["pending"] = "pending";
+    OrderStatus["confirmed"] = "confirmed";
+    OrderStatus["preparing"] = "preparing";
+    OrderStatus["served"] = "served";
+    OrderStatus["paid"] = "paid";
+    OrderStatus["cancelled"] = "cancelled";
+})(OrderStatus || (exports.OrderStatus = OrderStatus = {}));
+(0, graphql_1.registerEnumType)(OrderStatus, {
+    name: 'OrderStatus',
+    description: 'Lifecycle status of a customer order',
+});
+var PaymentMethod;
+(function (PaymentMethod) {
+    PaymentMethod["cash"] = "cash";
+    PaymentMethod["card"] = "card";
+    PaymentMethod["qr"] = "qr";
+    PaymentMethod["wallet"] = "wallet";
+})(PaymentMethod || (exports.PaymentMethod = PaymentMethod = {}));
+(0, graphql_1.registerEnumType)(PaymentMethod, {
+    name: 'PaymentMethod',
+    description: 'Payment method used for an order',
 });
 //# sourceMappingURL=enum.js.map

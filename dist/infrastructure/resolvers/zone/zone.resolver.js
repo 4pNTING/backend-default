@@ -89,7 +89,7 @@ let ZoneResolver = class ZoneResolver {
 exports.ZoneResolver = ZoneResolver;
 __decorate([
     (0, graphql_1.Query)(() => zone_model_1.LoadZoneResponse, { name: 'loadZone' }),
-    __param(0, (0, graphql_1.Args)('input')),
+    __param(0, (0, graphql_1.Args)('input', { nullable: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [zone_model_1.LoadZoneDto]),
     __metadata("design:returntype", Promise)

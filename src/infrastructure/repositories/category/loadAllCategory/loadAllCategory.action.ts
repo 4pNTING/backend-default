@@ -40,8 +40,14 @@ export class LoadAllCategoryAction {
         qb.orderBy('category._id', 'DESC'); // Default Sort
       }
 
+      // Debug: log SQL
+      const [sql, params] = qb.getQueryAndParameters();
+      console.log(`📊 [LoadAllCategoryAction] SQL: ${sql}`);
+      console.log(`📊 [LoadAllCategoryAction] params: ${JSON.stringify(params)}`);
+
       // Execute Query
       const entities = await qb.getMany();
+      console.log(`📊 [LoadAllCategoryAction] result count: ${entities.length}`);
 
       return { items: entities };
 

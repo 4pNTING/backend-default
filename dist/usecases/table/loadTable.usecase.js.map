@@ -1,0 +1,1 @@
+{"version":3,"file":"loadTable.usecase.js","sourceRoot":"","sources":["../../../src/usecases/table/loadTable.usecase.ts"],"names":[],"mappings":";;;AAIA,MAAa,gBAAgB;IACzB,YAA6B,eAAiC;QAAjC,oBAAe,GAAf,eAAe,CAAkB;IAAI,CAAC;IAEnE,KAAK,CAAC,OAAO,CAAC,KAAiB;QAC3B,OAAO,MAAM,IAAI,CAAC,eAAe,CAAC,OAAO,CAAC,KAAK,CAAC,CAAC;IACrD,CAAC;CACJ;AAND,4CAMC"}

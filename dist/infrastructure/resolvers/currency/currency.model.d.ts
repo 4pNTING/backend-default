@@ -1,8 +1,10 @@
+import { ActiveStatus } from '../../common/graphql/common.model';
+export { ActiveStatus };
 export declare class Currency {
     _id: string;
     code: string;
     name: string;
-    isActive: boolean;
+    isActive?: ActiveStatus;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -24,17 +26,25 @@ export declare class DeleteCurrencyResponse {
 export declare class CreateCurrencyDto {
     code: string;
     name: string;
-    isActive: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class UpdateCurrencyDto {
     _id: string;
     code?: string;
     name?: string;
-    isActive?: boolean;
+    isActive?: ActiveStatus;
 }
 export declare class LoadCurrencyByIdDto {
     _id: string;
 }
 export declare class DeleteCurrencyDto {
     _id: string;
+}
+export declare class LoadCurrencyDto {
+    page?: number;
+    limit?: number;
+    isActive?: ActiveStatus;
+    keyword?: string;
+    sortField?: string;
+    sortDirection?: string;
 }

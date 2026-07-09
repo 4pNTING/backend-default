@@ -1,0 +1,1 @@
+{"version":3,"file":"loadByIDTable.usecase.js","sourceRoot":"","sources":["../../../src/usecases/table/loadByIDTable.usecase.ts"],"names":[],"mappings":";;;AAGA,MAAa,oBAAoB;IAC7B,YAA6B,eAAiC;QAAjC,oBAAe,GAAf,eAAe,CAAkB;IAAI,CAAC;IAEnE,KAAK,CAAC,OAAO,CAAC,MAA4B;QACtC,OAAO,MAAM,IAAI,CAAC,eAAe,CAAC,QAAQ,CAAC,MAAM,CAAC,CAAC;IACvD,CAAC;CACJ;AAND,oDAMC"}

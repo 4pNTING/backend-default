@@ -1,10 +1,6 @@
 import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
-import {
-    DateFilterDto,
-    SearchDto,
-    ActiveStatus
-} from '../../common/graphql/common.model';
+import {DateFilterDto,SearchDto,ActiveStatus} from '../../common/graphql/common.model';
 
 export { ActiveStatus };
 
@@ -143,9 +139,9 @@ export class LoadZoneDto {
     @IsOptional()
     limit?: number;
 
-    @Field(() => ActiveStatus)
+    @Field(() => ActiveStatus, { nullable: true })
     @IsOptional()
-    isActive: ActiveStatus;
+    isActive?: ActiveStatus;
 
     @Field({ nullable: true })
     @IsString()

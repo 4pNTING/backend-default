@@ -25,11 +25,9 @@ export class LoadAllCurrencyAction {
       }
 
       // 2. Pagination
-      const page = query.paginate?.page;
-      const limit = query.paginate?.limit;
-      if (page && limit) {
-        qb.skip((page - 1) * limit).take(limit);
-      }
+      const page = query.paginate?.page || 1;
+      const limit = query.paginate?.limit || 10;
+      qb.skip((page - 1) * limit).take(limit);
 
       // 3. Sort
       if (query.sortField) {

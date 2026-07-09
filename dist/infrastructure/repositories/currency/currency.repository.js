@@ -42,7 +42,7 @@ let DatabaseCurrencyRepository = class DatabaseCurrencyRepository {
             await new createCurrency_validation_1.CreateCurrencyValidation(this.currencyRepository).execute(params);
             const result = await new createCurrency_action_1.CreateCurrencyAction(session).execute(params);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.CURRENCY_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.CURRENCY_LIST_PATTERN);
             return result;
         }
         catch (error) {
@@ -61,7 +61,7 @@ let DatabaseCurrencyRepository = class DatabaseCurrencyRepository {
             await new updateCurrency_validation_1.UpdateCurrencyValidation(this.currencyRepository).execute({ ...params, _id });
             const result = await new updateCurrency_action_1.UpdateCurrencyAction(session).execute(_id, params);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.CURRENCY_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.CURRENCY_LIST_PATTERN);
             await this.redisService.del(cache_keys_constants_1.CacheKeys.CURRENCY_BY_ID(_id));
             return result;
         }
@@ -81,7 +81,7 @@ let DatabaseCurrencyRepository = class DatabaseCurrencyRepository {
             await new deleteCurrency_validation_1.DeleteCurrencyValidation(this.currencyRepository).execute(_id);
             await new deleteCurrency_action_1.DeleteCurrencyAction(session).execute(_id);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.CURRENCY_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.CURRENCY_LIST_PATTERN);
             await this.redisService.del(cache_keys_constants_1.CacheKeys.CURRENCY_BY_ID(_id));
         }
         catch (error) {
@@ -93,7 +93,8 @@ let DatabaseCurrencyRepository = class DatabaseCurrencyRepository {
         }
     }
     async findAll(query) {
-        const cached = await this.redisService.get(cache_keys_constants_1.CacheKeys.CURRENCY_LIST);
+        const cacheKey = cache_keys_constants_1.CacheKeys.CURRENCY_LIST_QUERY(query);
+        const cached = await this.redisService.get(cacheKey);
         if (cached)
             return cached;
         const session = this.dataSource.createQueryRunner();
@@ -102,7 +103,7 @@ let DatabaseCurrencyRepository = class DatabaseCurrencyRepository {
         try {
             const result = await new loadAllCurrency_action_1.LoadAllCurrencyAction(session).execute(query);
             await session.commitTransaction();
-            await this.redisService.set(cache_keys_constants_1.CacheKeys.CURRENCY_LIST, result);
+            await this.redisService.set(cacheKey, result);
             return result;
         }
         catch (error) {

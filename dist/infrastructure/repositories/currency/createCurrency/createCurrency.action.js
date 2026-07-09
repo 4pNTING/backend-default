@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCurrencyAction = void 0;
 const currency_entity_1 = require("../../../entities/currency.entity");
 const currency_model_1 = require("../../../../domain/models/currency.model");
+const enum_1 = require("../../../../domain/enums/enum");
 class CreateCurrencyAction extends currency_model_1.CurrencyModel {
     constructor(session) {
         super();
@@ -22,7 +23,7 @@ class CreateCurrencyAction extends currency_model_1.CurrencyModel {
         try {
             this.code = params.code;
             this.name = params.name;
-            this.isActive = params.isActive ?? true;
+            this.isActive = params.isActive ?? enum_1.ActiveStatus.active;
             this.createdAt = new Date();
             this.updatedAt = new Date();
         }

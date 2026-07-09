@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadAllCurrencyResponse = exports.UpdateCurrencyRequest = exports.CreateCurrencyRequest = exports.CurrencyModel = void 0;
 const class_validator_1 = require("class-validator");
+const enum_1 = require("../enums/enum");
 class CurrencyModel {
 }
 exports.CurrencyModel = CurrencyModel;
@@ -28,8 +29,8 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCurrencyRequest.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsBoolean)(),
-    __metadata("design:type", Boolean)
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
 ], CreateCurrencyRequest.prototype, "isActive", void 0);
 class UpdateCurrencyRequest {
 }
@@ -50,9 +51,8 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCurrencyRequest.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsBoolean)(),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Boolean)
+    __metadata("design:type", String)
 ], UpdateCurrencyRequest.prototype, "isActive", void 0);
 class LoadAllCurrencyResponse {
 }

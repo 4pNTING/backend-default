@@ -16,7 +16,8 @@ import {
     LoadCurrencyByIdResponse,
     CreateCurrencyResponse,
     UpdateCurrencyResponse,
-    DeleteCurrencyResponse
+    DeleteCurrencyResponse,
+    LoadCurrencyDto
 } from './currency.model';
 
 @Resolver(() => Currency)
@@ -34,9 +35,35 @@ export class CurrencyResolver {
         private readonly loadCurrencyByIdUsecase: LoadCurrencyByIdUsecase,
     ) {}
 
+    // ==============================
+    // QUERY
+    // ==============================
+
     @Query(() => LoadCurrencyResponse, { name: 'loadCurrencies' })
-    async loadCurrencies() {
-        const result = await this.loadAllCurrencyUsecase.execute({});
+    async loadCurrencies(
+        @Args('input', { nullable: true }) input: LoadCurrencyDto,
+    ) {
+        const query: any = {};
+
+        if (input) {
+            if (input.page || input.limit) {
+                query.paginate = { page: input.page, limit: input.limit };
+            }
+            if (input.keyword) {
+                query.search = { q: input.keyword };
+            }
+            if (input.isActive) {
+                query.isActive = input.isActive;
+            }
+            if (input.sortField) {
+                query.sortField = input.sortField;
+            }
+            if (input.sortDirection) {
+                query.sortDirection = input.sortDirection;
+            }
+        }
+
+        const result = await this.loadAllCurrencyUsecase.execute(query);
         return {
             currency: result.items,
         };
@@ -50,6 +77,10 @@ export class CurrencyResolver {
         if (!result) return { currency: null };
         return { currency: result };
     }
+
+    // ==============================
+    // MUTATION
+    // ==============================
 
     @Mutation(() => CreateCurrencyResponse)
     async createCurrency(

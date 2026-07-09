@@ -30,8 +30,26 @@ let CurrencyResolver = class CurrencyResolver {
         this.loadAllCurrencyUsecase = loadAllCurrencyUsecase;
         this.loadCurrencyByIdUsecase = loadCurrencyByIdUsecase;
     }
-    async loadCurrencies() {
-        const result = await this.loadAllCurrencyUsecase.execute({});
+    async loadCurrencies(input) {
+        const query = {};
+        if (input) {
+            if (input.page || input.limit) {
+                query.paginate = { page: input.page, limit: input.limit };
+            }
+            if (input.keyword) {
+                query.search = { q: input.keyword };
+            }
+            if (input.isActive) {
+                query.isActive = input.isActive;
+            }
+            if (input.sortField) {
+                query.sortField = input.sortField;
+            }
+            if (input.sortDirection) {
+                query.sortDirection = input.sortDirection;
+            }
+        }
+        const result = await this.loadAllCurrencyUsecase.execute(query);
         return {
             currency: result.items,
         };
@@ -58,8 +76,9 @@ let CurrencyResolver = class CurrencyResolver {
 exports.CurrencyResolver = CurrencyResolver;
 __decorate([
     (0, graphql_1.Query)(() => currency_model_1.LoadCurrencyResponse, { name: 'loadCurrencies' }),
+    __param(0, (0, graphql_1.Args)('input', { nullable: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [currency_model_1.LoadCurrencyDto]),
     __metadata("design:returntype", Promise)
 ], CurrencyResolver.prototype, "loadCurrencies", null);
 __decorate([

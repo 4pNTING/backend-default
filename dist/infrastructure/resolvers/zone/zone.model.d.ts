@@ -47,7 +47,7 @@ export declare class RestoreZoneDto {
 export declare class LoadZoneDto {
     page?: number;
     limit?: number;
-    isActive: ActiveStatus;
+    isActive?: ActiveStatus;
     keyword?: string;
     sortField?: string;
     sortDirection?: string;

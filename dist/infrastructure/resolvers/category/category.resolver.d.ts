@@ -12,6 +12,7 @@ export declare class CategoryResolver {
     private readonly loadCategoryUseCase;
     private readonly loadCategoryByIdUseCase;
     private readonly restoreCategoryUseCase;
+    private readonly logger;
     constructor(createCategoryUseCase: CreateCategoryUseCase, updateCategoryUseCase: UpdateCategoryUseCase, deleteCategoryUseCase: DeleteCategoryUseCase, loadCategoryUseCase: LoadCategoryUseCase, loadCategoryByIdUseCase: LoadByIDCategoryUseCase, restoreCategoryUseCase: RestoreCategoryUseCase);
     loadCategory(input: LoadCategoryDto): Promise<{
         category: import("../../../domain/models/category.model").CategoryModel[];

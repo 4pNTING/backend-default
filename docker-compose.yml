@@ -27,20 +27,6 @@ services:
       - share-container-network
     restart: always
 
-  # 3. PgAdmin (หน้าเว็บสำหรับจัดการ Database - Optional)
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pos_pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - postgres
-    networks:
-      - share-container-network
-
   # 4. Backend Service (NestJS)
   backend:
     build:
@@ -53,7 +39,8 @@ services:
     env_file:
       - .env
     environment:
-      - DB_HOST=postgres
+      - DB_HOST=host.docker.internal
+      - DB_PORT=5432
       - REDIS_HOST=redis
     depends_on:
       - postgres

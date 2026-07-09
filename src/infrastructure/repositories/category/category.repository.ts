@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CategoryEntity } from '@infrastructure/entities/category.entity';
@@ -39,6 +39,8 @@ import { CacheKeys } from '../../cache/cache-keys.constants';
 
 @Injectable()
 export class DatabaseCategoryRepository implements ICategoryRepository {
+  private readonly logger = new Logger(DatabaseCategoryRepository.name);
+
   constructor(
     @InjectRepository(CategoryEntity)
     private readonly categoryEntity: Repository<CategoryEntity>,
@@ -56,8 +58,8 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
       const result = await new CreateCategoryAction(session).execute(params);
       await session.commitTransaction();
 
-      // Invalidate list cache
-      await this.redisService.del(CacheKeys.CATEGORY_LIST);
+      // Invalidate all paginated list caches
+      await this.redisService.delByPattern(CacheKeys.CATEGORY_LIST_PATTERN);
 
       return result;
     } catch (error) {
@@ -77,8 +79,8 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
       await new UpdateCategoryAction(session).execute(params);
       await session.commitTransaction();
 
-      // Invalidate ทั้ง list cache และ cache ของ item นี้
-      await this.redisService.del(CacheKeys.CATEGORY_LIST);
+      // Invalidate all paginated list caches และ cache ของ item นี้
+      await this.redisService.delByPattern(CacheKeys.CATEGORY_LIST_PATTERN);
       if (params._id) {
         await this.redisService.del(CacheKeys.CATEGORY_BY_ID(params._id));
       }
@@ -98,8 +100,8 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
       await session.manager.softDelete(CategoryEntity, params._id);
       await session.commitTransaction();
 
-      // Invalidate ทั้ง list cache และ cache ของ item นี้
-      await this.redisService.del(CacheKeys.CATEGORY_LIST);
+      // Invalidate all paginated list caches และ cache ของ item นี้
+      await this.redisService.delByPattern(CacheKeys.CATEGORY_LIST_PATTERN);
       await this.redisService.del(CacheKeys.CATEGORY_BY_ID(params._id));
     } catch (error) {
       await session.rollbackTransaction();
@@ -117,8 +119,8 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
       await new RestoreCategoryAction(session).execute(_id);
       await session.commitTransaction();
 
-      // Invalidate ทั้ง list cache และ cache ของ item นี้
-      await this.redisService.del(CacheKeys.CATEGORY_LIST);
+      // Invalidate all paginated list caches และ cache ของ item นี้
+      await this.redisService.delByPattern(CacheKeys.CATEGORY_LIST_PATTERN);
       await this.redisService.del(CacheKeys.CATEGORY_BY_ID(_id));
     } catch (error) {
       await session.rollbackTransaction();
@@ -129,25 +131,21 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
   }
 
   async findAll(query: QueryProps): Promise<LoadAllCategoryResponse> {
-    // Cache-Aside: ลองอ่านจาก cache ก่อน
-    const cached = await this.redisService.get<LoadAllCategoryResponse>(CacheKeys.CATEGORY_LIST);
+    // Cache-Aside: ลองอ่านจาก cache ก่อน (ใช้ key ที่รวม query params เพื่อแยก cache แต่ละ pagination/filter)
+    const cacheKey = CacheKeys.CATEGORY_LIST_QUERY(query);
+    const cached = await this.redisService.get<LoadAllCategoryResponse>(cacheKey);
     if (cached) return cached;
 
     // Cache MISS → query จาก Database
     const session = this.dataSource.createQueryRunner();
     await session.connect();
-    await session.startTransaction();
     try {
       const result = await new LoadAllCategoryAction(session).execute(query);
-      await session.commitTransaction();
 
       // เก็บผลลง cache สำหรับครั้งถัดไป
-      await this.redisService.set(CacheKeys.CATEGORY_LIST, result);
+      await this.redisService.set(cacheKey, result);
 
       return result;
-    } catch (error) {
-      await session.rollbackTransaction();
-      throw error;
     } finally {
       await session.release();
     }
@@ -161,11 +159,9 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
     // Cache MISS → query จาก Database
     const session = this.dataSource.createQueryRunner();
     await session.connect();
-    await session.startTransaction();
     try {
       await new LoadCategoryByIdValidation(this.categoryEntity).execute(params);
       const result = await new LoadCategoryByIdAction(session).execute(params);
-      await session.commitTransaction();
 
       // เก็บผลลง cache (เฉพาะเมื่อมีข้อมูล)
       if (result) {
@@ -173,9 +169,6 @@ export class DatabaseCategoryRepository implements ICategoryRepository {
       }
 
       return result;
-    } catch (error) {
-      await session.rollbackTransaction();
-      throw error;
     } finally {
       await session.release();
     }

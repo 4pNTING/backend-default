@@ -15,7 +15,6 @@ import { LoadMenuItemUseCase }             from '../../../usecases/menu-item/loa
 import { LoadByIDMenuItemUseCase }         from '../../../usecases/menu-item/loadByIDMenuItem.usecase';
 
 @Resolver(() => MenuItem)
-@UseGuards(JwtAuthGuard)
 export class MenuItemResolver {
     constructor(
         @Inject(MenuItemUsecasesProxyModule.CREATE_MENU_ITEM_PROXY)

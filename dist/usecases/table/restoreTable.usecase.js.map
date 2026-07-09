@@ -1,0 +1,1 @@
+{"version":3,"file":"restoreTable.usecase.js","sourceRoot":"","sources":["../../../src/usecases/table/restoreTable.usecase.ts"],"names":[],"mappings":";;;AAEA,MAAa,mBAAmB;IAC5B,YAA6B,eAAiC;QAAjC,oBAAe,GAAf,eAAe,CAAkB;IAAI,CAAC;IAEnE,KAAK,CAAC,OAAO,CAAC,GAAW;QACrB,OAAO,MAAM,IAAI,CAAC,eAAe,CAAC,OAAO,CAAC,GAAG,CAAC,CAAC;IACnD,CAAC;CACJ;AAND,kDAMC"}

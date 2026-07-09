@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var DatabaseCategoryRepository_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseCategoryRepository = void 0;
 const common_1 = require("@nestjs/common");
@@ -27,11 +28,12 @@ const loadCategoryById_action_1 = require("./loadCategoryById/loadCategoryById.a
 const loadCategoryById_validation_1 = require("./loadCategoryById/loadCategoryById.validation");
 const redis_service_1 = require("../../cache/redis.service");
 const cache_keys_constants_1 = require("../../cache/cache-keys.constants");
-let DatabaseCategoryRepository = class DatabaseCategoryRepository {
+let DatabaseCategoryRepository = DatabaseCategoryRepository_1 = class DatabaseCategoryRepository {
     constructor(categoryEntity, dataSource, redisService) {
         this.categoryEntity = categoryEntity;
         this.dataSource = dataSource;
         this.redisService = redisService;
+        this.logger = new common_1.Logger(DatabaseCategoryRepository_1.name);
     }
     async create(params) {
         const session = this.dataSource.createQueryRunner();
@@ -41,7 +43,7 @@ let DatabaseCategoryRepository = class DatabaseCategoryRepository {
             await new createCategory_validation_1.CreateCategoryValidation(this.categoryEntity).execute(params);
             const result = await new createCategory_action_1.CreateCategoryAction(session).execute(params);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.CATEGORY_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.CATEGORY_LIST_PATTERN);
             return result;
         }
         catch (error) {
@@ -60,7 +62,7 @@ let DatabaseCategoryRepository = class DatabaseCategoryRepository {
             await new updateCategory_validation_1.UpdateCategoryValidation(this.categoryEntity).execute(params);
             await new updateCategory_action_1.UpdateCategoryAction(session).execute(params);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.CATEGORY_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.CATEGORY_LIST_PATTERN);
             if (params._id) {
                 await this.redisService.del(cache_keys_constants_1.CacheKeys.CATEGORY_BY_ID(params._id));
             }
@@ -80,7 +82,7 @@ let DatabaseCategoryRepository = class DatabaseCategoryRepository {
         try {
             await session.manager.softDelete(category_entity_1.CategoryEntity, params._id);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.CATEGORY_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.CATEGORY_LIST_PATTERN);
             await this.redisService.del(cache_keys_constants_1.CacheKeys.CATEGORY_BY_ID(params._id));
         }
         catch (error) {
@@ -98,7 +100,7 @@ let DatabaseCategoryRepository = class DatabaseCategoryRepository {
         try {
             await new restoreCategory_action_1.RestoreCategoryAction(session).execute(_id);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.CATEGORY_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.CATEGORY_LIST_PATTERN);
             await this.redisService.del(cache_keys_constants_1.CacheKeys.CATEGORY_BY_ID(_id));
         }
         catch (error) {
@@ -110,21 +112,16 @@ let DatabaseCategoryRepository = class DatabaseCategoryRepository {
         }
     }
     async findAll(query) {
-        const cached = await this.redisService.get(cache_keys_constants_1.CacheKeys.CATEGORY_LIST);
+        const cacheKey = cache_keys_constants_1.CacheKeys.CATEGORY_LIST_QUERY(query);
+        const cached = await this.redisService.get(cacheKey);
         if (cached)
             return cached;
         const session = this.dataSource.createQueryRunner();
         await session.connect();
-        await session.startTransaction();
         try {
             const result = await new loadAllCategory_action_1.LoadAllCategoryAction(session).execute(query);
-            await session.commitTransaction();
-            await this.redisService.set(cache_keys_constants_1.CacheKeys.CATEGORY_LIST, result);
+            await this.redisService.set(cacheKey, result);
             return result;
-        }
-        catch (error) {
-            await session.rollbackTransaction();
-            throw error;
         }
         finally {
             await session.release();
@@ -136,19 +133,13 @@ let DatabaseCategoryRepository = class DatabaseCategoryRepository {
             return cached;
         const session = this.dataSource.createQueryRunner();
         await session.connect();
-        await session.startTransaction();
         try {
             await new loadCategoryById_validation_1.LoadCategoryByIdValidation(this.categoryEntity).execute(params);
             const result = await new loadCategoryById_action_1.LoadCategoryByIdAction(session).execute(params);
-            await session.commitTransaction();
             if (result) {
                 await this.redisService.set(cache_keys_constants_1.CacheKeys.CATEGORY_BY_ID(params._id), result);
             }
             return result;
-        }
-        catch (error) {
-            await session.rollbackTransaction();
-            throw error;
         }
         finally {
             await session.release();
@@ -169,7 +160,7 @@ let DatabaseCategoryRepository = class DatabaseCategoryRepository {
     }
 };
 exports.DatabaseCategoryRepository = DatabaseCategoryRepository;
-exports.DatabaseCategoryRepository = DatabaseCategoryRepository = __decorate([
+exports.DatabaseCategoryRepository = DatabaseCategoryRepository = DatabaseCategoryRepository_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(category_entity_1.CategoryEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,

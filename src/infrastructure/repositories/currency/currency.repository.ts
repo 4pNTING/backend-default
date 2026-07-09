@@ -43,8 +43,8 @@ export class DatabaseCurrencyRepository implements ICurrencyRepository {
       const result = await new CreateCurrencyAction(session).execute(params);
       await session.commitTransaction();
 
-      // Invalidate list cache (ข้อมูลเปลี่ยน ต้อง re-fetch)
-      await this.redisService.del(CacheKeys.CURRENCY_LIST);
+      // Invalidate all paginated list caches
+      await this.redisService.delByPattern(CacheKeys.CURRENCY_LIST_PATTERN);
 
       return result;
     } catch (error) {
@@ -64,8 +64,8 @@ export class DatabaseCurrencyRepository implements ICurrencyRepository {
       const result = await new UpdateCurrencyAction(session).execute(_id, params);
       await session.commitTransaction();
 
-      // Invalidate ทั้ง list cache และ cache ของ item นี้
-      await this.redisService.del(CacheKeys.CURRENCY_LIST);
+      // Invalidate all paginated list caches และ cache ของ item นี้
+      await this.redisService.delByPattern(CacheKeys.CURRENCY_LIST_PATTERN);
       await this.redisService.del(CacheKeys.CURRENCY_BY_ID(_id));
 
       return result;
@@ -86,8 +86,8 @@ export class DatabaseCurrencyRepository implements ICurrencyRepository {
       await new DeleteCurrencyAction(session).execute(_id);
       await session.commitTransaction();
 
-      // Invalidate ทั้ง list cache และ cache ของ item นี้
-      await this.redisService.del(CacheKeys.CURRENCY_LIST);
+      // Invalidate all paginated list caches และ cache ของ item นี้
+      await this.redisService.delByPattern(CacheKeys.CURRENCY_LIST_PATTERN);
       await this.redisService.del(CacheKeys.CURRENCY_BY_ID(_id));
     } catch (error) {
       await session.rollbackTransaction();
@@ -98,8 +98,9 @@ export class DatabaseCurrencyRepository implements ICurrencyRepository {
   }
 
   async findAll(query: QueryProps): Promise<LoadAllCurrencyResponse> {
-    // Cache-Aside: ลองอ่านจาก cache ก่อน
-    const cached = await this.redisService.get<LoadAllCurrencyResponse>(CacheKeys.CURRENCY_LIST);
+    // Cache-Aside: ลองอ่านจาก cache ก่อน (ใช้ key ที่รวม query params เพื่อแยก cache แต่ละ pagination/filter)
+    const cacheKey = CacheKeys.CURRENCY_LIST_QUERY(query);
+    const cached = await this.redisService.get<LoadAllCurrencyResponse>(cacheKey);
     if (cached) return cached;
 
     // Cache MISS → query จาก Database
@@ -111,7 +112,7 @@ export class DatabaseCurrencyRepository implements ICurrencyRepository {
       await session.commitTransaction();
 
       // เก็บผลลง cache สำหรับครั้งถัดไป
-      await this.redisService.set(CacheKeys.CURRENCY_LIST, result);
+      await this.redisService.set(cacheKey, result);
 
       return result;
     } catch (error) {

@@ -40,8 +40,8 @@ export class DatabaseZoneRepository implements IZoneRepository {
             const result = await new CreateZoneAction(session).execute(params);
             await session.commitTransaction();
 
-            // Invalidate list cache
-            await this.redisService.del(CacheKeys.ZONE_LIST);
+            // Invalidate all paginated list caches
+            await this.redisService.delByPattern(CacheKeys.ZONE_LIST_PATTERN);
 
             return result;
         } catch (error) {
@@ -60,8 +60,8 @@ export class DatabaseZoneRepository implements IZoneRepository {
             await new UpdateZoneAction(session).execute(params);
             await session.commitTransaction();
 
-            // Invalidate ทั้ง list cache และ cache ของ item นี้
-            await this.redisService.del(CacheKeys.ZONE_LIST);
+            // Invalidate all paginated list caches และ cache ของ item นี้
+            await this.redisService.delByPattern(CacheKeys.ZONE_LIST_PATTERN);
             if (params._id) {
                 await this.redisService.del(CacheKeys.ZONE_BY_ID(params._id));
             }
@@ -81,8 +81,8 @@ export class DatabaseZoneRepository implements IZoneRepository {
             await new DeleteZoneAction(session).execute(params._id);
             await session.commitTransaction();
 
-            // Invalidate ทั้ง list cache และ cache ของ item นี้
-            await this.redisService.del(CacheKeys.ZONE_LIST);
+            // Invalidate all paginated list caches และ cache ของ item นี้
+            await this.redisService.delByPattern(CacheKeys.ZONE_LIST_PATTERN);
             await this.redisService.del(CacheKeys.ZONE_BY_ID(params._id));
         } catch (error) {
             await session.rollbackTransaction();
@@ -100,8 +100,8 @@ export class DatabaseZoneRepository implements IZoneRepository {
             await new RestoreZoneAction(session).execute(_id);
             await session.commitTransaction();
 
-            // Invalidate ทั้ง list cache และ cache ของ item นี้
-            await this.redisService.del(CacheKeys.ZONE_LIST);
+            // Invalidate all paginated list caches และ cache ของ item นี้
+            await this.redisService.delByPattern(CacheKeys.ZONE_LIST_PATTERN);
             await this.redisService.del(CacheKeys.ZONE_BY_ID(_id));
         } catch (error) {
             await session.rollbackTransaction();
@@ -112,8 +112,9 @@ export class DatabaseZoneRepository implements IZoneRepository {
     }
 
     async findAll(query: QueryProps): Promise<LoadAllZoneResponse> {
-        // Cache-Aside: ลองอ่านจาก cache ก่อน
-        const cached = await this.redisService.get<LoadAllZoneResponse>(CacheKeys.ZONE_LIST);
+        // Cache-Aside: ลองอ่านจาก cache ก่อน (ใช้ key ที่รวม query params เพื่อแยก cache แต่ละ pagination/filter)
+        const cacheKey = CacheKeys.ZONE_LIST_QUERY(query);
+        const cached = await this.redisService.get<LoadAllZoneResponse>(cacheKey);
         if (cached) return cached;
 
         // Cache MISS → query จาก Database
@@ -123,7 +124,7 @@ export class DatabaseZoneRepository implements IZoneRepository {
             const result = await new LoadAllZoneAction(session).execute(query);
             
             // บันทึกผลลง cache
-            await this.redisService.set(CacheKeys.ZONE_LIST, result);
+            await this.redisService.set(cacheKey, result);
 
             return result;
         } finally {

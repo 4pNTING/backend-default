@@ -17,6 +17,17 @@ const user_entity_1 = require("../entities/user.entity");
 const user_repository_1 = require("./user/user.repository");
 const currency_entity_1 = require("../entities/currency.entity");
 const currency_repository_1 = require("./currency/currency.repository");
+const table_entity_1 = require("../entities/table.entity");
+const table_repository_1 = require("./table/table.repository");
+const menu_item_entity_1 = require("../entities/menu-item.entity");
+const menu_item_repository_1 = require("./menu-item/menu-item.repository");
+const menu_option_entity_1 = require("../entities/menu-option.entity");
+const menu_option_repository_1 = require("./menu-option/menu-option.repository");
+const order_entity_1 = require("../entities/order.entity");
+const order_item_entity_1 = require("../entities/order-item.entity");
+const order_repository_1 = require("./order/order.repository");
+const payment_entity_1 = require("../entities/payment.entity");
+const payment_repository_1 = require("./payment/payment.repository");
 let RepositoriesModule = class RepositoriesModule {
 };
 exports.RepositoriesModule = RepositoriesModule;
@@ -28,6 +39,12 @@ exports.RepositoriesModule = RepositoriesModule = __decorate([
                 zone_entity_1.ZoneEntity,
                 user_entity_1.UserEntity,
                 currency_entity_1.CurrencyEntity,
+                table_entity_1.TableEntity,
+                menu_item_entity_1.MenuItemEntity,
+                menu_option_entity_1.MenuOptionEntity,
+                order_entity_1.OrderEntity,
+                order_item_entity_1.OrderItemEntity,
+                payment_entity_1.PaymentEntity,
             ]),
         ],
         providers: [
@@ -35,12 +52,22 @@ exports.RepositoriesModule = RepositoriesModule = __decorate([
             zone_repository_1.DatabaseZoneRepository,
             user_repository_1.DatabaseUserRepository,
             currency_repository_1.DatabaseCurrencyRepository,
+            table_repository_1.DatabaseTableRepository,
+            menu_item_repository_1.DatabaseMenuItemRepository,
+            menu_option_repository_1.DatabaseMenuOptionRepository,
+            order_repository_1.DatabaseOrderRepository,
+            payment_repository_1.DatabasePaymentRepository,
         ],
         exports: [
             category_repository_1.DatabaseCategoryRepository,
             zone_repository_1.DatabaseZoneRepository,
             user_repository_1.DatabaseUserRepository,
             currency_repository_1.DatabaseCurrencyRepository,
+            table_repository_1.DatabaseTableRepository,
+            menu_item_repository_1.DatabaseMenuItemRepository,
+            menu_option_repository_1.DatabaseMenuOptionRepository,
+            order_repository_1.DatabaseOrderRepository,
+            payment_repository_1.DatabasePaymentRepository,
         ],
     })
 ], RepositoriesModule);

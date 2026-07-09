@@ -16,8 +16,8 @@ class LoadAllCategoryAction {
             if (query.isActive !== undefined) {
                 qb.andWhere('category.isActive = :isActive', { isActive: query.isActive });
             }
-            const page = query.paginate?.page;
-            const limit = query.paginate?.limit;
+            const page = query.paginate?.page || 1;
+            const limit = query.paginate?.limit || 10;
             qb.skip((page - 1) * limit).take(limit);
             if (query.sortField) {
                 const direction = query.sortDirection === 'ASC' ? 'ASC' : 'DESC';
@@ -29,7 +29,11 @@ class LoadAllCategoryAction {
             else {
                 qb.orderBy('category._id', 'DESC');
             }
+            const [sql, params] = qb.getQueryAndParameters();
+            console.log(`📊 [LoadAllCategoryAction] SQL: ${sql}`);
+            console.log(`📊 [LoadAllCategoryAction] params: ${JSON.stringify(params)}`);
             const entities = await qb.getMany();
+            console.log(`📊 [LoadAllCategoryAction] result count: ${entities.length}`);
             return { items: entities };
         }
         catch (error) {

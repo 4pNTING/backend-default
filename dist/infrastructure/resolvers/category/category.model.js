@@ -197,7 +197,7 @@ __decorate([
     __metadata("design:type", Number)
 ], LoadCategoryDto.prototype, "limit", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "isActive", void 0);
 __decorate([

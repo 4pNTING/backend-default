@@ -81,7 +81,7 @@ async function seed() {
         for (const c of currencies) {
             await client.query(
                 `INSERT INTO currencies (_id, code, name, "isActive", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, NOW(), NOW())`,
-                [c.id, c.code, c.name, true]
+                [c.id, c.code, c.name, 'active']
             );
         }
         console.log('✅ Currencies seeded');
@@ -221,6 +221,123 @@ async function seed() {
         }
         console.log('✅ Menu Options seeded');
 
+        // 11. Seed Orders (10 orders)
+        console.log('📦 Seeding 10 Orders & Order Items...');
+        const orders = [];
+        const orderItems = [];
+        
+        // Generate 10 orders
+        for (let i = 0; i < 10; i++) {
+            const orderId = generateUUID();
+            const orderNumber = `ORD-20260708-${String(i + 1).padStart(4, '0')}`;
+            const tableId = tables[i % tables.length].id;
+            const staffId = users[3 + (i % 5)].id; // staff1 to staff5
+            
+            // Statuses: 5 paid, 3 served, 1 confirmed, 1 pending
+            let status = 'pending';
+            if (i < 5) status = 'paid';
+            else if (i < 8) status = 'served';
+            else if (i < 9) status = 'confirmed';
+            
+            // Choose 2 menu items per order to seed
+            const item1 = menuItems[(i * 2) % menuItems.length];
+            const item2 = menuItems[(i * 2 + 1) % menuItems.length];
+            
+            const qty1 = (i % 2) + 1; // 1 or 2
+            const qty2 = (i % 3) + 1; // 1, 2 or 3
+            
+            const price1 = Number(item1.price);
+            const price2 = Number(item2.price);
+            
+            const tot1 = price1 * qty1;
+            const tot2 = price2 * qty2;
+            
+            const subTotal = tot1 + tot2;
+            const discount = i % 4 === 0 ? 20.00 : 0.00; // Some discount
+            const total = subTotal - discount;
+            
+            orders.push({
+                id: orderId,
+                orderNumber,
+                tableId,
+                staffId,
+                status,
+                subTotal,
+                discount,
+                total
+            });
+            
+            orderItems.push({
+                id: generateUUID(),
+                orderId,
+                menuItemId: item1.id,
+                menuItemName: item1.name,
+                quantity: qty1,
+                unitPrice: price1,
+                totalPrice: tot1
+            });
+            
+            orderItems.push({
+                id: generateUUID(),
+                orderId,
+                menuItemId: item2.id,
+                menuItemName: item2.name,
+                quantity: qty2,
+                unitPrice: price2,
+                totalPrice: tot2
+            });
+        }
+        
+        for (const o of orders) {
+            await client.query(
+                `INSERT INTO orders (_id, "orderNumber", "tableId", "staffId", status, "subTotal", discount, total, "createdAt", "updatedAt") 
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())`,
+                [o.id, o.orderNumber, o.tableId, o.staffId, o.status, o.subTotal, o.discount, o.total]
+            );
+        }
+        
+        for (const oi of orderItems) {
+            await client.query(
+                `INSERT INTO order_items (_id, "orderId", "menuItemId", "menuItemName", quantity, "unitPrice", "totalPrice", "createdAt", "updatedAt") 
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())`,
+                [oi.id, oi.orderId, oi.menuItemId, oi.menuItemName, oi.quantity, oi.unitPrice, oi.totalPrice]
+            );
+        }
+        console.log('✅ Orders & Order Items seeded');
+
+        // 12. Seed Payments (10 payments - some for paid orders, some history logs)
+        console.log('💳 Seeding 10 Payments...');
+        const payments = [];
+        const paidOrders = orders.filter(o => o.status === 'paid');
+        
+        for (let i = 0; i < 10; i++) {
+            // Seed payments for the 5 paid orders first, and then make up the rest of the 10 using other orders/mock ids
+            const order = i < paidOrders.length ? paidOrders[i] : orders[i % orders.length];
+            const amountPaid = Math.ceil(order.total / 100) * 100; // Round up to nearest 100
+            const change = amountPaid - order.total;
+            const currencyId = currencies[0].id; // THB
+            const method = i % 2 === 0 ? 'cash' : 'card';
+            
+            payments.push({
+                id: generateUUID(),
+                orderId: order.id,
+                currencyId,
+                method,
+                amount: amountPaid,
+                change,
+                paidAt: new Date()
+            });
+        }
+        
+        for (const p of payments) {
+            await client.query(
+                `INSERT INTO payments (_id, "orderId", "currencyId", method, amount, change, "paidAt", "createdAt") 
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+                [p.id, p.orderId, p.currencyId, p.method, p.amount, p.change, p.paidAt]
+            );
+        }
+        console.log('✅ Payments seeded');
+
         console.log('\n🎉 Seeding completed successfully!');
         
         // Print Summary
@@ -232,6 +349,9 @@ async function seed() {
         console.log(`  - Tables: ${tables.length}`);
         console.log(`  - Menu Items: ${menuItems.length}`);
         console.log(`  - Menu Options: ${menuOptions.length}`);
+        console.log(`  - Orders: ${orders.length}`);
+        console.log(`  - Order Items: ${orderItems.length}`);
+        console.log(`  - Payments: ${payments.length}`);
 
         // Helper information to set values in Postman
         console.log('\n🔑 Helper IDs for your Postman Configuration:');

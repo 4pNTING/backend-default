@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLISODateTime } from '@nestjs/graphql';
 import { join } from 'path';
 
 // Import Modules ของเรา
@@ -62,6 +63,9 @@ import { RedisModule } from './infrastructure/cache/redis.module';
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+            resolvers: {
+                DateTime: GraphQLISODateTime,
+            },
             context: ({ req }) => ({ req }),
             sortSchema: false,
             playground: true,

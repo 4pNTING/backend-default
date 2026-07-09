@@ -1,5 +1,8 @@
-import { ObjectType, Field, InputType, Int, Float } from '@nestjs/graphql';
-import { ActiveStatus } from '../../../domain/enums/enum';
+import { Field, Int, Float, ObjectType, InputType } from '@nestjs/graphql';
+import { IsString, IsOptional, IsNotEmpty } from 'class-validator';
+import { ActiveStatus } from '../../common/graphql/common.model';
+
+export { ActiveStatus };
 
 // ─── Object Types ─────────────────────────────────────────
 @ObjectType()
@@ -66,86 +69,121 @@ export class DeleteMenuItemResponse {
 @InputType()
 export class CreateMenuItemDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     name: string;
 
     @Field({ nullable: true })
+    @IsOptional()
     description?: string;
 
     @Field({ nullable: true })
+    @IsOptional()
     photo?: string;
 
     @Field(() => Float)
     price: number;
 
     @Field()
+    @IsString()
+    @IsNotEmpty()
     categoryId: string;
 
     @Field(() => String, { nullable: true })
+    @IsOptional()
     isActive?: ActiveStatus;
 }
 
 @InputType()
 export class UpdateMenuItemDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     name?: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     description?: string;
 
     @Field({ nullable: true })
+    @IsOptional()
     photo?: string;
 
     @Field(() => Float, { nullable: true })
+    @IsOptional()
     price?: number;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     categoryId?: string;
 
     @Field(() => String, { nullable: true })
+    @IsOptional()
     isActive?: ActiveStatus;
 }
 
 @InputType()
 export class LoadMenuItemDto {
     @Field(() => Int, { nullable: true })
+    @IsOptional()
     page?: number;
 
     @Field(() => Int, { nullable: true })
+    @IsOptional()
     limit?: number;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     categoryId?: string;
 
-    @Field(() => String, { nullable: true })
+    @Field(() => ActiveStatus, { nullable: true })
+    @IsOptional()
     isActive?: ActiveStatus;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     keyword?: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     sortField?: string;
 
     @Field({ nullable: true })
+    @IsString()
+    @IsOptional()
     sortDirection?: string;
 }
 
 @InputType()
 export class LoadMenuItemByIdDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 }
 
 @InputType()
 export class DeleteMenuItemDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     _id: string;
 }
 
 @InputType()
 export class LoadMenuItemByCategoryDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     categoryId: string;
 }

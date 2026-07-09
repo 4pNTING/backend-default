@@ -8,6 +8,7 @@ export declare class DatabaseCategoryRepository implements ICategoryRepository {
     private readonly categoryEntity;
     private readonly dataSource;
     private readonly redisService;
+    private readonly logger;
     constructor(categoryEntity: Repository<CategoryEntity>, dataSource: DataSource, redisService: RedisService);
     create(params: CreateCategoryRequest): Promise<CreateCategoryResponse>;
     update(params: UpdateCategoryRequest): Promise<void>;

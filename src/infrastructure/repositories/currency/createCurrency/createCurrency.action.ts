@@ -1,6 +1,7 @@
 import { QueryRunner } from 'typeorm';
 import { CurrencyEntity } from '../../../entities/currency.entity';
 import { CurrencyModel, CreateCurrencyRequest } from '../../../../domain/models/currency.model';
+import { ActiveStatus } from '../../../../domain/enums/enum';
 
 export class CreateCurrencyAction extends CurrencyModel {
   constructor(private readonly session: QueryRunner) {
@@ -25,7 +26,7 @@ export class CreateCurrencyAction extends CurrencyModel {
     try {
       this.code = params.code;
       this.name = params.name;
-      this.isActive = params.isActive ?? true;
+      this.isActive = params.isActive ?? ActiveStatus.active;
 
       this.createdAt = new Date();
       this.updatedAt = new Date();

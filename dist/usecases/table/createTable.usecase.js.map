@@ -1,0 +1,1 @@
+{"version":3,"file":"createTable.usecase.js","sourceRoot":"","sources":["../../../src/usecases/table/createTable.usecase.ts"],"names":[],"mappings":";;;AAGA,MAAa,kBAAkB;IAC3B,YAA6B,eAAiC;QAAjC,oBAAe,GAAf,eAAe,CAAkB;IAAI,CAAC;IAEnE,KAAK,CAAC,OAAO,CAAC,MAA0B;QACpC,OAAO,MAAM,IAAI,CAAC,eAAe,CAAC,MAAM,CAAC,MAAM,CAAC,CAAC;IACrD,CAAC;CACJ;AAND,gDAMC"}

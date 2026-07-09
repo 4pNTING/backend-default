@@ -42,9 +42,13 @@ export class ZoneResolver {
         private readonly restoreZoneUsecase: RestoreZoneUsecase,
     ) { }
 
+    // ==============================
+    // QUERY
+    // ==============================
+
     @Query(() => LoadZoneResponse, { name: 'loadZone' })
     async loadZone(
-        @Args('input') input: LoadZoneDto,
+        @Args('input', { nullable: true }) input: LoadZoneDto,
     ) {
         // Map simple input directly to QueryProps
         const query: any = {};
@@ -94,6 +98,10 @@ export class ZoneResolver {
         if (!result) return { zone: null };
         return { zone: result };
     }
+
+    // ==============================
+    // MUTATION
+    // ==============================
 
     @Mutation(() => CreateZoneResponse)
     async createZone(

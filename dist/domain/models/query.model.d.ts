@@ -17,4 +17,10 @@ export interface QueryProps {
     paginate?: Paginate;
     isActive?: boolean | string;
     select?: string[];
+    sortField?: string;
+    sortDirection?: string;
+    zoneId?: string;
+    categoryId?: string;
+    tableId?: string;
+    status?: string;
 }

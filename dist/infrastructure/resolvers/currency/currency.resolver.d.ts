@@ -3,7 +3,7 @@ import { UpdateCurrencyUsecase } from '../../../usecases/currency/updateCurrency
 import { DeleteCurrencyUsecase } from '../../../usecases/currency/deleteCurrency.usecase';
 import { LoadAllCurrencyUsecase } from '../../../usecases/currency/loadAllCurrency.usecase';
 import { LoadCurrencyByIdUsecase } from '../../../usecases/currency/loadCurrencyById.usecase';
-import { CreateCurrencyDto, UpdateCurrencyDto, DeleteCurrencyDto, LoadCurrencyByIdDto } from './currency.model';
+import { CreateCurrencyDto, UpdateCurrencyDto, DeleteCurrencyDto, LoadCurrencyByIdDto, LoadCurrencyDto } from './currency.model';
 export declare class CurrencyResolver {
     private readonly createCurrencyUsecase;
     private readonly updateCurrencyUsecase;
@@ -11,7 +11,7 @@ export declare class CurrencyResolver {
     private readonly loadAllCurrencyUsecase;
     private readonly loadCurrencyByIdUsecase;
     constructor(createCurrencyUsecase: CreateCurrencyUsecase, updateCurrencyUsecase: UpdateCurrencyUsecase, deleteCurrencyUsecase: DeleteCurrencyUsecase, loadAllCurrencyUsecase: LoadAllCurrencyUsecase, loadCurrencyByIdUsecase: LoadCurrencyByIdUsecase);
-    loadCurrencies(): Promise<{
+    loadCurrencies(input: LoadCurrencyDto): Promise<{
         currency: import("../../../domain/models/currency.model").CurrencyModel[];
     }>;
     loadCurrencyById(input: LoadCurrencyByIdDto): Promise<{

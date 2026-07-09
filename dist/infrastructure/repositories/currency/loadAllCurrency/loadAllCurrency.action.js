@@ -16,11 +16,9 @@ class LoadAllCurrencyAction {
             if (query.isActive !== undefined) {
                 qb.andWhere('currency.isActive = :isActive', { isActive: query.isActive });
             }
-            const page = query.paginate?.page;
-            const limit = query.paginate?.limit;
-            if (page && limit) {
-                qb.skip((page - 1) * limit).take(limit);
-            }
+            const page = query.paginate?.page || 1;
+            const limit = query.paginate?.limit || 10;
+            qb.skip((page - 1) * limit).take(limit);
             if (query.sortField) {
                 const direction = query.sortDirection === 'ASC' ? 'ASC' : 'DESC';
                 qb.orderBy(`currency.${query.sortField}`, direction);
