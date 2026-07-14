@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../common/jwt-auth.guard';
 import { ZoneUsecasesProxyModule } from '../../usecases-proxy/zone-usecases-proxy.module';
 import { CreateZoneUsecase } from '../../../usecases/zone/createZone.usecase';
 import { UpdateZoneUsecase } from '../../../usecases/zone/updateZone.usecase';
@@ -26,6 +27,7 @@ import {
 } from './zone.model';
 
 @Resolver(() => Zone)
+@UseGuards(JwtAuthGuard)
 export class ZoneResolver {
     constructor(
         @Inject(ZoneUsecasesProxyModule.CREATE_ZONE_PROXY)
@@ -87,6 +89,7 @@ export class ZoneResolver {
         const result = await this.loadAllZoneUsecase.execute(query);
         return {
             zone: result.items,
+            count: result.total,
         };
     }
 

@@ -39,8 +39,8 @@ export class LoadAllTableAction {
                 qb.orderBy('table.number', 'ASC');
             }
 
-            const entities = await qb.getMany();
-            return { items: entities };
+            const [entities, total] = await qb.getManyAndCount();
+            return { items: entities, total };
         } catch (error) {
             throw error instanceof Error ? error : new Error(error?.message);
         }

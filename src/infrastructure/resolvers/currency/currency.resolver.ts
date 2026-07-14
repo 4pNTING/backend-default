@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../common/jwt-auth.guard';
 import { CurrencyUsecasesProxyModule } from '../../usecases-proxy/currency-usecases-proxy.module';
 import { CreateCurrencyUsecase } from '../../../usecases/currency/createCurrency.usecase';
 import { UpdateCurrencyUsecase } from '../../../usecases/currency/updateCurrency.usecase';
@@ -21,6 +22,7 @@ import {
 } from './currency.model';
 
 @Resolver(() => Currency)
+@UseGuards(JwtAuthGuard)
 export class CurrencyResolver {
     constructor(
         @Inject(CurrencyUsecasesProxyModule.CREATE_CURRENCY_PROXY)
@@ -66,6 +68,7 @@ export class CurrencyResolver {
         const result = await this.loadAllCurrencyUsecase.execute(query);
         return {
             currency: result.items,
+            count: result.total,
         };
     }
 

@@ -60,6 +60,7 @@ export class LoadAllMenuItemRequest { }
 
 export class LoadAllMenuItemResponse {
     items: MenuItemModel[];
+    total: number;
 }
 
 export class LoadMenuItemByIdRequest {

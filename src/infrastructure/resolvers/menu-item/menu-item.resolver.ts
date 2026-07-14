@@ -15,6 +15,7 @@ import { LoadMenuItemUseCase }             from '../../../usecases/menu-item/loa
 import { LoadByIDMenuItemUseCase }         from '../../../usecases/menu-item/loadByIDMenuItem.usecase';
 
 @Resolver(() => MenuItem)
+@UseGuards(JwtAuthGuard)
 export class MenuItemResolver {
     constructor(
         @Inject(MenuItemUsecasesProxyModule.CREATE_MENU_ITEM_PROXY)
@@ -49,7 +50,7 @@ export class MenuItemResolver {
             if (input.sortDirection) query.sortDirection = input.sortDirection;
         }
         const result = await this.loadMenuItemUseCase.execute(query);
-        return { menuItem: result.items };
+        return { menuItem: result.items, count: result.total };
     }
 
     @Query(() => LoadMenuItemByIdResponse, { name: 'loadMenuItemById', nullable: true })

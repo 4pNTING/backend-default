@@ -34,6 +34,9 @@ export class Currency {
 export class LoadCurrencyResponse {
     @Field(() => [Currency])
     currency: Currency[];
+
+    @Field(() => Int, { nullable: true })
+    count: number;
 }
 
 @ObjectType()

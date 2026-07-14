@@ -46,6 +46,7 @@ export class LoadAllCategoryRequest {
 
 export class LoadAllCategoryResponse {
   items: CategoryModel[];
+  total: number;
 }
 
 export class LoadCategoryByIdRequest {

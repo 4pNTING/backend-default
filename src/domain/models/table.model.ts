@@ -57,6 +57,7 @@ export class LoadAllTableRequest { }
 
 export class LoadAllTableResponse {
     items: TableModel[];
+    total: number;
 }
 
 export class LoadTableByIdRequest {

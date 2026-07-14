@@ -35,6 +35,9 @@ export class Table {
 export class LoadTableResponse {
     @Field(() => [Table])
     table: Table[];
+
+    @Field(() => Int, { nullable: true })
+    count: number;
 }
 
 @ObjectType()

@@ -46,6 +46,7 @@ export class LoadAllZoneRequest {
 
 export class LoadAllZoneResponse {
     items: ZoneModel[];
+    total: number;
 }
 
 export class LoadZoneByIdRequest {

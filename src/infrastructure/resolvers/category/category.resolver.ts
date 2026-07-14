@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { Inject, Logger } from '@nestjs/common';
+import { Inject, Logger, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../common/jwt-auth.guard';
 import {
     Category,
     LoadCategoryResponse,
@@ -25,6 +26,7 @@ import { LoadByIDCategoryUseCase } from '../../../usecases/category/loadByIDCate
 import { RestoreCategoryUseCase } from '../../../usecases/category/restoreCategory.usecase';
 
 @Resolver(() => Category)
+@UseGuards(JwtAuthGuard)
 export class CategoryResolver {
     private readonly logger = new Logger(CategoryResolver.name);
 
@@ -56,8 +58,6 @@ export class CategoryResolver {
     async loadCategory(
         @Args('input', { nullable: true }) input: LoadCategoryDto
     ) {
-        console.log(`🔍 [CategoryResolver] input: ${JSON.stringify(input)}`);
-
         // Map simple input directly to QueryProps
         const query: any = {};
 
@@ -90,12 +90,11 @@ export class CategoryResolver {
             }
         }
 
-        console.log(`🔍 [CategoryResolver] query: ${JSON.stringify(query)}`);
         const result = await this.loadCategoryUseCase.execute(query);
-        console.log(`✅ [CategoryResolver] result items count: ${result.items?.length ?? 0}`);
 
         return {
             category: result.items,
+            count: result.total,
         };
     }
 

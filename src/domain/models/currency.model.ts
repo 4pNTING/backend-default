@@ -42,4 +42,5 @@ export class UpdateCurrencyRequest {
 
 export class LoadAllCurrencyResponse {
     items: CurrencyModel[];
+    total: number;
 }

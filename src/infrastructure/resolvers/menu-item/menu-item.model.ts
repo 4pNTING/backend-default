@@ -39,6 +39,9 @@ export class MenuItem {
 export class LoadMenuItemResponse {
     @Field(() => [MenuItem])
     menuItem: MenuItem[];
+
+    @Field(() => Int, { nullable: true })
+    count: number;
 }
 
 @ObjectType()

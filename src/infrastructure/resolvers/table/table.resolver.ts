@@ -55,7 +55,7 @@ export class TableResolver {
             if (input.sortDirection) query.sortDirection = input.sortDirection;
         }
         const result = await this.loadTableUseCase.execute(query);
-        return { table: result.items };
+        return { table: result.items, count: result.total };
     }
 
     @Query(() => LoadTableByIdResponse, { name: 'loadTableById', nullable: true })

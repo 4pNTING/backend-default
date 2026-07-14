@@ -32,6 +32,9 @@ export class Category {
 export class LoadCategoryResponse {
     @Field(() => [Category])
     category: Category[];
+
+    @Field(() => Int, { nullable: true })
+    count: number;
 }
 
 @ObjectType()
@@ -166,4 +169,3 @@ export class LoadCategoryDto {
     @IsOptional()
     sortDirection?: string;
 }
-
