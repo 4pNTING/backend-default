@@ -37,11 +37,11 @@ export class MenuItem {
 
 @ObjectType()
 export class LoadMenuItemResponse {
-    @Field(() => [MenuItem])
-    menuItem: MenuItem[];
-
     @Field(() => Int, { nullable: true })
     count: number;
+
+    @Field(() => [MenuItem])
+    menuItem: MenuItem[];
 }
 
 @ObjectType()

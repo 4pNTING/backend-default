@@ -30,11 +30,11 @@ export class Zone {
 
 @ObjectType()
 export class LoadZoneResponse {
-    @Field(() => [Zone])
-    zone: Zone[];
-
     @Field(() => Int, { nullable: true })
     count: number;
+
+    @Field(() => [Zone])
+    zone: Zone[];
 }
 
 @ObjectType()

@@ -30,11 +30,11 @@ export class Category {
 
 @ObjectType()
 export class LoadCategoryResponse {
-    @Field(() => [Category])
-    category: Category[];
-
     @Field(() => Int, { nullable: true })
     count: number;
+
+    @Field(() => [Category])
+    category: Category[];
 }
 
 @ObjectType()

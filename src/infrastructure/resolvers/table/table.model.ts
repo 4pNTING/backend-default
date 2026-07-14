@@ -33,11 +33,11 @@ export class Table {
 
 @ObjectType()
 export class LoadTableResponse {
-    @Field(() => [Table])
-    table: Table[];
-
     @Field(() => Int, { nullable: true })
     count: number;
+
+    @Field(() => [Table])
+    table: Table[];
 }
 
 @ObjectType()
