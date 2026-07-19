@@ -56,6 +56,8 @@ export class CreateZoneAction extends ZoneModel {
         try {
             return {
                 _id: this._id,
+                uniqueId: this.uniqueId,
+                uid: this.uid,
                 name: this.name,
                 isActive: this.isActive,
                 createdAt: this.createdAt,

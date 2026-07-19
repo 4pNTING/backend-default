@@ -1,6 +1,8 @@
 import { ActiveStatus } from '../enums/enum';
 export declare class MenuItemModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     name: string;
     description?: string;
     photo?: string;
@@ -47,6 +49,7 @@ export declare class LoadAllMenuItemRequest {
 }
 export declare class LoadAllMenuItemResponse {
     items: MenuItemModel[];
+    total: number;
 }
 export declare class LoadMenuItemByIdRequest {
     _id: string;

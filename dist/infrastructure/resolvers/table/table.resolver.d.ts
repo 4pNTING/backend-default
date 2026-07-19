@@ -15,6 +15,7 @@ export declare class TableResolver {
     constructor(createTableUseCase: CreateTableUseCase, updateTableUseCase: UpdateTableUseCase, deleteTableUseCase: DeleteTableUseCase, restoreTableUseCase: RestoreTableUseCase, loadTableUseCase: LoadTableUseCase, loadTableByIdUseCase: LoadByIDTableUseCase);
     loadTable(input: LoadTableDto): Promise<{
         table: import("../../../domain/models/table.model").TableModel[];
+        count: number;
     }>;
     loadTableById(input: LoadTableByIdDto): Promise<{
         table: import("../../../domain/models/table.model").LoadTableByIdResponse;

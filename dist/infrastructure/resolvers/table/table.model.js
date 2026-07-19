@@ -22,6 +22,14 @@ __decorate([
     __metadata("design:type", String)
 ], Table.prototype, "_id", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], Table.prototype, "uniqueId", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], Table.prototype, "uid", void 0);
+__decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Table.prototype, "number", void 0);
@@ -55,6 +63,10 @@ exports.Table = Table = __decorate([
 let LoadTableResponse = class LoadTableResponse {
 };
 exports.LoadTableResponse = LoadTableResponse;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], LoadTableResponse.prototype, "count", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [Table]),
     __metadata("design:type", Array)

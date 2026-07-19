@@ -1,6 +1,9 @@
-import { ActiveStatus } from '../../../domain/enums/enum';
+import { ActiveStatus } from '../../common/graphql/common.model';
+export { ActiveStatus };
 export declare class MenuItem {
     _id: string;
+    uniqueId: number;
+    uid: string;
     name: string;
     description?: string;
     photo?: string;
@@ -11,6 +14,7 @@ export declare class MenuItem {
     updatedAt?: Date;
 }
 export declare class LoadMenuItemResponse {
+    count: number;
     menuItem: MenuItem[];
 }
 export declare class LoadMenuItemByIdResponse {

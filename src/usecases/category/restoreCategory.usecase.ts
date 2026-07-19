@@ -9,7 +9,7 @@ export class RestoreCategoryUseCase {
     async execute(_id: string): Promise<CategoryModel> {
         // 1. Restore the category (set deletedAt = null)
         await this.categoryRepository.restore(_id);
-        
+
         // 2. Return the restored category
         return await this.categoryRepository.findById({ _id });
     }

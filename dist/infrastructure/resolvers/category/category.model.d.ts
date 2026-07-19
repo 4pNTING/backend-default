@@ -1,7 +1,9 @@
-import { ActiveStatus } from '../../../domain/enums/enum';
+import { ActiveStatus } from '../../common/graphql/common.model';
 export { ActiveStatus };
 export declare class Category {
     _id: string;
+    uniqueId: number;
+    uid: string;
     name: string;
     description?: string;
     photo?: string;
@@ -10,6 +12,7 @@ export declare class Category {
     isActive?: ActiveStatus;
 }
 export declare class LoadCategoryResponse {
+    count: number;
     category: Category[];
 }
 export declare class LoadCategoryByIdResponse {

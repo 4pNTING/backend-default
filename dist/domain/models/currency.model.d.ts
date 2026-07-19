@@ -1,6 +1,8 @@
 import { ActiveStatus } from '../enums/enum';
 export declare class CurrencyModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     code: string;
     name: string;
     isActive: ActiveStatus;
@@ -20,4 +22,5 @@ export declare class UpdateCurrencyRequest {
 }
 export declare class LoadAllCurrencyResponse {
     items: CurrencyModel[];
+    total: number;
 }

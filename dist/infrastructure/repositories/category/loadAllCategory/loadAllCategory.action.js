@@ -29,12 +29,8 @@ class LoadAllCategoryAction {
             else {
                 qb.orderBy('category._id', 'DESC');
             }
-            const [sql, params] = qb.getQueryAndParameters();
-            console.log(`📊 [LoadAllCategoryAction] SQL: ${sql}`);
-            console.log(`📊 [LoadAllCategoryAction] params: ${JSON.stringify(params)}`);
-            const entities = await qb.getMany();
-            console.log(`📊 [LoadAllCategoryAction] result count: ${entities.length}`);
-            return { items: entities };
+            const [entities, total] = await qb.getManyAndCount();
+            return { items: entities, total };
         }
         catch (error) {
             throw error instanceof Error ? error : new Error(error?.message);

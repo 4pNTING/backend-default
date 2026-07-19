@@ -13,6 +13,7 @@ export declare class CurrencyResolver {
     constructor(createCurrencyUsecase: CreateCurrencyUsecase, updateCurrencyUsecase: UpdateCurrencyUsecase, deleteCurrencyUsecase: DeleteCurrencyUsecase, loadAllCurrencyUsecase: LoadAllCurrencyUsecase, loadCurrencyByIdUsecase: LoadCurrencyByIdUsecase);
     loadCurrencies(input: LoadCurrencyDto): Promise<{
         currency: import("../../../domain/models/currency.model").CurrencyModel[];
+        count: number;
     }>;
     loadCurrencyById(input: LoadCurrencyByIdDto): Promise<{
         currency: import("../../../domain/models/currency.model").CurrencyModel;

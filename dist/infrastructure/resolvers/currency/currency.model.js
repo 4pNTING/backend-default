@@ -22,6 +22,14 @@ __decorate([
     __metadata("design:type", String)
 ], Currency.prototype, "_id", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], Currency.prototype, "uniqueId", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], Currency.prototype, "uid", void 0);
+__decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Currency.prototype, "code", void 0);
@@ -47,6 +55,10 @@ exports.Currency = Currency = __decorate([
 let LoadCurrencyResponse = class LoadCurrencyResponse {
 };
 exports.LoadCurrencyResponse = LoadCurrencyResponse;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], LoadCurrencyResponse.prototype, "count", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [Currency]),
     __metadata("design:type", Array)

@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoadMenuItemByCategoryDto = exports.DeleteMenuItemDto = exports.LoadMenuItemByIdDto = exports.LoadMenuItemDto = exports.UpdateMenuItemDto = exports.CreateMenuItemDto = exports.DeleteMenuItemResponse = exports.UpdateMenuItemResponse = exports.CreateMenuItemResponse = exports.LoadMenuItemByIdResponse = exports.LoadMenuItemResponse = exports.MenuItem = void 0;
+exports.LoadMenuItemByCategoryDto = exports.DeleteMenuItemDto = exports.LoadMenuItemByIdDto = exports.LoadMenuItemDto = exports.UpdateMenuItemDto = exports.CreateMenuItemDto = exports.DeleteMenuItemResponse = exports.UpdateMenuItemResponse = exports.CreateMenuItemResponse = exports.LoadMenuItemByIdResponse = exports.LoadMenuItemResponse = exports.MenuItem = exports.ActiveStatus = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const enum_1 = require("../../../domain/enums/enum");
+const class_validator_1 = require("class-validator");
+const common_model_1 = require("../../common/graphql/common.model");
+Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return common_model_1.ActiveStatus; } });
 let MenuItem = class MenuItem {
 };
 exports.MenuItem = MenuItem;
@@ -19,6 +21,14 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], MenuItem.prototype, "_id", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], MenuItem.prototype, "uniqueId", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], MenuItem.prototype, "uid", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
@@ -57,6 +67,10 @@ exports.MenuItem = MenuItem = __decorate([
 let LoadMenuItemResponse = class LoadMenuItemResponse {
 };
 exports.LoadMenuItemResponse = LoadMenuItemResponse;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], LoadMenuItemResponse.prototype, "count", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [MenuItem]),
     __metadata("design:type", Array)
@@ -109,14 +123,18 @@ let CreateMenuItemDto = class CreateMenuItemDto {
 exports.CreateMenuItemDto = CreateMenuItemDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateMenuItemDto.prototype, "name", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateMenuItemDto.prototype, "description", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateMenuItemDto.prototype, "photo", void 0);
 __decorate([
@@ -125,10 +143,13 @@ __decorate([
 ], CreateMenuItemDto.prototype, "price", void 0);
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateMenuItemDto.prototype, "categoryId", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateMenuItemDto.prototype, "isActive", void 0);
 exports.CreateMenuItemDto = CreateMenuItemDto = __decorate([
@@ -139,30 +160,41 @@ let UpdateMenuItemDto = class UpdateMenuItemDto {
 exports.UpdateMenuItemDto = UpdateMenuItemDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdateMenuItemDto.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateMenuItemDto.prototype, "name", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateMenuItemDto.prototype, "description", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateMenuItemDto.prototype, "photo", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Float, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], UpdateMenuItemDto.prototype, "price", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateMenuItemDto.prototype, "categoryId", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateMenuItemDto.prototype, "isActive", void 0);
 exports.UpdateMenuItemDto = UpdateMenuItemDto = __decorate([
@@ -173,30 +205,41 @@ let LoadMenuItemDto = class LoadMenuItemDto {
 exports.LoadMenuItemDto = LoadMenuItemDto;
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], LoadMenuItemDto.prototype, "page", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], LoadMenuItemDto.prototype, "limit", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadMenuItemDto.prototype, "categoryId", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadMenuItemDto.prototype, "isActive", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadMenuItemDto.prototype, "keyword", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadMenuItemDto.prototype, "sortField", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadMenuItemDto.prototype, "sortDirection", void 0);
 exports.LoadMenuItemDto = LoadMenuItemDto = __decorate([
@@ -207,6 +250,8 @@ let LoadMenuItemByIdDto = class LoadMenuItemByIdDto {
 exports.LoadMenuItemByIdDto = LoadMenuItemByIdDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoadMenuItemByIdDto.prototype, "_id", void 0);
 exports.LoadMenuItemByIdDto = LoadMenuItemByIdDto = __decorate([
@@ -217,6 +262,8 @@ let DeleteMenuItemDto = class DeleteMenuItemDto {
 exports.DeleteMenuItemDto = DeleteMenuItemDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], DeleteMenuItemDto.prototype, "_id", void 0);
 exports.DeleteMenuItemDto = DeleteMenuItemDto = __decorate([
@@ -227,6 +274,8 @@ let LoadMenuItemByCategoryDto = class LoadMenuItemByCategoryDto {
 exports.LoadMenuItemByCategoryDto = LoadMenuItemByCategoryDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoadMenuItemByCategoryDto.prototype, "categoryId", void 0);
 exports.LoadMenuItemByCategoryDto = LoadMenuItemByCategoryDto = __decorate([

@@ -20,6 +20,14 @@ __decorate([
     __metadata("design:type", String)
 ], CurrencyEntity.prototype, "_id", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
+    __metadata("design:type", Number)
+], CurrencyEntity.prototype, "uniqueId", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], CurrencyEntity.prototype, "uid", void 0);
+__decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], CurrencyEntity.prototype, "code", void 0);

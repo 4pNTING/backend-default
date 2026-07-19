@@ -22,6 +22,14 @@ __decorate([
     __metadata("design:type", String)
 ], Zone.prototype, "_id", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], Zone.prototype, "uniqueId", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], Zone.prototype, "uid", void 0);
+__decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Zone.prototype, "name", void 0);
@@ -43,6 +51,10 @@ exports.Zone = Zone = __decorate([
 let LoadZoneResponse = class LoadZoneResponse {
 };
 exports.LoadZoneResponse = LoadZoneResponse;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], LoadZoneResponse.prototype, "count", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [Zone]),
     __metadata("design:type", Array)

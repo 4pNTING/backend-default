@@ -2,6 +2,8 @@ import { ActiveStatus } from '../../common/graphql/common.model';
 export { ActiveStatus };
 export declare class Currency {
     _id: string;
+    uniqueId: number;
+    uid: string;
     code: string;
     name: string;
     isActive?: ActiveStatus;
@@ -9,6 +11,7 @@ export declare class Currency {
     updatedAt?: Date;
 }
 export declare class LoadCurrencyResponse {
+    count: number;
     currency: Currency[];
 }
 export declare class LoadCurrencyByIdResponse {

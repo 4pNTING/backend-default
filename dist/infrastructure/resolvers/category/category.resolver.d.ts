@@ -16,6 +16,7 @@ export declare class CategoryResolver {
     constructor(createCategoryUseCase: CreateCategoryUseCase, updateCategoryUseCase: UpdateCategoryUseCase, deleteCategoryUseCase: DeleteCategoryUseCase, loadCategoryUseCase: LoadCategoryUseCase, loadCategoryByIdUseCase: LoadByIDCategoryUseCase, restoreCategoryUseCase: RestoreCategoryUseCase);
     loadCategory(input: LoadCategoryDto): Promise<{
         category: import("../../../domain/models/category.model").CategoryModel[];
+        count: number;
     }>;
     loadCategoryById(input: LoadCategoryByIdDto): Promise<{
         category: import("../../../domain/models/category.model").LoadCategoryByIdResponse;

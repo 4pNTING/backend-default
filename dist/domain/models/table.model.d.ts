@@ -1,6 +1,8 @@
 import { ActiveStatus, TableStatus } from '../enums/enum';
 export declare class TableModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     number: string;
     zoneId: string;
     capacity: number;
@@ -44,6 +46,7 @@ export declare class LoadAllTableRequest {
 }
 export declare class LoadAllTableResponse {
     items: TableModel[];
+    total: number;
 }
 export declare class LoadTableByIdRequest {
     _id: string;

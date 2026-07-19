@@ -3,6 +3,8 @@ import { ActiveStatus } from '../../domain/enums/enum';
 import { CategoryEntity } from './category.entity';
 export declare class MenuItemEntity implements MenuItemModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     name: string;
     description: string;
     photo: string;

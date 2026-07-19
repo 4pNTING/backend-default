@@ -1,6 +1,8 @@
 import { ActiveStatus } from '../enums/enum';
 export declare class CategoryModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     name: string;
     description?: string;
     photo?: string;
@@ -36,6 +38,7 @@ export declare class LoadAllCategoryRequest {
 }
 export declare class LoadAllCategoryResponse {
     items: CategoryModel[];
+    total: number;
 }
 export declare class LoadCategoryByIdRequest {
     _id: string;

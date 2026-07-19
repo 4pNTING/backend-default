@@ -49,7 +49,7 @@ let MenuItemResolver = class MenuItemResolver {
                 query.sortDirection = input.sortDirection;
         }
         const result = await this.loadMenuItemUseCase.execute(query);
-        return { menuItem: result.items };
+        return { menuItem: result.items, count: result.total };
     }
     async loadMenuItemById(input) {
         const result = await this.loadMenuItemByIdUseCase.execute({ _id: input._id });

@@ -52,6 +52,8 @@ export class CreateMenuItemAction extends MenuItemModel {
     private buildResponse(): CreateMenuItemResponse {
         return {
             _id:         this._id,
+            uniqueId:    this.uniqueId,
+            uid:         this.uid,
             name:        this.name,
             description: this.description,
             photo:       this.photo,

@@ -24,6 +24,10 @@ import { DatabaseOrderRepository } from './order/order.repository';
 import { PaymentEntity } from '../entities/payment.entity';
 import { DatabasePaymentRepository } from './payment/payment.repository';
 
+// Customer Entity & Repository
+import { CustomerEntity } from '../entities/customer.entity';
+import { DatabaseCustomerRepository } from './customer/customer.repository';
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -39,6 +43,8 @@ import { DatabasePaymentRepository } from './payment/payment.repository';
       OrderEntity,
       OrderItemEntity,
       PaymentEntity,
+      // Customer
+      CustomerEntity,
     ]),
   ],
   providers: [
@@ -53,6 +59,8 @@ import { DatabasePaymentRepository } from './payment/payment.repository';
     DatabaseMenuOptionRepository,
     DatabaseOrderRepository,
     DatabasePaymentRepository,
+    // Customer
+    DatabaseCustomerRepository,
   ],
   exports: [
     // Existing
@@ -66,6 +74,8 @@ import { DatabasePaymentRepository } from './payment/payment.repository';
     DatabaseMenuOptionRepository,
     DatabaseOrderRepository,
     DatabasePaymentRepository,
+    // Customer
+    DatabaseCustomerRepository,
   ],
 })
 export class RepositoriesModule { }

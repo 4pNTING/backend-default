@@ -15,6 +15,7 @@ export declare class ZoneResolver {
     constructor(createZoneUsecase: CreateZoneUsecase, updateZoneUsecase: UpdateZoneUsecase, deleteZoneUsecase: DeleteZoneUsecase, loadAllZoneUsecase: LoadAllZoneUsecase, loadZoneByIdUsecase: LoadZoneByIdUsecase, restoreZoneUsecase: RestoreZoneUsecase);
     loadZone(input: LoadZoneDto): Promise<{
         zone: import("../../../domain/models/zone.model").ZoneModel[];
+        count: number;
     }>;
     loadZoneById(input: LoadZoneByIdDto): Promise<{
         zone: import("../../../domain/models/zone.model").LoadZoneByIdResponse;

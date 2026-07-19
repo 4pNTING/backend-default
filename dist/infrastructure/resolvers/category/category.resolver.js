@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const common_1 = require("@nestjs/common");
+const jwt_auth_guard_1 = require("../../common/jwt-auth.guard");
 const category_model_1 = require("./category.model");
 const category_usecases_proxy_module_1 = require("../../usecases-proxy/category-usecases-proxy.module");
 const createCategory_usecase_1 = require("../../../usecases/category/createCategory.usecase");
@@ -35,7 +36,6 @@ let CategoryResolver = CategoryResolver_1 = class CategoryResolver {
         this.logger = new common_1.Logger(CategoryResolver_1.name);
     }
     async loadCategory(input) {
-        console.log(`🔍 [CategoryResolver] input: ${JSON.stringify(input)}`);
         const query = {};
         if (input) {
             if (input.page || input.limit) {
@@ -59,11 +59,10 @@ let CategoryResolver = CategoryResolver_1 = class CategoryResolver {
                 query.sortDirection = input.sortDirection;
             }
         }
-        console.log(`🔍 [CategoryResolver] query: ${JSON.stringify(query)}`);
         const result = await this.loadCategoryUseCase.execute(query);
-        console.log(`✅ [CategoryResolver] result items count: ${result.items?.length ?? 0}`);
         return {
             category: result.items,
+            count: result.total,
         };
     }
     async loadCategoryById(input) {
@@ -145,6 +144,7 @@ __decorate([
 ], CategoryResolver.prototype, "restoreCategory", null);
 exports.CategoryResolver = CategoryResolver = CategoryResolver_1 = __decorate([
     (0, graphql_1.Resolver)(() => category_model_1.Category),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Inject)(category_usecases_proxy_module_1.CategoryUsecasesProxyModule.CREATE_CATEGORY_PROXY)),
     __param(1, (0, common_1.Inject)(category_usecases_proxy_module_1.CategoryUsecasesProxyModule.UPDATE_CATEGORY_PROXY)),
     __param(2, (0, common_1.Inject)(category_usecases_proxy_module_1.CategoryUsecasesProxyModule.DELETE_CATEGORY_PROXY)),

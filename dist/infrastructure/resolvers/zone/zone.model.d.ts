@@ -2,12 +2,15 @@ import { ActiveStatus } from '../../common/graphql/common.model';
 export { ActiveStatus };
 export declare class Zone {
     _id: string;
+    uniqueId: number;
+    uid: string;
     name: string;
     isActive?: ActiveStatus;
     createdAt?: Date;
     updatedAt?: Date;
 }
 export declare class LoadZoneResponse {
+    count: number;
     zone: Zone[];
 }
 export declare class LoadZoneByIdResponse {

@@ -52,12 +52,14 @@ export class CreateTableAction extends TableModel {
 
     private buildResponse(): CreateTableResponse {
         return {
-            _id:      this._id,
-            number:   this.number,
-            zoneId:   this.zoneId,
-            capacity: this.capacity,
-            status:   this.status,
-            isActive: this.isActive,
+            _id:       this._id,
+            uniqueId:  this.uniqueId,
+            uid:       this.uid,
+            number:    this.number,
+            zoneId:    this.zoneId,
+            capacity:  this.capacity,
+            status:    this.status,
+            isActive:  this.isActive,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
         };

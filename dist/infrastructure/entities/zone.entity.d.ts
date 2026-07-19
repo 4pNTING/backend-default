@@ -2,6 +2,8 @@ import { ZoneModel } from '../../domain/models/zone.model';
 import { ActiveStatus } from '../../domain/enums/enum';
 export declare class ZoneEntity implements ZoneModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     name: string;
     isActive: ActiveStatus;
     createdAt: Date;

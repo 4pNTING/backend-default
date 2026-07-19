@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZoneResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const common_1 = require("@nestjs/common");
+const jwt_auth_guard_1 = require("../../common/jwt-auth.guard");
 const zone_usecases_proxy_module_1 = require("../../usecases-proxy/zone-usecases-proxy.module");
 const createZone_usecase_1 = require("../../../usecases/zone/createZone.usecase");
 const updateZone_usecase_1 = require("../../../usecases/zone/updateZone.usecase");
@@ -59,6 +60,7 @@ let ZoneResolver = class ZoneResolver {
         const result = await this.loadAllZoneUsecase.execute(query);
         return {
             zone: result.items,
+            count: result.total,
         };
     }
     async loadZoneById(input) {
@@ -131,6 +133,7 @@ __decorate([
 ], ZoneResolver.prototype, "restoreZone", null);
 exports.ZoneResolver = ZoneResolver = __decorate([
     (0, graphql_1.Resolver)(() => zone_model_1.Zone),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Inject)(zone_usecases_proxy_module_1.ZoneUsecasesProxyModule.CREATE_ZONE_PROXY)),
     __param(1, (0, common_1.Inject)(zone_usecases_proxy_module_1.ZoneUsecasesProxyModule.UPDATE_ZONE_PROXY)),
     __param(2, (0, common_1.Inject)(zone_usecases_proxy_module_1.ZoneUsecasesProxyModule.DELETE_ZONE_PROXY)),

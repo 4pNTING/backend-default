@@ -12,6 +12,7 @@ const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const graphql_1 = require("@nestjs/graphql");
 const apollo_1 = require("@nestjs/apollo");
+const graphql_2 = require("@nestjs/graphql");
 const path_1 = require("path");
 const repositories_module_1 = require("./infrastructure/repositories/repositories.module");
 const category_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/category-usecases-proxy.module");
@@ -59,6 +60,9 @@ exports.AppModule = AppModule = __decorate([
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/schema.gql'),
+                resolvers: {
+                    DateTime: graphql_2.GraphQLISODateTime,
+                },
                 context: ({ req }) => ({ req }),
                 sortSchema: false,
                 playground: true,

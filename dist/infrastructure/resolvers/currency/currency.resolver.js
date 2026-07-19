@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CurrencyResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const common_1 = require("@nestjs/common");
+const jwt_auth_guard_1 = require("../../common/jwt-auth.guard");
 const currency_usecases_proxy_module_1 = require("../../usecases-proxy/currency-usecases-proxy.module");
 const createCurrency_usecase_1 = require("../../../usecases/currency/createCurrency.usecase");
 const updateCurrency_usecase_1 = require("../../../usecases/currency/updateCurrency.usecase");
@@ -52,6 +53,7 @@ let CurrencyResolver = class CurrencyResolver {
         const result = await this.loadAllCurrencyUsecase.execute(query);
         return {
             currency: result.items,
+            count: result.total,
         };
     }
     async loadCurrencyById(input) {
@@ -111,6 +113,7 @@ __decorate([
 ], CurrencyResolver.prototype, "deleteCurrency", null);
 exports.CurrencyResolver = CurrencyResolver = __decorate([
     (0, graphql_1.Resolver)(() => currency_model_1.Currency),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Inject)(currency_usecases_proxy_module_1.CurrencyUsecasesProxyModule.CREATE_CURRENCY_PROXY)),
     __param(1, (0, common_1.Inject)(currency_usecases_proxy_module_1.CurrencyUsecasesProxyModule.UPDATE_CURRENCY_PROXY)),
     __param(2, (0, common_1.Inject)(currency_usecases_proxy_module_1.CurrencyUsecasesProxyModule.DELETE_CURRENCY_PROXY)),

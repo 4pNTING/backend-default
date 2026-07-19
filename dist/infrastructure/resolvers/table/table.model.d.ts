@@ -2,6 +2,8 @@ import { ActiveStatus, TableStatus } from '../../../domain/enums/enum';
 export { ActiveStatus, TableStatus };
 export declare class Table {
     _id: string;
+    uniqueId: number;
+    uid: string;
     number: string;
     zoneId: string;
     capacity: number;
@@ -11,6 +13,7 @@ export declare class Table {
     updatedAt?: Date;
 }
 export declare class LoadTableResponse {
+    count: number;
     table: Table[];
 }
 export declare class LoadTableByIdResponse {

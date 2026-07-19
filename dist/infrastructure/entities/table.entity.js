@@ -21,7 +21,15 @@ __decorate([
     __metadata("design:type", String)
 ], TableEntity.prototype, "_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true }),
+    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
+    __metadata("design:type", Number)
+], TableEntity.prototype, "uniqueId", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], TableEntity.prototype, "uid", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], TableEntity.prototype, "number", void 0);
 __decorate([

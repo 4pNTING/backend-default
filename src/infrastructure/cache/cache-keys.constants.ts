@@ -80,4 +80,11 @@ export const CacheKeys = {
   PAYMENT_BY_ORDER: (orderId: string) => `payment:order:${orderId}`,
   PAYMENT_BY_ID: (id: string) => `payment:id:${id}`,
   PAYMENT_PATTERN: 'payment:*',
+
+  // ─── Customer ────────────────────────────────────────
+  CUSTOMER_LIST: 'customer:list',
+  CUSTOMER_LIST_QUERY: (query: any) => `customer:list:${queryToCacheKey(query)}`,
+  CUSTOMER_BY_ID: (id: string) => `customer:id:${id}`,
+  CUSTOMER_PATTERN: 'customer:*',
+  CUSTOMER_LIST_PATTERN: 'customer:list:*',
 } as const;

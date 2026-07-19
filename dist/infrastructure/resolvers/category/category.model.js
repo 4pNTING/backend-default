@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadCategoryDto = exports.RestoreCategoryDto = exports.DeleteCategoryDto = exports.LoadCategoryByIdDto = exports.UpdateCategoryDto = exports.CreateCategoryDto = exports.RestoreCategoryResponse = exports.DeleteCategoryResponse = exports.UpdateCategoryResponse = exports.CreateCategoryResponse = exports.LoadCategoryByIdResponse = exports.LoadCategoryResponse = exports.Category = exports.ActiveStatus = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const enum_1 = require("../../../domain/enums/enum");
-Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return enum_1.ActiveStatus; } });
+const class_validator_1 = require("class-validator");
+const common_model_1 = require("../../common/graphql/common.model");
+Object.defineProperty(exports, "ActiveStatus", { enumerable: true, get: function () { return common_model_1.ActiveStatus; } });
 let Category = class Category {
 };
 exports.Category = Category;
@@ -20,6 +21,14 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], Category.prototype, "_id", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], Category.prototype, "uniqueId", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], Category.prototype, "uid", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
@@ -50,6 +59,10 @@ exports.Category = Category = __decorate([
 let LoadCategoryResponse = class LoadCategoryResponse {
 };
 exports.LoadCategoryResponse = LoadCategoryResponse;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    __metadata("design:type", Number)
+], LoadCategoryResponse.prototype, "count", void 0);
 __decorate([
     (0, graphql_1.Field)(() => [Category]),
     __metadata("design:type", Array)
@@ -112,18 +125,23 @@ let CreateCategoryDto = class CreateCategoryDto {
 exports.CreateCategoryDto = CreateCategoryDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "name", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "description", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "photo", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "isActive", void 0);
 exports.CreateCategoryDto = CreateCategoryDto = __decorate([
@@ -134,22 +152,31 @@ let UpdateCategoryDto = class UpdateCategoryDto {
 exports.UpdateCategoryDto = UpdateCategoryDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "name", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "description", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "photo", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "isActive", void 0);
 exports.UpdateCategoryDto = UpdateCategoryDto = __decorate([
@@ -160,6 +187,8 @@ let LoadCategoryByIdDto = class LoadCategoryByIdDto {
 exports.LoadCategoryByIdDto = LoadCategoryByIdDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoadCategoryByIdDto.prototype, "_id", void 0);
 exports.LoadCategoryByIdDto = LoadCategoryByIdDto = __decorate([
@@ -170,6 +199,8 @@ let DeleteCategoryDto = class DeleteCategoryDto {
 exports.DeleteCategoryDto = DeleteCategoryDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], DeleteCategoryDto.prototype, "_id", void 0);
 exports.DeleteCategoryDto = DeleteCategoryDto = __decorate([
@@ -180,6 +211,8 @@ let RestoreCategoryDto = class RestoreCategoryDto {
 exports.RestoreCategoryDto = RestoreCategoryDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], RestoreCategoryDto.prototype, "_id", void 0);
 exports.RestoreCategoryDto = RestoreCategoryDto = __decorate([
@@ -190,26 +223,35 @@ let LoadCategoryDto = class LoadCategoryDto {
 exports.LoadCategoryDto = LoadCategoryDto;
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], LoadCategoryDto.prototype, "page", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], LoadCategoryDto.prototype, "limit", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => enum_1.ActiveStatus, { nullable: true }),
+    (0, graphql_1.Field)(() => common_model_1.ActiveStatus, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "isActive", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "keyword", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "sortField", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadCategoryDto.prototype, "sortDirection", void 0);
 exports.LoadCategoryDto = LoadCategoryDto = __decorate([

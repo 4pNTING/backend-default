@@ -51,7 +51,7 @@ let TableResolver = class TableResolver {
                 query.sortDirection = input.sortDirection;
         }
         const result = await this.loadTableUseCase.execute(query);
-        return { table: result.items };
+        return { table: result.items, count: result.total };
     }
     async loadTableById(input) {
         const result = await this.loadTableByIdUseCase.execute({ _id: input._id });

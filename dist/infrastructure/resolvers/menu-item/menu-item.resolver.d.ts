@@ -13,6 +13,7 @@ export declare class MenuItemResolver {
     constructor(createMenuItemUseCase: CreateMenuItemUseCase, updateMenuItemUseCase: UpdateMenuItemUseCase, deleteMenuItemUseCase: DeleteMenuItemUseCase, loadMenuItemUseCase: LoadMenuItemUseCase, loadMenuItemByIdUseCase: LoadByIDMenuItemUseCase);
     loadMenuItem(input: LoadMenuItemDto): Promise<{
         menuItem: import("../../../domain/models/menu-item.model").MenuItemModel[];
+        count: number;
     }>;
     loadMenuItemById(input: LoadMenuItemByIdDto): Promise<{
         menuItem: import("../../../domain/models/menu-item.model").LoadMenuItemByIdResponse;
