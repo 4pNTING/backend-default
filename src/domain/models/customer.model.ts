@@ -2,13 +2,13 @@ import { ActiveStatus } from '../enums/enum';
 
 // ─── Contact Sub-Model ─────────────────────────────────────
 export class CustomerContactModel {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    province: string;
-    district: string;
-    village: string;
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    phoneNumber?: string;
+    province?: string;
+    district?: string;
+    village?: string;
 }
 
 // ─── Base Model ───────────────────────────────────────────
