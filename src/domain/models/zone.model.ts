@@ -3,6 +3,8 @@ import { ActiveStatus } from '../enums/enum';
 // Base Model
 export class ZoneModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     name: string;
     isActive?: ActiveStatus;
     createdAt?: Date;

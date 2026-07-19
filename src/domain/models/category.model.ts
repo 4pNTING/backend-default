@@ -3,6 +3,8 @@ import { ActiveStatus } from '../enums/enum';
 // Base Model
 export class CategoryModel {
   _id: string;
+  uniqueId: number;
+  uid: string;
   name: string;
   description?: string;
   photo?: string;

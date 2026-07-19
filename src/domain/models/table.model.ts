@@ -3,6 +3,8 @@ import { ActiveStatus, TableStatus } from '../enums/enum';
 // ─── Base Model ───────────────────────────────────────────
 export class TableModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     number: string;       // เลขโต๊ะ เช่น "T01", "A5"
     zoneId: string;       // FK → Zone
     capacity: number;     // จำนวนที่นั่ง

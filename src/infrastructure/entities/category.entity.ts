@@ -7,6 +7,12 @@ export class CategoryEntity implements CategoryModel {
   @PrimaryGeneratedColumn('uuid')
   _id: string;
 
+  @Column({ type: 'int', default: 0 })
+  uniqueId: number;
+
+  @Column({ nullable: true })
+  uid: string;
+
   @Column({ unique: true })
   name: string;
 

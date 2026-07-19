@@ -12,6 +12,12 @@ export class MenuItemEntity implements MenuItemModel {
     @PrimaryGeneratedColumn('uuid')
     _id: string;
 
+    @Column({ type: 'int', default: 0 })
+    uniqueId: number;
+
+    @Column({ nullable: true })
+    uid: string;
+
     @Column()
     name: string;
 

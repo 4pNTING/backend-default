@@ -76,6 +76,8 @@ export class CreateCategoryAction extends CategoryModel {
     try {
       return {
         _id: this._id,
+        uniqueId: this.uniqueId,
+        uid: this.uid,
         name: this.name,
         description: this.description,
         photo: this.photo,

@@ -9,11 +9,17 @@ import { ZoneEntity } from './zone.entity';
 
 @Entity('tables')
 export class TableEntity implements TableModel {
-    @PrimaryGeneratedColumn('uuid')
-    _id: string;
+  @PrimaryGeneratedColumn('uuid')
+  _id: string;
 
-    @Column({ unique: true })
-    number: string;
+  @Column({ type: 'int', default: 0 })
+  uniqueId: number;
+
+  @Column({ nullable: true })
+  uid: string;
+
+  @Column()
+  number: string;
 
     @Column({ type: 'uuid' })
     zoneId: string;

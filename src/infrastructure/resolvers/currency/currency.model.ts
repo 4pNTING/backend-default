@@ -14,6 +14,12 @@ export class Currency {
     @Field({ nullable: true })
     _id: string;
 
+    @Field(() => Int, { nullable: true })
+    uniqueId: number;
+
+    @Field({ nullable: true })
+    uid: string;
+
     @Field()
     code: string;
 

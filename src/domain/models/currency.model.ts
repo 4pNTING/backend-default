@@ -3,6 +3,8 @@ import { ActiveStatus } from '../enums/enum';
 
 export class CurrencyModel {
     _id: string;
+    uniqueId: number;
+    uid: string;
     code: string;
     name: string;
     isActive: ActiveStatus;
