@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteCategoryAction = void 0;
-const category_entity_1 = require("../../../entities/category.entity");
-const enum_1 = require("../../../../domain/enums/enum");
+const category_entity_1 = require("../../../entities/category.entity.js");
+const enum_1 = require("../../../../domain/enums/enum.js");
 class DeleteCategoryAction {
     constructor(session) {
         this.session = session;

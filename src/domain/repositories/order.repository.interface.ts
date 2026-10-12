@@ -9,6 +9,7 @@ import {
     LoadAllOrderResponse,
     LoadOrderByIdRequest, LoadOrderByIdResponse,
     LoadOrderByTableRequest, LoadOrderByTableResponse,
+    TransferTableRequest, TransferTableResponse,
 } from '../models/order.model';
 
 export interface IOrderRepository {
@@ -18,6 +19,7 @@ export interface IOrderRepository {
     updateStatus(params: UpdateOrderStatusRequest): Promise<void>;
     cancel(params: CancelOrderRequest): Promise<void>;
     delete(params: DeleteOrderRequest): Promise<void>;
+    transferTable(params: TransferTableRequest): Promise<TransferTableResponse>;
     findAll(query: QueryProps): Promise<LoadAllOrderResponse>;
     findById(params: LoadOrderByIdRequest): Promise<LoadOrderByIdResponse | null>;
     findByTable(params: LoadOrderByTableRequest): Promise<LoadOrderByTableResponse>;

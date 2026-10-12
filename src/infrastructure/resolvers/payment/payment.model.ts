@@ -1,3 +1,4 @@
+import { IsString, IsNotEmpty, IsNumber } from "class-validator";
 import { ObjectType, Field, InputType, Float } from '@nestjs/graphql';
 import { PaymentMethod } from '../../../domain/enums/enum';
 
@@ -43,20 +44,30 @@ export class LoadPaymentResponse {
 @InputType()
 export class ProcessPaymentDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     orderId: string;
 
     @Field()
+    @IsString()
+    @IsNotEmpty()
     currencyId: string;
 
     @Field(() => String)
+    @IsString()
+    @IsNotEmpty()
     method: PaymentMethod;
 
     @Field(() => Float)
+    @IsNumber()
+    @IsNotEmpty()
     amount: number;
 }
 
 @InputType()
 export class LoadPaymentByOrderDto {
     @Field()
+    @IsString()
+    @IsNotEmpty()
     orderId: string;
 }

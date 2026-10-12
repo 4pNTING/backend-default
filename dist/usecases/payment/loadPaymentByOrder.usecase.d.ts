@@ -1,5 +1,5 @@
-import { IPaymentRepository } from '../../domain/repositories/payment.repository.interface';
-import { LoadPaymentByOrderRequest, LoadPaymentByOrderResponse } from '../../domain/models/payment.model';
+import { IPaymentRepository } from '../../domain/repositories/payment.repository.interface.js';
+import { LoadPaymentByOrderRequest, LoadPaymentByOrderResponse } from '../../domain/models/payment.model.js';
 export declare class LoadPaymentByOrderUseCase {
     private readonly paymentRepository;
     constructor(paymentRepository: IPaymentRepository);

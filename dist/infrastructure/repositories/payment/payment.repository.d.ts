@@ -1,8 +1,8 @@
 import { DataSource, Repository } from 'typeorm';
-import { PaymentEntity } from '../../entities/payment.entity';
-import { OrderEntity } from '../../entities/order.entity';
-import { IPaymentRepository } from '../../../domain/repositories/payment.repository.interface';
-import { ProcessPaymentRequest, ProcessPaymentResponse, LoadPaymentByOrderRequest, LoadPaymentByOrderResponse, LoadPaymentByIdRequest, LoadPaymentByIdResponse } from '../../../domain/models/payment.model';
+import { PaymentEntity } from '../../entities/payment.entity.js';
+import { OrderEntity } from '../../entities/order.entity.js';
+import { IPaymentRepository } from '../../../domain/repositories/payment.repository.interface.js';
+import { ProcessPaymentRequest, ProcessPaymentResponse, LoadPaymentByOrderRequest, LoadPaymentByOrderResponse, LoadPaymentByIdRequest, LoadPaymentByIdResponse } from '../../../domain/models/payment.model.js';
 import { RedisService } from '../../cache/redis.service';
 export declare class DatabasePaymentRepository implements IPaymentRepository {
     private readonly paymentEntity;

@@ -17,10 +17,10 @@ exports.DatabaseAttachmentRepository = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const attachment_entity_1 = require("../../entities/attachment.entity");
+const attachment_entity_1 = require("../../entities/attachment.entity.js");
 const redis_service_1 = require("../../cache/redis.service");
 const cache_keys_constants_1 = require("../../cache/cache-keys.constants");
-const enum_1 = require("../../../domain/enums/enum");
+const enum_1 = require("../../../domain/enums/enum.js");
 let DatabaseAttachmentRepository = DatabaseAttachmentRepository_1 = class DatabaseAttachmentRepository {
     constructor(attachmentEntity, dataSource, redisService) {
         this.attachmentEntity = attachmentEntity;

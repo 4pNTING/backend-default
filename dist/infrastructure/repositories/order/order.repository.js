@@ -16,9 +16,10 @@ exports.DatabaseOrderRepository = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const order_entity_1 = require("../../entities/order.entity");
-const order_item_entity_1 = require("../../entities/order-item.entity");
-const enum_1 = require("../../../domain/enums/enum");
+const order_entity_1 = require("../../entities/order.entity.js");
+const order_item_entity_1 = require("../../entities/order-item.entity.js");
+const table_entity_1 = require("../../entities/table.entity.js");
+const enum_1 = require("../../../domain/enums/enum.js");
 const redis_service_1 = require("../../cache/redis.service");
 const cache_keys_constants_1 = require("../../cache/cache-keys.constants");
 let DatabaseOrderRepository = class DatabaseOrderRepository {
@@ -213,6 +214,84 @@ let DatabaseOrderRepository = class DatabaseOrderRepository {
         const result = { items: entities };
         await this.redisService.set(cacheKey, result, 30);
         return result;
+    }
+    async transferTable(params) {
+        if (params.fromTableId === params.toTableId) {
+            throw new common_1.BadRequestException('Source and destination tables cannot be the same');
+        }
+        const session = this.dataSource.createQueryRunner();
+        await session.connect();
+        await session.startTransaction();
+        try {
+            const toTable = await session.manager.findOne(table_entity_1.TableEntity, {
+                where: { _id: params.toTableId },
+            });
+            if (!toTable) {
+                throw new common_1.BadRequestException('Destination table not found');
+            }
+            if (toTable.isActive === enum_1.ActiveStatus.inactive) {
+                throw new common_1.BadRequestException('Destination table is not active');
+            }
+            if (toTable.status !== enum_1.TableStatus.available) {
+                throw new common_1.BadRequestException(`Destination table is not available (current status: ${toTable.status})`);
+            }
+            const fromTable = await session.manager.findOne(table_entity_1.TableEntity, {
+                where: { _id: params.fromTableId },
+            });
+            if (!fromTable) {
+                throw new common_1.BadRequestException('Source table not found');
+            }
+            const order = await session.manager.findOne(order_entity_1.OrderEntity, {
+                where: { _id: params.orderId },
+                relations: ['items'],
+            });
+            if (!order) {
+                throw new common_1.BadRequestException('Order not found');
+            }
+            if (order.tableId !== params.fromTableId) {
+                throw new common_1.BadRequestException('Order does not belong to the source table');
+            }
+            if (order.status === enum_1.OrderStatus.paid || order.status === enum_1.OrderStatus.cancelled) {
+                throw new common_1.BadRequestException(`Cannot transfer order with status: ${order.status}`);
+            }
+            await session.manager.update(order_entity_1.OrderEntity, { _id: params.orderId }, {
+                tableId: params.toTableId,
+            });
+            await session.manager.update(table_entity_1.TableEntity, { _id: params.fromTableId }, {
+                status: enum_1.TableStatus.available,
+            });
+            await session.manager.update(table_entity_1.TableEntity, { _id: params.toTableId }, {
+                status: enum_1.TableStatus.occupied,
+            });
+            const updatedOrder = await session.manager.findOne(order_entity_1.OrderEntity, {
+                where: { _id: params.orderId },
+                relations: ['items'],
+            });
+            await session.commitTransaction();
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ORDER_BY_ID(params.orderId));
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ORDER_BY_TABLE(params.fromTableId));
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ORDER_BY_TABLE(params.toTableId));
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.ORDER_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.ORDER_LIST_PATTERN);
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ID(params.fromTableId));
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ID(params.toTableId));
+            await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.TABLE_LIST_PATTERN);
+            if (fromTable.zoneId) {
+                await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ZONE(fromTable.zoneId));
+            }
+            if (toTable.zoneId) {
+                await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ZONE(toTable.zoneId));
+            }
+            return updatedOrder;
+        }
+        catch (error) {
+            await session.rollbackTransaction();
+            throw error;
+        }
+        finally {
+            await session.release();
+        }
     }
 };
 exports.DatabaseOrderRepository = DatabaseOrderRepository;

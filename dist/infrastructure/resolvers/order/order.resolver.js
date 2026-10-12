@@ -23,16 +23,18 @@ const addOrderItem_usecase_1 = require("../../../usecases/order/addOrderItem.use
 const removeOrderItem_usecase_1 = require("../../../usecases/order/removeOrderItem.usecase");
 const updateOrderStatus_usecase_1 = require("../../../usecases/order/updateOrderStatus.usecase");
 const cancelOrder_usecase_1 = require("../../../usecases/order/cancelOrder.usecase");
+const transferTable_usecase_1 = require("../../../usecases/order/transferTable.usecase");
 const loadOrder_usecase_1 = require("../../../usecases/order/loadOrder.usecase");
 const loadOrderById_usecase_1 = require("../../../usecases/order/loadOrderById.usecase");
 const loadOrderByTable_usecase_1 = require("../../../usecases/order/loadOrderByTable.usecase");
 let OrderResolver = class OrderResolver {
-    constructor(createOrderUseCase, addOrderItemUseCase, removeOrderItemUseCase, updateOrderStatusUseCase, cancelOrderUseCase, loadOrderUseCase, loadOrderByIdUseCase, loadOrderByTableUseCase) {
+    constructor(createOrderUseCase, addOrderItemUseCase, removeOrderItemUseCase, updateOrderStatusUseCase, cancelOrderUseCase, transferTableUseCase, loadOrderUseCase, loadOrderByIdUseCase, loadOrderByTableUseCase) {
         this.createOrderUseCase = createOrderUseCase;
         this.addOrderItemUseCase = addOrderItemUseCase;
         this.removeOrderItemUseCase = removeOrderItemUseCase;
         this.updateOrderStatusUseCase = updateOrderStatusUseCase;
         this.cancelOrderUseCase = cancelOrderUseCase;
+        this.transferTableUseCase = transferTableUseCase;
         this.loadOrderUseCase = loadOrderUseCase;
         this.loadOrderByIdUseCase = loadOrderByIdUseCase;
         this.loadOrderByTableUseCase = loadOrderByTableUseCase;
@@ -82,6 +84,10 @@ let OrderResolver = class OrderResolver {
     async cancelOrder(input) {
         await this.cancelOrderUseCase.execute(input);
         return { _id: input._id };
+    }
+    async transferTable(input) {
+        const result = await this.transferTableUseCase.execute(input);
+        return { order: result };
     }
 };
 exports.OrderResolver = OrderResolver;
@@ -141,6 +147,13 @@ __decorate([
     __metadata("design:paramtypes", [order_model_1.CancelOrderDto]),
     __metadata("design:returntype", Promise)
 ], OrderResolver.prototype, "cancelOrder", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => order_model_1.TransferTableResponse),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [order_model_1.TransferTableDto]),
+    __metadata("design:returntype", Promise)
+], OrderResolver.prototype, "transferTable", null);
 exports.OrderResolver = OrderResolver = __decorate([
     (0, graphql_1.Resolver)(() => order_model_1.Order),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
@@ -149,14 +162,16 @@ exports.OrderResolver = OrderResolver = __decorate([
     __param(2, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.REMOVE_ORDER_ITEM_PROXY)),
     __param(3, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.UPDATE_ORDER_STATUS_PROXY)),
     __param(4, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.CANCEL_ORDER_PROXY)),
-    __param(5, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.LOAD_ORDER_PROXY)),
-    __param(6, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.LOAD_ORDER_BY_ID_PROXY)),
-    __param(7, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.LOAD_ORDER_BY_TABLE_PROXY)),
+    __param(5, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.TRANSFER_TABLE_PROXY)),
+    __param(6, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.LOAD_ORDER_PROXY)),
+    __param(7, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.LOAD_ORDER_BY_ID_PROXY)),
+    __param(8, (0, common_1.Inject)(order_usecases_proxy_module_1.OrderUsecasesProxyModule.LOAD_ORDER_BY_TABLE_PROXY)),
     __metadata("design:paramtypes", [createOrder_usecase_1.CreateOrderUseCase,
         addOrderItem_usecase_1.AddOrderItemUseCase,
         removeOrderItem_usecase_1.RemoveOrderItemUseCase,
         updateOrderStatus_usecase_1.UpdateOrderStatusUseCase,
         cancelOrder_usecase_1.CancelOrderUseCase,
+        transferTable_usecase_1.TransferTableUseCase,
         loadOrder_usecase_1.LoadOrderUseCase,
         loadOrderById_usecase_1.LoadOrderByIdUseCase,
         loadOrderByTable_usecase_1.LoadOrderByTableUseCase])

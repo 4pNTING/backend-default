@@ -1,9 +1,9 @@
 import { DataSource, Repository } from 'typeorm';
-import { OrderEntity } from '../../entities/order.entity';
-import { OrderItemEntity } from '../../entities/order-item.entity';
-import { IOrderRepository } from '../../../domain/repositories/order.repository.interface';
-import { CreateOrderRequest, CreateOrderResponse, AddOrderItemRequest, AddOrderItemResponse, RemoveOrderItemRequest, UpdateOrderStatusRequest, CancelOrderRequest, DeleteOrderRequest, LoadAllOrderResponse, LoadOrderByIdRequest, LoadOrderByIdResponse, LoadOrderByTableRequest, LoadOrderByTableResponse } from '../../../domain/models/order.model';
-import { QueryProps } from '../../../domain/models/query.model';
+import { OrderEntity } from '../../entities/order.entity.js';
+import { OrderItemEntity } from '../../entities/order-item.entity.js';
+import { IOrderRepository } from '../../../domain/repositories/order.repository.interface.js';
+import { CreateOrderRequest, CreateOrderResponse, AddOrderItemRequest, AddOrderItemResponse, RemoveOrderItemRequest, UpdateOrderStatusRequest, CancelOrderRequest, DeleteOrderRequest, LoadAllOrderResponse, LoadOrderByIdRequest, LoadOrderByIdResponse, LoadOrderByTableRequest, LoadOrderByTableResponse, TransferTableRequest, TransferTableResponse } from '../../../domain/models/order.model.js';
+import { QueryProps } from '../../../domain/models/query.model.js';
 import { RedisService } from '../../cache/redis.service';
 export declare class DatabaseOrderRepository implements IOrderRepository {
     private readonly orderEntity;
@@ -21,4 +21,5 @@ export declare class DatabaseOrderRepository implements IOrderRepository {
     findAll(query: QueryProps): Promise<LoadAllOrderResponse>;
     findById(params: LoadOrderByIdRequest): Promise<LoadOrderByIdResponse | null>;
     findByTable(params: LoadOrderByTableRequest): Promise<LoadOrderByTableResponse>;
+    transferTable(params: TransferTableRequest): Promise<TransferTableResponse>;
 }

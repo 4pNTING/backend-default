@@ -1,5 +1,5 @@
-import { IOrderRepository } from '../../domain/repositories/order.repository.interface';
-import { UpdateOrderStatusRequest } from '../../domain/models/order.model';
+import { IOrderRepository } from '../../domain/repositories/order.repository.interface.js';
+import { UpdateOrderStatusRequest } from '../../domain/models/order.model.js';
 export declare class UpdateOrderStatusUseCase {
     private readonly orderRepository;
     constructor(orderRepository: IOrderRepository);

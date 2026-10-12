@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadPaymentByOrderDto = exports.ProcessPaymentDto = exports.LoadPaymentResponse = exports.PaymentResponse = exports.Payment = void 0;
+const class_validator_1 = require("class-validator");
 const graphql_1 = require("@nestjs/graphql");
 const enum_1 = require("../../../domain/enums/enum");
 let Payment = class Payment {
@@ -75,18 +76,26 @@ let ProcessPaymentDto = class ProcessPaymentDto {
 exports.ProcessPaymentDto = ProcessPaymentDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], ProcessPaymentDto.prototype, "orderId", void 0);
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], ProcessPaymentDto.prototype, "currencyId", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], ProcessPaymentDto.prototype, "method", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Float),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], ProcessPaymentDto.prototype, "amount", void 0);
 exports.ProcessPaymentDto = ProcessPaymentDto = __decorate([
@@ -97,6 +106,8 @@ let LoadPaymentByOrderDto = class LoadPaymentByOrderDto {
 exports.LoadPaymentByOrderDto = LoadPaymentByOrderDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoadPaymentByOrderDto.prototype, "orderId", void 0);
 exports.LoadPaymentByOrderDto = LoadPaymentByOrderDto = __decorate([

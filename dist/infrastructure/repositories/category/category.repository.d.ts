@@ -1,8 +1,8 @@
 import { DataSource, Repository } from 'typeorm';
-import { CategoryEntity } from '../../entities/category.entity';
-import { ICategoryRepository } from '../../../domain/repositories/category.repository.interface';
-import { CreateCategoryRequest, CreateCategoryResponse, UpdateCategoryRequest, DeleteCategoryRequest, LoadAllCategoryResponse, LoadCategoryByIdRequest, LoadCategoryByIdResponse } from '../../../domain/models/category.model';
-import { QueryProps } from '../../../domain/models/query.model';
+import { CategoryEntity } from '../../entities/category.entity.js';
+import { ICategoryRepository } from '../../../domain/repositories/category.repository.interface.js';
+import { CreateCategoryRequest, CreateCategoryResponse, UpdateCategoryRequest, DeleteCategoryRequest, LoadAllCategoryResponse, LoadCategoryByIdRequest, LoadCategoryByIdResponse } from '../../../domain/models/category.model.js';
+import { QueryProps } from '../../../domain/models/query.model.js';
 import { RedisService } from '../../cache/redis.service';
 export declare class DatabaseCategoryRepository implements ICategoryRepository {
     private readonly categoryEntity;

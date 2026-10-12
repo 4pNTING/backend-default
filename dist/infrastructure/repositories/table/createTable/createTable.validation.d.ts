@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
-import { TableEntity } from '../../../entities/table.entity';
-import { CreateTableRequest } from '../../../../domain/models/table.model';
+import { TableEntity } from '../../../entities/table.entity.js';
+import { CreateTableRequest } from '../../../../domain/models/table.model.js';
 export declare class CreateTableValidation extends CreateTableRequest {
     private readonly tableRepository;
     constructor(tableRepository: Repository<TableEntity>);

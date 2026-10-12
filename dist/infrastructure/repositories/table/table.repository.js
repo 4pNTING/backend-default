@@ -16,8 +16,8 @@ exports.DatabaseTableRepository = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const table_entity_1 = require("../../entities/table.entity");
-const enum_1 = require("../../../domain/enums/enum");
+const table_entity_1 = require("../../entities/table.entity.js");
+const enum_1 = require("../../../domain/enums/enum.js");
 const createTable_action_1 = require("./createTable/createTable.action");
 const createTable_validation_1 = require("./createTable/createTable.validation");
 const updateTable_action_1 = require("./updateTable/updateTable.action");
@@ -41,7 +41,7 @@ let DatabaseTableRepository = class DatabaseTableRepository {
             await new createTable_validation_1.CreateTableValidation(this.tableEntity).execute(params);
             const result = await new createTable_action_1.CreateTableAction(session).execute(params);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.TABLE_LIST_PATTERN);
             if (params.zoneId) {
                 await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ZONE(params.zoneId));
             }
@@ -63,7 +63,7 @@ let DatabaseTableRepository = class DatabaseTableRepository {
             await new updateTable_validation_1.UpdateTableValidation(this.tableEntity).execute(params);
             await new updateTable_action_1.UpdateTableAction(session).execute(params);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.TABLE_LIST_PATTERN);
             await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ID(params._id));
         }
         catch (error) {
@@ -84,7 +84,7 @@ let DatabaseTableRepository = class DatabaseTableRepository {
                 deletedAt: null
             });
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.TABLE_LIST_PATTERN);
             await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ID(params._id));
         }
         catch (error) {
@@ -102,7 +102,7 @@ let DatabaseTableRepository = class DatabaseTableRepository {
         try {
             await new restoreTable_action_1.RestoreTableAction(session).execute(_id);
             await session.commitTransaction();
-            await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_LIST);
+            await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.TABLE_LIST_PATTERN);
             await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ID(_id));
         }
         catch (error) {
@@ -114,7 +114,8 @@ let DatabaseTableRepository = class DatabaseTableRepository {
         }
     }
     async findAll(query) {
-        const cached = await this.redisService.get(cache_keys_constants_1.CacheKeys.TABLE_LIST);
+        const cacheKey = cache_keys_constants_1.CacheKeys.TABLE_LIST_QUERY(query);
+        const cached = await this.redisService.get(cacheKey);
         if (cached)
             return cached;
         const session = this.dataSource.createQueryRunner();
@@ -123,7 +124,7 @@ let DatabaseTableRepository = class DatabaseTableRepository {
         try {
             const result = await new loadAllTable_action_1.LoadAllTableAction(session).execute(query);
             await session.commitTransaction();
-            await this.redisService.set(cache_keys_constants_1.CacheKeys.TABLE_LIST, result);
+            await this.redisService.set(cacheKey, result);
             return result;
         }
         catch (error) {

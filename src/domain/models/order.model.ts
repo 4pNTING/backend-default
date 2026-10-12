@@ -94,3 +94,12 @@ export class LoadOrderByTableRequest {
 export class LoadOrderByTableResponse {
     items: OrderModel[];
 }
+
+// ─── Transfer Table ───────────────────────────────────────
+export class TransferTableRequest {
+    orderId: string;
+    fromTableId: string;
+    toTableId: string;
+}
+
+export class TransferTableResponse extends OrderModel { }

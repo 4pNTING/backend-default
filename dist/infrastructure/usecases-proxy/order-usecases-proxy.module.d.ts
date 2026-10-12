@@ -5,6 +5,7 @@ export declare class OrderUsecasesProxyModule {
     static REMOVE_ORDER_ITEM_PROXY: string;
     static UPDATE_ORDER_STATUS_PROXY: string;
     static CANCEL_ORDER_PROXY: string;
+    static TRANSFER_TABLE_PROXY: string;
     static LOAD_ORDER_PROXY: string;
     static LOAD_ORDER_BY_ID_PROXY: string;
     static LOAD_ORDER_BY_TABLE_PROXY: string;

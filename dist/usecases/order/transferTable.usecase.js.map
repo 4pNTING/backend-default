@@ -1,0 +1,1 @@
+{"version":3,"file":"transferTable.usecase.js","sourceRoot":"","sources":["../../../src/usecases/order/transferTable.usecase.ts"],"names":[],"mappings":";;;AAGA,MAAa,oBAAoB;IAC7B,YAA6B,eAAiC;QAAjC,oBAAe,GAAf,eAAe,CAAkB;IAAI,CAAC;IAEnE,KAAK,CAAC,OAAO,CAAC,MAA4B;QACtC,OAAO,MAAM,IAAI,CAAC,eAAe,CAAC,aAAa,CAAC,MAAM,CAAC,CAAC;IAC5D,CAAC;CACJ;AAND,oDAMC"}

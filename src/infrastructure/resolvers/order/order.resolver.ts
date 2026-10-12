@@ -8,6 +8,7 @@ import {
     LoadOrderDto, LoadOrderByIdDto, LoadOrderByTableDto,
     CreateOrderResponse, AddOrderItemResponse,
     UpdateOrderResponse, CancelOrderResponse,
+    TransferTableResponse, TransferTableDto,
 } from './order.model';
 import { OrderUsecasesProxyModule }   from '../../usecases-proxy/order-usecases-proxy.module';
 import { CreateOrderUseCase }         from '../../../usecases/order/createOrder.usecase';
@@ -15,6 +16,7 @@ import { AddOrderItemUseCase }        from '../../../usecases/order/addOrderItem
 import { RemoveOrderItemUseCase }     from '../../../usecases/order/removeOrderItem.usecase';
 import { UpdateOrderStatusUseCase }   from '../../../usecases/order/updateOrderStatus.usecase';
 import { CancelOrderUseCase }         from '../../../usecases/order/cancelOrder.usecase';
+import { TransferTableUseCase }       from '../../../usecases/order/transferTable.usecase';
 import { LoadOrderUseCase }           from '../../../usecases/order/loadOrder.usecase';
 import { LoadOrderByIdUseCase }       from '../../../usecases/order/loadOrderById.usecase';
 import { LoadOrderByTableUseCase }    from '../../../usecases/order/loadOrderByTable.usecase';
@@ -37,6 +39,9 @@ export class OrderResolver {
 
         @Inject(OrderUsecasesProxyModule.CANCEL_ORDER_PROXY)
         private readonly cancelOrderUseCase: CancelOrderUseCase,
+
+        @Inject(OrderUsecasesProxyModule.TRANSFER_TABLE_PROXY)
+        private readonly transferTableUseCase: TransferTableUseCase,
 
         @Inject(OrderUsecasesProxyModule.LOAD_ORDER_PROXY)
         private readonly loadOrderUseCase: LoadOrderUseCase,
@@ -109,5 +114,11 @@ export class OrderResolver {
     async cancelOrder(@Args('input') input: CancelOrderDto) {
         await this.cancelOrderUseCase.execute(input);
         return { _id: input._id };
+    }
+
+    @Mutation(() => TransferTableResponse)
+    async transferTable(@Args('input') input: TransferTableDto) {
+        const result = await this.transferTableUseCase.execute(input);
+        return { order: result };
     }
 }

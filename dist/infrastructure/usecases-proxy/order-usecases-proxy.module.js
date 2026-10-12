@@ -19,6 +19,7 @@ const cancelOrder_usecase_1 = require("../../usecases/order/cancelOrder.usecase"
 const loadOrder_usecase_1 = require("../../usecases/order/loadOrder.usecase");
 const loadOrderById_usecase_1 = require("../../usecases/order/loadOrderById.usecase");
 const loadOrderByTable_usecase_1 = require("../../usecases/order/loadOrderByTable.usecase");
+const transferTable_usecase_1 = require("../../usecases/order/transferTable.usecase");
 let OrderUsecasesProxyModule = OrderUsecasesProxyModule_1 = class OrderUsecasesProxyModule {
     static register() {
         return {
@@ -51,6 +52,11 @@ let OrderUsecasesProxyModule = OrderUsecasesProxyModule_1 = class OrderUsecasesP
                 },
                 {
                     inject: [order_repository_1.DatabaseOrderRepository],
+                    provide: OrderUsecasesProxyModule_1.TRANSFER_TABLE_PROXY,
+                    useFactory: (repo) => new transferTable_usecase_1.TransferTableUseCase(repo),
+                },
+                {
+                    inject: [order_repository_1.DatabaseOrderRepository],
                     provide: OrderUsecasesProxyModule_1.LOAD_ORDER_PROXY,
                     useFactory: (repo) => new loadOrder_usecase_1.LoadOrderUseCase(repo),
                 },
@@ -71,6 +77,7 @@ let OrderUsecasesProxyModule = OrderUsecasesProxyModule_1 = class OrderUsecasesP
                 OrderUsecasesProxyModule_1.REMOVE_ORDER_ITEM_PROXY,
                 OrderUsecasesProxyModule_1.UPDATE_ORDER_STATUS_PROXY,
                 OrderUsecasesProxyModule_1.CANCEL_ORDER_PROXY,
+                OrderUsecasesProxyModule_1.TRANSFER_TABLE_PROXY,
                 OrderUsecasesProxyModule_1.LOAD_ORDER_PROXY,
                 OrderUsecasesProxyModule_1.LOAD_ORDER_BY_ID_PROXY,
                 OrderUsecasesProxyModule_1.LOAD_ORDER_BY_TABLE_PROXY,
@@ -84,6 +91,7 @@ OrderUsecasesProxyModule.ADD_ORDER_ITEM_PROXY = 'AddOrderItemProxy';
 OrderUsecasesProxyModule.REMOVE_ORDER_ITEM_PROXY = 'RemoveOrderItemProxy';
 OrderUsecasesProxyModule.UPDATE_ORDER_STATUS_PROXY = 'UpdateOrderStatusProxy';
 OrderUsecasesProxyModule.CANCEL_ORDER_PROXY = 'CancelOrderProxy';
+OrderUsecasesProxyModule.TRANSFER_TABLE_PROXY = 'TransferTableProxy';
 OrderUsecasesProxyModule.LOAD_ORDER_PROXY = 'LoadOrderProxy';
 OrderUsecasesProxyModule.LOAD_ORDER_BY_ID_PROXY = 'LoadOrderByIdProxy';
 OrderUsecasesProxyModule.LOAD_ORDER_BY_TABLE_PROXY = 'LoadOrderByTableProxy';

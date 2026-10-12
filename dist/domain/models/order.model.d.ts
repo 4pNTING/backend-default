@@ -72,3 +72,10 @@ export declare class LoadOrderByTableRequest {
 export declare class LoadOrderByTableResponse {
     items: OrderModel[];
 }
+export declare class TransferTableRequest {
+    orderId: string;
+    fromTableId: string;
+    toTableId: string;
+}
+export declare class TransferTableResponse extends OrderModel {
+}

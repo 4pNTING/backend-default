@@ -16,13 +16,13 @@ exports.DatabaseMenuItemRepository = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const menu_item_entity_1 = require("../../entities/menu-item.entity");
+const menu_item_entity_1 = require("../../entities/menu-item.entity.js");
 const createMenuItem_action_1 = require("./createMenuItem/createMenuItem.action");
 const createMenuItem_validation_1 = require("./createMenuItem/createMenuItem.validation");
 const loadAllMenuItem_action_1 = require("./loadAllMenuItem/loadAllMenuItem.action");
 const redis_service_1 = require("../../cache/redis.service");
 const cache_keys_constants_1 = require("../../cache/cache-keys.constants");
-const enum_1 = require("../../../domain/enums/enum");
+const enum_1 = require("../../../domain/enums/enum.js");
 let DatabaseMenuItemRepository = class DatabaseMenuItemRepository {
     constructor(menuItemEntity, dataSource, redisService) {
         this.menuItemEntity = menuItemEntity;

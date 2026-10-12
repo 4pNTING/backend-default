@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestoreTableAction = void 0;
-const table_entity_1 = require("../../../entities/table.entity");
-const enum_1 = require("../../../../domain/enums/enum");
+const table_entity_1 = require("../../../entities/table.entity.js");
+const enum_1 = require("../../../../domain/enums/enum.js");
 class RestoreTableAction {
     constructor(session) {
         this.session = session;

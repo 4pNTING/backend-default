@@ -10,6 +10,7 @@ import { CancelOrderUseCase }         from '../../usecases/order/cancelOrder.use
 import { LoadOrderUseCase }           from '../../usecases/order/loadOrder.usecase';
 import { LoadOrderByIdUseCase }       from '../../usecases/order/loadOrderById.usecase';
 import { LoadOrderByTableUseCase }    from '../../usecases/order/loadOrderByTable.usecase';
+import { TransferTableUseCase }        from '../../usecases/order/transferTable.usecase';
 
 @Module({
     imports: [RepositoriesModule],
@@ -20,6 +21,7 @@ export class OrderUsecasesProxyModule {
     static REMOVE_ORDER_ITEM_PROXY     = 'RemoveOrderItemProxy';
     static UPDATE_ORDER_STATUS_PROXY   = 'UpdateOrderStatusProxy';
     static CANCEL_ORDER_PROXY          = 'CancelOrderProxy';
+    static TRANSFER_TABLE_PROXY        = 'TransferTableProxy';
     static LOAD_ORDER_PROXY            = 'LoadOrderProxy';
     static LOAD_ORDER_BY_ID_PROXY      = 'LoadOrderByIdProxy';
     static LOAD_ORDER_BY_TABLE_PROXY   = 'LoadOrderByTableProxy';
@@ -55,6 +57,11 @@ export class OrderUsecasesProxyModule {
                 },
                 {
                     inject: [DatabaseOrderRepository],
+                    provide: OrderUsecasesProxyModule.TRANSFER_TABLE_PROXY,
+                    useFactory: (repo: DatabaseOrderRepository) => new TransferTableUseCase(repo),
+                },
+                {
+                    inject: [DatabaseOrderRepository],
                     provide: OrderUsecasesProxyModule.LOAD_ORDER_PROXY,
                     useFactory: (repo: DatabaseOrderRepository) => new LoadOrderUseCase(repo),
                 },
@@ -75,6 +82,7 @@ export class OrderUsecasesProxyModule {
                 OrderUsecasesProxyModule.REMOVE_ORDER_ITEM_PROXY,
                 OrderUsecasesProxyModule.UPDATE_ORDER_STATUS_PROXY,
                 OrderUsecasesProxyModule.CANCEL_ORDER_PROXY,
+                OrderUsecasesProxyModule.TRANSFER_TABLE_PROXY,
                 OrderUsecasesProxyModule.LOAD_ORDER_PROXY,
                 OrderUsecasesProxyModule.LOAD_ORDER_BY_ID_PROXY,
                 OrderUsecasesProxyModule.LOAD_ORDER_BY_TABLE_PROXY,

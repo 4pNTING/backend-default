@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { OrderEntity } from '@infrastructure/entities/order.entity';
 import { OrderItemEntity } from '@infrastructure/entities/order-item.entity';
+import { TableEntity } from '@infrastructure/entities/table.entity';
 import { IOrderRepository } from '@domain/repositories/order.repository.interface';
 import {
     CreateOrderRequest, CreateOrderResponse,
@@ -14,8 +15,9 @@ import {
     LoadAllOrderResponse,
     LoadOrderByIdRequest, LoadOrderByIdResponse,
     LoadOrderByTableRequest, LoadOrderByTableResponse,
+    TransferTableRequest, TransferTableResponse,
 } from '@domain/models/order.model';
-import { OrderStatus } from '@domain/enums/enum';
+import { OrderStatus, TableStatus, ActiveStatus } from '@domain/enums/enum';
 import { QueryProps } from '@domain/models/query.model';
 
 import { RedisService } from '../../cache/redis.service';
@@ -233,4 +235,102 @@ export class DatabaseOrderRepository implements IOrderRepository {
         await this.redisService.set(cacheKey, result, 30);
         return result;
     }
+
+    async transferTable(params: TransferTableRequest): Promise<TransferTableResponse> {
+        if (params.fromTableId === params.toTableId) {
+            throw new BadRequestException('Source and destination tables cannot be the same');
+        }
+
+        const session = this.dataSource.createQueryRunner();
+        await session.connect();
+        await session.startTransaction();
+
+        try {
+            // 1. Verify destination table exists, is active, and is available
+            const toTable = await session.manager.findOne(TableEntity, {
+                where: { _id: params.toTableId },
+            });
+            if (!toTable) {
+                throw new BadRequestException('Destination table not found');
+            }
+            if (toTable.isActive === ActiveStatus.inactive) {
+                throw new BadRequestException('Destination table is not active');
+            }
+            if (toTable.status !== TableStatus.available) {
+                throw new BadRequestException(`Destination table is not available (current status: ${toTable.status})`);
+            }
+
+            // 2. Verify source table exists
+            const fromTable = await session.manager.findOne(TableEntity, {
+                where: { _id: params.fromTableId },
+            });
+            if (!fromTable) {
+                throw new BadRequestException('Source table not found');
+            }
+
+            // 3. Verify order exists and matches source table
+            const order = await session.manager.findOne(OrderEntity, {
+                where: { _id: params.orderId },
+                relations: ['items'],
+            });
+            if (!order) {
+                throw new BadRequestException('Order not found');
+            }
+            if (order.tableId !== params.fromTableId) {
+                throw new BadRequestException('Order does not belong to the source table');
+            }
+            if (order.status === OrderStatus.paid || order.status === OrderStatus.cancelled) {
+                throw new BadRequestException(`Cannot transfer order with status: ${order.status}`);
+            }
+
+            // 4. Update order's tableId to toTableId
+            await session.manager.update(OrderEntity, { _id: params.orderId }, {
+                tableId: params.toTableId,
+            });
+
+            // 5. Update source table status to available
+            await session.manager.update(TableEntity, { _id: params.fromTableId }, {
+                status: TableStatus.available,
+            });
+
+            // 6. Update destination table status to occupied
+            await session.manager.update(TableEntity, { _id: params.toTableId }, {
+                status: TableStatus.occupied,
+            });
+
+            // 7. Get updated order
+            const updatedOrder = await session.manager.findOne(OrderEntity, {
+                where: { _id: params.orderId },
+                relations: ['items'],
+            });
+
+            await session.commitTransaction();
+
+            // 8. Invalidate Redis caches
+            await this.redisService.del(CacheKeys.ORDER_BY_ID(params.orderId));
+            await this.redisService.del(CacheKeys.ORDER_BY_TABLE(params.fromTableId));
+            await this.redisService.del(CacheKeys.ORDER_BY_TABLE(params.toTableId));
+            await this.redisService.del(CacheKeys.ORDER_LIST);
+            await this.redisService.delByPattern(CacheKeys.ORDER_LIST_PATTERN);
+
+            await this.redisService.del(CacheKeys.TABLE_BY_ID(params.fromTableId));
+            await this.redisService.del(CacheKeys.TABLE_BY_ID(params.toTableId));
+            await this.redisService.del(CacheKeys.TABLE_LIST);
+            await this.redisService.delByPattern(CacheKeys.TABLE_LIST_PATTERN);
+            if (fromTable.zoneId) {
+                await this.redisService.del(CacheKeys.TABLE_BY_ZONE(fromTable.zoneId));
+            }
+            if (toTable.zoneId) {
+                await this.redisService.del(CacheKeys.TABLE_BY_ZONE(toTable.zoneId));
+            }
+
+            return updatedOrder as TransferTableResponse;
+        } catch (error) {
+            await session.rollbackTransaction();
+            throw error;
+        } finally {
+            await session.release();
+        }
+    }
 }
+

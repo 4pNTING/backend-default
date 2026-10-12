@@ -15,6 +15,9 @@ function queryToCacheKey(query) {
     if (query.categoryId) {
         parts.push(`category:${query.categoryId}`);
     }
+    if (query.zoneId) {
+        parts.push(`zone:${query.zoneId}`);
+    }
     if (query.sortField) {
         parts.push(`sf:${query.sortField}_sd:${query.sortDirection ?? 'DESC'}`);
     }

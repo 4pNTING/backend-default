@@ -9,7 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoadOrderByTableDto = exports.LoadOrderByIdDto = exports.LoadOrderDto = exports.CancelOrderDto = exports.UpdateOrderStatusDto = exports.RemoveOrderItemDto = exports.AddOrderItemDto = exports.CreateOrderDto = exports.CancelOrderResponse = exports.AddOrderItemResponse = exports.UpdateOrderResponse = exports.CreateOrderResponse = exports.LoadOrderByIdResponse = exports.LoadOrderResponse = exports.Order = exports.OrderItem = void 0;
+exports.TransferTableDto = exports.LoadOrderByTableDto = exports.LoadOrderByIdDto = exports.LoadOrderDto = exports.CancelOrderDto = exports.UpdateOrderStatusDto = exports.RemoveOrderItemDto = exports.AddOrderItemDto = exports.CreateOrderDto = exports.TransferTableResponse = exports.CancelOrderResponse = exports.AddOrderItemResponse = exports.UpdateOrderResponse = exports.CreateOrderResponse = exports.LoadOrderByIdResponse = exports.LoadOrderResponse = exports.Order = exports.OrderItem = void 0;
+const class_validator_1 = require("class-validator");
 const graphql_1 = require("@nestjs/graphql");
 const enum_1 = require("../../../domain/enums/enum");
 let OrderItem = class OrderItem {
@@ -168,23 +169,41 @@ __decorate([
 exports.CancelOrderResponse = CancelOrderResponse = __decorate([
     (0, graphql_1.ObjectType)()
 ], CancelOrderResponse);
+let TransferTableResponse = class TransferTableResponse {
+};
+exports.TransferTableResponse = TransferTableResponse;
+__decorate([
+    (0, graphql_1.Field)(() => Order, { nullable: true }),
+    __metadata("design:type", Order)
+], TransferTableResponse.prototype, "order", void 0);
+exports.TransferTableResponse = TransferTableResponse = __decorate([
+    (0, graphql_1.ObjectType)()
+], TransferTableResponse);
 let CreateOrderDto = class CreateOrderDto {
 };
 exports.CreateOrderDto = CreateOrderDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "tableId", void 0);
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "staffId", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "note", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Float, { nullable: true }),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], CreateOrderDto.prototype, "discount", void 0);
 exports.CreateOrderDto = CreateOrderDto = __decorate([
@@ -195,26 +214,38 @@ let AddOrderItemDto = class AddOrderItemDto {
 exports.AddOrderItemDto = AddOrderItemDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], AddOrderItemDto.prototype, "orderId", void 0);
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], AddOrderItemDto.prototype, "menuItemId", void 0);
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], AddOrderItemDto.prototype, "menuItemName", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], AddOrderItemDto.prototype, "quantity", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Float),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], AddOrderItemDto.prototype, "unitPrice", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddOrderItemDto.prototype, "note", void 0);
 exports.AddOrderItemDto = AddOrderItemDto = __decorate([
@@ -225,10 +256,14 @@ let RemoveOrderItemDto = class RemoveOrderItemDto {
 exports.RemoveOrderItemDto = RemoveOrderItemDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], RemoveOrderItemDto.prototype, "orderItemId", void 0);
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], RemoveOrderItemDto.prototype, "orderId", void 0);
 exports.RemoveOrderItemDto = RemoveOrderItemDto = __decorate([
@@ -239,10 +274,14 @@ let UpdateOrderStatusDto = class UpdateOrderStatusDto {
 exports.UpdateOrderStatusDto = UpdateOrderStatusDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdateOrderStatusDto.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdateOrderStatusDto.prototype, "status", void 0);
 exports.UpdateOrderStatusDto = UpdateOrderStatusDto = __decorate([
@@ -253,10 +292,14 @@ let CancelOrderDto = class CancelOrderDto {
 exports.CancelOrderDto = CancelOrderDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CancelOrderDto.prototype, "_id", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CancelOrderDto.prototype, "reason", void 0);
 exports.CancelOrderDto = CancelOrderDto = __decorate([
@@ -267,18 +310,25 @@ let LoadOrderDto = class LoadOrderDto {
 exports.LoadOrderDto = LoadOrderDto;
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], LoadOrderDto.prototype, "page", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], LoadOrderDto.prototype, "limit", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadOrderDto.prototype, "tableId", void 0);
 __decorate([
     (0, graphql_1.Field)(() => String, { nullable: true }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], LoadOrderDto.prototype, "status", void 0);
 exports.LoadOrderDto = LoadOrderDto = __decorate([
@@ -289,6 +339,8 @@ let LoadOrderByIdDto = class LoadOrderByIdDto {
 exports.LoadOrderByIdDto = LoadOrderByIdDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoadOrderByIdDto.prototype, "_id", void 0);
 exports.LoadOrderByIdDto = LoadOrderByIdDto = __decorate([
@@ -299,9 +351,35 @@ let LoadOrderByTableDto = class LoadOrderByTableDto {
 exports.LoadOrderByTableDto = LoadOrderByTableDto;
 __decorate([
     (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], LoadOrderByTableDto.prototype, "tableId", void 0);
 exports.LoadOrderByTableDto = LoadOrderByTableDto = __decorate([
     (0, graphql_1.InputType)()
 ], LoadOrderByTableDto);
+let TransferTableDto = class TransferTableDto {
+};
+exports.TransferTableDto = TransferTableDto;
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], TransferTableDto.prototype, "orderId", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], TransferTableDto.prototype, "fromTableId", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], TransferTableDto.prototype, "toTableId", void 0);
+exports.TransferTableDto = TransferTableDto = __decorate([
+    (0, graphql_1.InputType)()
+], TransferTableDto);
 //# sourceMappingURL=order.model.js.map

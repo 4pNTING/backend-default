@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadAllMenuItemAction = void 0;
-const menu_item_entity_1 = require("../../../entities/menu-item.entity");
+const menu_item_entity_1 = require("../../../entities/menu-item.entity.js");
 class LoadAllMenuItemAction {
     constructor(session) {
         this.session = session;

@@ -1,9 +1,9 @@
 import { DataSource, Repository } from 'typeorm';
-import { CustomerEntity } from '../../entities/customer.entity';
-import { ContactEntity } from '../../entities/contact.entity';
-import { ICustomerRepository } from '../../../domain/repositories/customer.repository.interface';
-import { CustomerModel, CreateCustomerRequest, CreateCustomerResponse, UpdateCustomerRequest, DeleteCustomerRequest, LoadAllCustomerResponse, LoadCustomerByIdRequest, LoadCustomerByIdResponse } from '../../../domain/models/customer.model';
-import { QueryProps } from '../../../domain/models/query.model';
+import { CustomerEntity } from '../../entities/customer.entity.js';
+import { ContactEntity } from '../../entities/contact.entity.js';
+import { ICustomerRepository } from '../../../domain/repositories/customer.repository.interface.js';
+import { CustomerModel, CreateCustomerRequest, CreateCustomerResponse, UpdateCustomerRequest, DeleteCustomerRequest, LoadAllCustomerResponse, LoadCustomerByIdRequest, LoadCustomerByIdResponse } from '../../../domain/models/customer.model.js';
+import { QueryProps } from '../../../domain/models/query.model.js';
 import { RedisService } from '../../cache/redis.service';
 export declare class DatabaseCustomerRepository implements ICustomerRepository {
     private readonly customerEntity;

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteZoneAction = void 0;
-const zone_entity_1 = require("../../../entities/zone.entity");
-const enum_1 = require("../../../../domain/enums/enum");
+const zone_entity_1 = require("../../../entities/zone.entity.js");
+const enum_1 = require("../../../../domain/enums/enum.js");
 class DeleteZoneAction {
     constructor(session) {
         this.session = session;

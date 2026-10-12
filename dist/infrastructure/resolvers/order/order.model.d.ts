@@ -42,6 +42,9 @@ export declare class AddOrderItemResponse {
 export declare class CancelOrderResponse {
     _id: string;
 }
+export declare class TransferTableResponse {
+    order: Order;
+}
 export declare class CreateOrderDto {
     tableId: string;
     staffId: string;
@@ -79,4 +82,9 @@ export declare class LoadOrderByIdDto {
 }
 export declare class LoadOrderByTableDto {
     tableId: string;
+}
+export declare class TransferTableDto {
+    orderId: string;
+    fromTableId: string;
+    toTableId: string;
 }

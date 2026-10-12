@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadAllTableAction = void 0;
-const table_entity_1 = require("../../../entities/table.entity");
+const table_entity_1 = require("../../../entities/table.entity.js");
 class LoadAllTableAction {
     constructor(session) {
         this.session = session;

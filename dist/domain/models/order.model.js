@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoadOrderByTableResponse = exports.LoadOrderByTableRequest = exports.LoadOrderByIdResponse = exports.LoadOrderByIdRequest = exports.LoadAllOrderResponse = exports.DeleteOrderRequest = exports.CancelOrderRequest = exports.UpdateOrderStatusRequest = exports.RemoveOrderItemRequest = exports.AddOrderItemResponse = exports.AddOrderItemRequest = exports.CreateOrderResponse = exports.CreateOrderRequest = exports.OrderModel = exports.OrderItemModel = void 0;
+exports.TransferTableResponse = exports.TransferTableRequest = exports.LoadOrderByTableResponse = exports.LoadOrderByTableRequest = exports.LoadOrderByIdResponse = exports.LoadOrderByIdRequest = exports.LoadAllOrderResponse = exports.DeleteOrderRequest = exports.CancelOrderRequest = exports.UpdateOrderStatusRequest = exports.RemoveOrderItemRequest = exports.AddOrderItemResponse = exports.AddOrderItemRequest = exports.CreateOrderResponse = exports.CreateOrderRequest = exports.OrderModel = exports.OrderItemModel = void 0;
 class OrderItemModel {
 }
 exports.OrderItemModel = OrderItemModel;
@@ -46,4 +46,10 @@ exports.LoadOrderByTableRequest = LoadOrderByTableRequest;
 class LoadOrderByTableResponse {
 }
 exports.LoadOrderByTableResponse = LoadOrderByTableResponse;
+class TransferTableRequest {
+}
+exports.TransferTableRequest = TransferTableRequest;
+class TransferTableResponse extends OrderModel {
+}
+exports.TransferTableResponse = TransferTableResponse;
 //# sourceMappingURL=order.model.js.map
