@@ -44,6 +44,9 @@ export class MenuItemEntity implements MenuItemModel {
     })
     isActive: ActiveStatus;
 
+    @Column({ type: 'boolean', default: true })
+    isAvailable: boolean;
+
     @CreateDateColumn()
     createdAt: Date;
 

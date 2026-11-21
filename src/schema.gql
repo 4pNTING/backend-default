@@ -269,6 +269,10 @@ type CancelOrderResponse {
   _id: String!
 }
 
+type TransferTableResponse {
+  order: Order
+}
+
 type Payment {
   _id: String
   orderId: String!
@@ -579,6 +583,7 @@ type Mutation {
   removeOrderItem(input: RemoveOrderItemDto!): UpdateOrderResponse!
   updateOrderStatus(input: UpdateOrderStatusDto!): UpdateOrderResponse!
   cancelOrder(input: CancelOrderDto!): CancelOrderResponse!
+  transferTable(input: TransferTableDto!): TransferTableResponse!
   processPayment(input: ProcessPaymentDto!): PaymentResponse!
   createCustomer(input: CreateCustomerDto!): CreateCustomerResponse!
   updateCustomer(input: UpdateCustomerDto!): UpdateCustomerResponse!
@@ -754,6 +759,12 @@ input UpdateOrderStatusDto {
 input CancelOrderDto {
   _id: String!
   reason: String
+}
+
+input TransferTableDto {
+  orderId: String!
+  fromTableId: String!
+  toTableId: String!
 }
 
 input ProcessPaymentDto {

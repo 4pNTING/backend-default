@@ -18,13 +18,16 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const payment_entity_1 = require("../../entities/payment.entity.js");
 const order_entity_1 = require("../../entities/order.entity.js");
+const table_entity_1 = require("../../entities/table.entity.js");
 const enum_1 = require("../../../domain/enums/enum.js");
 const redis_service_1 = require("../../cache/redis.service");
 const cache_keys_constants_1 = require("../../cache/cache-keys.constants");
+const inventory_repository_1 = require("../inventory/inventory.repository");
 let DatabasePaymentRepository = class DatabasePaymentRepository {
-    constructor(paymentEntity, orderEntity, dataSource, redisService) {
+    constructor(paymentEntity, orderEntity, inventoryRepository, dataSource, redisService) {
         this.paymentEntity = paymentEntity;
         this.orderEntity = orderEntity;
+        this.inventoryRepository = inventoryRepository;
         this.dataSource = dataSource;
         this.redisService = redisService;
     }
@@ -61,10 +64,20 @@ let DatabasePaymentRepository = class DatabasePaymentRepository {
             await session.manager.update(order_entity_1.OrderEntity, { _id: params.orderId }, {
                 status: enum_1.OrderStatus.paid,
             });
+            await this.inventoryRepository.deductStockForOrder(params.orderId, session);
+            if (order.tableId) {
+                await session.manager.update(table_entity_1.TableEntity, { _id: order.tableId }, {
+                    status: enum_1.TableStatus.available,
+                });
+            }
             await session.commitTransaction();
             await this.redisService.del(cache_keys_constants_1.CacheKeys.ORDER_BY_ID(params.orderId));
             await this.redisService.del(cache_keys_constants_1.CacheKeys.ORDER_LIST);
             await this.redisService.del(cache_keys_constants_1.CacheKeys.PAYMENT_BY_ORDER(params.orderId));
+            if (order.tableId) {
+                await this.redisService.del(cache_keys_constants_1.CacheKeys.TABLE_BY_ID(order.tableId));
+                await this.redisService.delByPattern(cache_keys_constants_1.CacheKeys.TABLE_LIST_PATTERN);
+            }
             return savedPayment;
         }
         catch (error) {
@@ -105,6 +118,7 @@ exports.DatabasePaymentRepository = DatabasePaymentRepository = __decorate([
     __param(1, (0, typeorm_1.InjectRepository)(order_entity_1.OrderEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
+        inventory_repository_1.DatabaseInventoryRepository,
         typeorm_2.DataSource,
         redis_service_1.RedisService])
 ], DatabasePaymentRepository);

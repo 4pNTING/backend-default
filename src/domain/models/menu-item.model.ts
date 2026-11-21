@@ -11,6 +11,7 @@ export class MenuItemModel {
     price: number;
     categoryId: string;    // FK → Category
     isActive: ActiveStatus;
+    isAvailable?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
 }

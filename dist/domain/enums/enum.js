@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AttachmentStatus = exports.PaymentMethod = exports.OrderStatus = exports.TableStatus = exports.InventoryMovementType = exports.ActiveStatus = exports.Role = void 0;
+exports.AttachmentStatus = exports.PaymentMethod = exports.OrderStatus = exports.TableStatus = exports.StockTransactionType = exports.InventoryMovementType = exports.ActiveStatus = exports.Role = void 0;
 const graphql_1 = require("@nestjs/graphql");
 var Role;
 (function (Role) {
@@ -29,6 +29,17 @@ var InventoryMovementType;
 (0, graphql_1.registerEnumType)(InventoryMovementType, {
     name: 'InventoryMovementType',
     description: 'Type of inventory movement: in, out, transfer, or adjust',
+});
+var StockTransactionType;
+(function (StockTransactionType) {
+    StockTransactionType["IN"] = "IN";
+    StockTransactionType["OUT_SALE"] = "OUT_SALE";
+    StockTransactionType["ADJUSTMENT"] = "ADJUSTMENT";
+    StockTransactionType["WASTE"] = "WASTE";
+})(StockTransactionType || (exports.StockTransactionType = StockTransactionType = {}));
+(0, graphql_1.registerEnumType)(StockTransactionType, {
+    name: 'StockTransactionType',
+    description: 'Type of stock transaction: IN, OUT_SALE, ADJUSTMENT, or WASTE',
 });
 var TableStatus;
 (function (TableStatus) {

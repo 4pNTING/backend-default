@@ -1,0 +1,31 @@
+import { LoadInventoryResponse, LoadLowStockAlertResponse, LoadStockHistoryResponse, LoadRecipeByMenuItemResponse, CreateInventoryItemResponse, UpdateInventoryItemResponse, DeleteInventoryItemResponse, AdjustStockResponse, SetMenuItemRecipeResponse, CreateInventoryItemDto, UpdateInventoryItemDto, DeleteInventoryItemDto, LoadInventoryDto, AdjustStockDto, SetMenuItemRecipeDto, LoadStockHistoryDto } from './inventory.model';
+import { CreateInventoryItemUseCase } from '../../../usecases/inventory/createInventoryItem.usecase';
+import { UpdateInventoryItemUseCase } from '../../../usecases/inventory/updateInventoryItem.usecase';
+import { DeleteInventoryItemUseCase } from '../../../usecases/inventory/deleteInventoryItem.usecase';
+import { LoadInventoryUseCase } from '../../../usecases/inventory/loadInventory.usecase';
+import { LoadLowStockAlertUseCase } from '../../../usecases/inventory/loadLowStockAlert.usecase';
+import { AdjustStockUseCase } from '../../../usecases/inventory/adjustStock.usecase';
+import { SetMenuItemRecipeUseCase } from '../../../usecases/inventory/setMenuItemRecipe.usecase';
+import { LoadRecipeByMenuItemUseCase } from '../../../usecases/inventory/loadRecipeByMenuItem.usecase';
+import { LoadStockHistoryUseCase } from '../../../usecases/inventory/loadStockHistory.usecase';
+export declare class InventoryResolver {
+    private readonly createInventoryItemUseCase;
+    private readonly updateInventoryItemUseCase;
+    private readonly deleteInventoryItemUseCase;
+    private readonly loadInventoryUseCase;
+    private readonly loadLowStockAlertUseCase;
+    private readonly adjustStockUseCase;
+    private readonly setMenuItemRecipeUseCase;
+    private readonly loadRecipeByMenuItemUseCase;
+    private readonly loadStockHistoryUseCase;
+    constructor(createInventoryItemUseCase: CreateInventoryItemUseCase, updateInventoryItemUseCase: UpdateInventoryItemUseCase, deleteInventoryItemUseCase: DeleteInventoryItemUseCase, loadInventoryUseCase: LoadInventoryUseCase, loadLowStockAlertUseCase: LoadLowStockAlertUseCase, adjustStockUseCase: AdjustStockUseCase, setMenuItemRecipeUseCase: SetMenuItemRecipeUseCase, loadRecipeByMenuItemUseCase: LoadRecipeByMenuItemUseCase, loadStockHistoryUseCase: LoadStockHistoryUseCase);
+    loadInventory(input?: LoadInventoryDto): Promise<LoadInventoryResponse>;
+    loadLowStockAlert(): Promise<LoadLowStockAlertResponse>;
+    loadRecipeByMenuItem(menuItemId: string): Promise<LoadRecipeByMenuItemResponse>;
+    loadStockHistory(input?: LoadStockHistoryDto): Promise<LoadStockHistoryResponse>;
+    createInventoryItem(input: CreateInventoryItemDto): Promise<CreateInventoryItemResponse>;
+    updateInventoryItem(input: UpdateInventoryItemDto): Promise<UpdateInventoryItemResponse>;
+    deleteInventoryItem(input: DeleteInventoryItemDto): Promise<DeleteInventoryItemResponse>;
+    adjustStock(input: AdjustStockDto): Promise<AdjustStockResponse>;
+    setMenuItemRecipe(input: SetMenuItemRecipeDto): Promise<SetMenuItemRecipeResponse>;
+}

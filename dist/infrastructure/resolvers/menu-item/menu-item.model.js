@@ -54,6 +54,10 @@ __decorate([
     __metadata("design:type", String)
 ], MenuItem.prototype, "isActive", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => Boolean, { nullable: true }),
+    __metadata("design:type", Boolean)
+], MenuItem.prototype, "isAvailable", void 0);
+__decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", Date)
 ], MenuItem.prototype, "createdAt", void 0);

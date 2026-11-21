@@ -27,6 +27,7 @@ const order_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/o
 const payment_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/payment-usecases-proxy.module");
 const customer_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/customer-usecases-proxy.module");
 const attachment_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/attachment-usecases-proxy.module");
+const inventory_usecases_proxy_module_1 = require("./infrastructure/usecases-proxy/inventory-usecases-proxy.module");
 const category_controller_1 = require("./infrastructure/controllers/category/category.controller");
 const zone_controller_1 = require("./infrastructure/controllers/zone/zone.controller");
 const auth_controller_1 = require("./infrastructure/controllers/auth/auth.controller");
@@ -45,6 +46,9 @@ const payment_entity_1 = require("./infrastructure/entities/payment.entity");
 const customer_entity_1 = require("./infrastructure/entities/customer.entity");
 const contact_entity_1 = require("./infrastructure/entities/contact.entity");
 const attachment_entity_1 = require("./infrastructure/entities/attachment.entity");
+const inventory_item_entity_1 = require("./infrastructure/entities/inventory-item.entity");
+const recipe_item_entity_1 = require("./infrastructure/entities/recipe-item.entity");
+const stock_transaction_entity_1 = require("./infrastructure/entities/stock-transaction.entity");
 const category_resolver_1 = require("./infrastructure/resolvers/category/category.resolver");
 const zone_resolver_1 = require("./infrastructure/resolvers/zone/zone.resolver");
 const auth_resolver_1 = require("./infrastructure/resolvers/auth/auth.resolver");
@@ -56,6 +60,7 @@ const order_resolver_1 = require("./infrastructure/resolvers/order/order.resolve
 const payment_resolver_1 = require("./infrastructure/resolvers/payment/payment.resolver");
 const customer_resolver_1 = require("./infrastructure/resolvers/customer/customer.resolver");
 const attachment_resolver_1 = require("./infrastructure/resolvers/attachment/attachment.resolver");
+const inventory_resolver_1 = require("./infrastructure/resolvers/inventory/inventory.resolver");
 const jwt_strategy_1 = require("./infrastructure/common/jwt.strategy");
 const redis_module_1 = require("./infrastructure/cache/redis.module");
 let AppModule = class AppModule {
@@ -107,6 +112,9 @@ exports.AppModule = AppModule = __decorate([
                         customer_entity_1.CustomerEntity,
                         contact_entity_1.ContactEntity,
                         attachment_entity_1.AttachmentEntity,
+                        inventory_item_entity_1.InventoryItemEntity,
+                        recipe_item_entity_1.RecipeItemEntity,
+                        stock_transaction_entity_1.StockTransactionEntity,
                     ],
                     synchronize: true,
                     autoLoadEntities: true,
@@ -125,6 +133,7 @@ exports.AppModule = AppModule = __decorate([
             payment_usecases_proxy_module_1.PaymentUsecasesProxyModule.register(),
             customer_usecases_proxy_module_1.CustomerUsecasesProxyModule.register(),
             attachment_usecases_proxy_module_1.AttachmentUsecasesProxyModule.register(),
+            inventory_usecases_proxy_module_1.InventoryUsecasesProxyModule.register(),
         ],
         controllers: [
             category_controller_1.CategoryController,
@@ -147,6 +156,7 @@ exports.AppModule = AppModule = __decorate([
             payment_resolver_1.PaymentResolver,
             customer_resolver_1.CustomerResolver,
             attachment_resolver_1.AttachmentResolver,
+            inventory_resolver_1.InventoryResolver,
         ],
     })
 ], AppModule);

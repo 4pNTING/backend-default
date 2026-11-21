@@ -34,6 +34,9 @@ export class MenuItem {
     @Field(() => String, { nullable: true })
     isActive?: ActiveStatus;
 
+    @Field(() => Boolean, { nullable: true })
+    isAvailable?: boolean;
+
     @Field({ nullable: true })
     createdAt?: Date;
 

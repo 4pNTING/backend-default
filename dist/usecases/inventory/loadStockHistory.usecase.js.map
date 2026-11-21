@@ -1,0 +1,1 @@
+{"version":3,"file":"loadStockHistory.usecase.js","sourceRoot":"","sources":["../../../src/usecases/inventory/loadStockHistory.usecase.ts"],"names":[],"mappings":";;;AAGA,MAAa,uBAAuB;IAChC,YAA6B,mBAAyC;QAAzC,wBAAmB,GAAnB,mBAAmB,CAAsB;IAAI,CAAC;IAE3E,KAAK,CAAC,OAAO,CAAC,MAA+B;QACzC,OAAO,MAAM,IAAI,CAAC,mBAAmB,CAAC,eAAe,CAAC,MAAM,CAAC,CAAC;IAClE,CAAC;CACJ;AAND,0DAMC"}

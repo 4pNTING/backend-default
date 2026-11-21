@@ -1,0 +1,1 @@
+{"version":3,"file":"adjustStock.usecase.js","sourceRoot":"","sources":["../../../src/usecases/inventory/adjustStock.usecase.ts"],"names":[],"mappings":";;;AAGA,MAAa,kBAAkB;IAC3B,YAA6B,mBAAyC;QAAzC,wBAAmB,GAAnB,mBAAmB,CAAsB;IAAI,CAAC;IAE3E,KAAK,CAAC,OAAO,CAAC,MAA0B;QACpC,OAAO,MAAM,IAAI,CAAC,mBAAmB,CAAC,WAAW,CAAC,MAAM,CAAC,CAAC;IAC9D,CAAC;CACJ;AAND,gDAMC"}

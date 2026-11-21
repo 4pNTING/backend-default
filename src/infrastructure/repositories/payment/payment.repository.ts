@@ -3,16 +3,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { PaymentEntity } from '@infrastructure/entities/payment.entity';
 import { OrderEntity }   from '@infrastructure/entities/order.entity';
+import { TableEntity }   from '@infrastructure/entities/table.entity';
 import { IPaymentRepository } from '@domain/repositories/payment.repository.interface';
 import {
     ProcessPaymentRequest, ProcessPaymentResponse,
     LoadPaymentByOrderRequest, LoadPaymentByOrderResponse,
     LoadPaymentByIdRequest, LoadPaymentByIdResponse,
 } from '@domain/models/payment.model';
-import { OrderStatus } from '@domain/enums/enum';
+import { OrderStatus, TableStatus } from '@domain/enums/enum';
 
 import { RedisService } from '../../cache/redis.service';
 import { CacheKeys }    from '../../cache/cache-keys.constants';
+import { DatabaseInventoryRepository } from '../inventory/inventory.repository';
 
 @Injectable()
 export class DatabasePaymentRepository implements IPaymentRepository {
@@ -21,6 +23,7 @@ export class DatabasePaymentRepository implements IPaymentRepository {
         private readonly paymentEntity: Repository<PaymentEntity>,
         @InjectRepository(OrderEntity)
         private readonly orderEntity: Repository<OrderEntity>,
+        private readonly inventoryRepository: DatabaseInventoryRepository,
         private readonly dataSource: DataSource,
         private readonly redisService: RedisService,
     ) { }
@@ -70,12 +73,26 @@ export class DatabasePaymentRepository implements IPaymentRepository {
                 status: OrderStatus.paid,
             });
 
+            // 6. Auto Stock Deduction (ตัดสต็อกอัตโนมัติตามสูตรใน Transaction เดียวกัน)
+            await this.inventoryRepository.deductStockForOrder(params.orderId, session);
+
+            // 7. อัปเดตโต๊ะกลับเป็น available
+            if (order.tableId) {
+                await session.manager.update(TableEntity, { _id: order.tableId }, {
+                    status: TableStatus.available,
+                });
+            }
+
             await session.commitTransaction();
 
             // Invalidate caches
             await this.redisService.del(CacheKeys.ORDER_BY_ID(params.orderId));
             await this.redisService.del(CacheKeys.ORDER_LIST);
             await this.redisService.del(CacheKeys.PAYMENT_BY_ORDER(params.orderId));
+            if (order.tableId) {
+                await this.redisService.del(CacheKeys.TABLE_BY_ID(order.tableId));
+                await this.redisService.delByPattern(CacheKeys.TABLE_LIST_PATTERN);
+            }
 
             return savedPayment as ProcessPaymentResponse;
         } catch (error) {

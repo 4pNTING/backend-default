@@ -62,6 +62,10 @@ __decorate([
     __metadata("design:type", String)
 ], MenuItemEntity.prototype, "isActive", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'boolean', default: true }),
+    __metadata("design:type", Boolean)
+], MenuItemEntity.prototype, "isAvailable", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], MenuItemEntity.prototype, "createdAt", void 0);

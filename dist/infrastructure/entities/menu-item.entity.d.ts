@@ -12,6 +12,7 @@ export declare class MenuItemEntity implements MenuItemModel {
     categoryId: string;
     category: CategoryEntity;
     isActive: ActiveStatus;
+    isAvailable: boolean;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;

@@ -49,4 +49,12 @@ export declare const CacheKeys: {
     readonly ATTACHMENT_BY_OWNER: (ownerId: string, ownerType?: string) => string;
     readonly ATTACHMENT_PATTERN: "attachment:*";
     readonly ATTACHMENT_LIST_PATTERN: "attachment:list:*";
+    readonly INVENTORY_LIST: "inventory:list";
+    readonly INVENTORY_LIST_QUERY: (query: any) => string;
+    readonly INVENTORY_BY_ID: (id: string) => string;
+    readonly INVENTORY_LOW_STOCK: "inventory:low_stock";
+    readonly INVENTORY_RECIPE_BY_MENU: (menuItemId: string) => string;
+    readonly INVENTORY_PATTERN: "inventory:*";
+    readonly INVENTORY_LIST_PATTERN: "inventory:list:*";
+    readonly INVENTORY_HISTORY_PATTERN: "inventory:history:*";
 };

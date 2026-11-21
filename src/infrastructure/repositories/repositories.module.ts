@@ -33,6 +33,12 @@ import { DatabaseCustomerRepository } from './customer/customer.repository';
 import { AttachmentEntity } from '../entities/attachment.entity';
 import { DatabaseAttachmentRepository } from './attachment/attachment.repository';
 
+// Inventory Entities & Repository
+import { InventoryItemEntity } from '../entities/inventory-item.entity';
+import { RecipeItemEntity } from '../entities/recipe-item.entity';
+import { StockTransactionEntity } from '../entities/stock-transaction.entity';
+import { DatabaseInventoryRepository } from './inventory/inventory.repository';
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -53,6 +59,10 @@ import { DatabaseAttachmentRepository } from './attachment/attachment.repository
       ContactEntity,
       // Attachment
       AttachmentEntity,
+      // Inventory
+      InventoryItemEntity,
+      RecipeItemEntity,
+      StockTransactionEntity,
     ]),
   ],
   providers: [
@@ -71,6 +81,8 @@ import { DatabaseAttachmentRepository } from './attachment/attachment.repository
     DatabaseCustomerRepository,
     // Attachment
     DatabaseAttachmentRepository,
+    // Inventory
+    DatabaseInventoryRepository,
   ],
   exports: [
     // Existing
@@ -88,6 +100,8 @@ import { DatabaseAttachmentRepository } from './attachment/attachment.repository
     DatabaseCustomerRepository,
     // Attachment
     DatabaseAttachmentRepository,
+    // Inventory
+    DatabaseInventoryRepository,
   ],
 })
 export class RepositoriesModule { }

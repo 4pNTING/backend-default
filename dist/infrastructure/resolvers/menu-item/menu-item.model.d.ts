@@ -10,6 +10,7 @@ export declare class MenuItem {
     price: number;
     categoryId: string;
     isActive?: ActiveStatus;
+    isAvailable?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
 }

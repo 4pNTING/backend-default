@@ -101,5 +101,15 @@ export const CacheKeys = {
   ATTACHMENT_BY_OWNER: (ownerId: string, ownerType?: string) => `attachment:owner:${ownerId}:${ownerType ?? 'all'}`,
   ATTACHMENT_PATTERN: 'attachment:*',
   ATTACHMENT_LIST_PATTERN: 'attachment:list:*',
+
+  // ─── Inventory ───────────────────────────────────────
+  INVENTORY_LIST: 'inventory:list',
+  INVENTORY_LIST_QUERY: (query: any) => `inventory:list:${queryToCacheKey(query)}`,
+  INVENTORY_BY_ID: (id: string) => `inventory:id:${id}`,
+  INVENTORY_LOW_STOCK: 'inventory:low_stock',
+  INVENTORY_RECIPE_BY_MENU: (menuItemId: string) => `inventory:recipe:${menuItemId}`,
+  INVENTORY_PATTERN: 'inventory:*',
+  INVENTORY_LIST_PATTERN: 'inventory:list:*',
+  INVENTORY_HISTORY_PATTERN: 'inventory:history:*',
 } as const;
 

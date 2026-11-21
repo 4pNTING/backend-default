@@ -30,6 +30,19 @@ registerEnumType(InventoryMovementType, {
     description: 'Type of inventory movement: in, out, transfer, or adjust',
 });
 
+// ─── Stock Transaction Type ───────────────────────────────
+export enum StockTransactionType {
+    IN = 'IN',
+    OUT_SALE = 'OUT_SALE',
+    ADJUSTMENT = 'ADJUSTMENT',
+    WASTE = 'WASTE',
+}
+
+registerEnumType(StockTransactionType, {
+    name: 'StockTransactionType',
+    description: 'Type of stock transaction: IN, OUT_SALE, ADJUSTMENT, or WASTE',
+});
+
 // ─── Table Status ─────────────────────────────────────────
 export enum TableStatus {
     available = 'available',   // ว่าง

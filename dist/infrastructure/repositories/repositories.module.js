@@ -33,6 +33,10 @@ const contact_entity_1 = require("../entities/contact.entity");
 const customer_repository_1 = require("./customer/customer.repository");
 const attachment_entity_1 = require("../entities/attachment.entity");
 const attachment_repository_1 = require("./attachment/attachment.repository");
+const inventory_item_entity_1 = require("../entities/inventory-item.entity");
+const recipe_item_entity_1 = require("../entities/recipe-item.entity");
+const stock_transaction_entity_1 = require("../entities/stock-transaction.entity");
+const inventory_repository_1 = require("./inventory/inventory.repository");
 let RepositoriesModule = class RepositoriesModule {
 };
 exports.RepositoriesModule = RepositoriesModule;
@@ -53,6 +57,9 @@ exports.RepositoriesModule = RepositoriesModule = __decorate([
                 customer_entity_1.CustomerEntity,
                 contact_entity_1.ContactEntity,
                 attachment_entity_1.AttachmentEntity,
+                inventory_item_entity_1.InventoryItemEntity,
+                recipe_item_entity_1.RecipeItemEntity,
+                stock_transaction_entity_1.StockTransactionEntity,
             ]),
         ],
         providers: [
@@ -67,6 +74,7 @@ exports.RepositoriesModule = RepositoriesModule = __decorate([
             payment_repository_1.DatabasePaymentRepository,
             customer_repository_1.DatabaseCustomerRepository,
             attachment_repository_1.DatabaseAttachmentRepository,
+            inventory_repository_1.DatabaseInventoryRepository,
         ],
         exports: [
             category_repository_1.DatabaseCategoryRepository,
@@ -80,6 +88,7 @@ exports.RepositoriesModule = RepositoriesModule = __decorate([
             payment_repository_1.DatabasePaymentRepository,
             customer_repository_1.DatabaseCustomerRepository,
             attachment_repository_1.DatabaseAttachmentRepository,
+            inventory_repository_1.DatabaseInventoryRepository,
         ],
     })
 ], RepositoriesModule);

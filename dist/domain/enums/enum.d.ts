@@ -15,6 +15,12 @@ export declare enum InventoryMovementType {
     TRANSFER = "transfer",
     ADJUST = "adjust"
 }
+export declare enum StockTransactionType {
+    IN = "IN",
+    OUT_SALE = "OUT_SALE",
+    ADJUSTMENT = "ADJUSTMENT",
+    WASTE = "WASTE"
+}
 export declare enum TableStatus {
     available = "available",
     occupied = "occupied",

@@ -20,6 +20,7 @@ import { OrderUsecasesProxyModule } from './infrastructure/usecases-proxy/order-
 import { PaymentUsecasesProxyModule } from './infrastructure/usecases-proxy/payment-usecases-proxy.module';
 import { CustomerUsecasesProxyModule } from './infrastructure/usecases-proxy/customer-usecases-proxy.module';
 import { AttachmentUsecasesProxyModule } from './infrastructure/usecases-proxy/attachment-usecases-proxy.module';
+import { InventoryUsecasesProxyModule } from './infrastructure/usecases-proxy/inventory-usecases-proxy.module';
 
 // Controllers
 import { CategoryController } from './infrastructure/controllers/category/category.controller';
@@ -42,6 +43,9 @@ import { PaymentEntity } from './infrastructure/entities/payment.entity';
 import { CustomerEntity } from './infrastructure/entities/customer.entity';
 import { ContactEntity } from './infrastructure/entities/contact.entity';
 import { AttachmentEntity } from './infrastructure/entities/attachment.entity';
+import { InventoryItemEntity } from './infrastructure/entities/inventory-item.entity';
+import { RecipeItemEntity } from './infrastructure/entities/recipe-item.entity';
+import { StockTransactionEntity } from './infrastructure/entities/stock-transaction.entity';
 
 // Resolvers (existing)
 import { CategoryResolver } from './infrastructure/resolvers/category/category.resolver';
@@ -57,6 +61,7 @@ import { OrderResolver } from './infrastructure/resolvers/order/order.resolver';
 import { PaymentResolver } from './infrastructure/resolvers/payment/payment.resolver';
 import { CustomerResolver } from './infrastructure/resolvers/customer/customer.resolver';
 import { AttachmentResolver } from './infrastructure/resolvers/attachment/attachment.resolver';
+import { InventoryResolver } from './infrastructure/resolvers/inventory/inventory.resolver';
 
 import { JwtStrategy } from './infrastructure/common/jwt.strategy';
 import { RedisModule } from './infrastructure/cache/redis.module';
@@ -114,6 +119,9 @@ import { RedisModule } from './infrastructure/cache/redis.module';
                     CustomerEntity,
                     ContactEntity,
                     AttachmentEntity,
+                    InventoryItemEntity,
+                    RecipeItemEntity,
+                    StockTransactionEntity,
                 ],
                 synchronize: true,
                 autoLoadEntities: true,
@@ -135,6 +143,7 @@ import { RedisModule } from './infrastructure/cache/redis.module';
         PaymentUsecasesProxyModule.register(),
         CustomerUsecasesProxyModule.register(),
         AttachmentUsecasesProxyModule.register(),
+        InventoryUsecasesProxyModule.register(),
     ],
     controllers: [
         // 5. Register Controllers
@@ -160,6 +169,7 @@ import { RedisModule } from './infrastructure/cache/redis.module';
         PaymentResolver,
         CustomerResolver,
         AttachmentResolver,
+        InventoryResolver,
     ],
 })
 export class AppModule { }
