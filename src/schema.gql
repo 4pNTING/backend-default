@@ -1,7 +1,3 @@
-# ------------------------------------------------------
-# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
-# ------------------------------------------------------
-
 type Category {
   _id: String
   uniqueId: Int
@@ -163,6 +159,7 @@ type MenuItem {
   price: Float!
   categoryId: String!
   isActive: String
+  isAvailable: Boolean
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -404,6 +401,83 @@ type RestoreAttachmentResponse {
   attachment: Attachment
 }
 
+type InventoryItem {
+  _id: String
+  name: String!
+  sku: String
+  category: String!
+  unit: String!
+  currentStock: Float!
+  minStockAlert: Float!
+  costPerUnit: Float!
+  isActive: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type RecipeItem {
+  _id: String
+  menuItemId: String!
+  inventoryItemId: String!
+  quantityRequired: Float!
+  inventoryItem: InventoryItem
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type StockTransaction {
+  _id: String
+  inventoryItemId: String!
+  type: String!
+  quantity: Float!
+  balanceAfter: Float!
+  orderId: String
+  staffId: String
+  note: String
+  inventoryItem: InventoryItem
+  createdAt: DateTime
+}
+
+type LoadInventoryResponse {
+  total: Int!
+  items: [InventoryItem!]!
+}
+
+type LoadLowStockAlertResponse {
+  items: [InventoryItem!]!
+}
+
+type LoadRecipeByMenuItemResponse {
+  recipes: [RecipeItem!]!
+}
+
+type LoadStockHistoryResponse {
+  total: Int!
+  items: [StockTransaction!]!
+}
+
+type CreateInventoryItemResponse {
+  item: InventoryItem
+}
+
+type UpdateInventoryItemResponse {
+  item: InventoryItem
+}
+
+type DeleteInventoryItemResponse {
+  _id: String!
+}
+
+type AdjustStockResponse {
+  transaction: StockTransaction
+  item: InventoryItem
+}
+
+type SetMenuItemRecipeResponse {
+  menuItemId: String!
+  recipes: [RecipeItem!]!
+}
+
 """DateTime scalar — returns ISO 8601 UTC string"""
 scalar DateTime
 
@@ -427,6 +501,10 @@ type Query {
   loadCustomerById(input: LoadCustomerByIdDto!): LoadCustomerByIdResponse
   loadAttachment(input: LoadAttachmentDto): LoadAttachmentResponse!
   loadAttachmentById(input: LoadAttachmentByIdDto!): LoadAttachmentByIdResponse
+  loadInventory(input: LoadInventoryDto): LoadInventoryResponse!
+  loadLowStockAlert: LoadLowStockAlertResponse!
+  loadRecipeByMenuItem(menuItemId: String!): LoadRecipeByMenuItemResponse!
+  loadStockHistory(input: LoadStockHistoryDto): LoadStockHistoryResponse!
 }
 
 input LoadCategoryDto {
@@ -554,6 +632,21 @@ input LoadAttachmentByIdDto {
   _id: String!
 }
 
+input LoadInventoryDto {
+  page: Int
+  limit: Int
+  search: String
+  category: String
+  isActive: String
+}
+
+input LoadStockHistoryDto {
+  inventoryItemId: String
+  type: String
+  page: Int
+  limit: Int
+}
+
 type Mutation {
   createCategory(input: CreateCategoryDto!): CreateCategoryResponse!
   updateCategory(input: UpdateCategoryDto!): UpdateCategoryResponse!
@@ -593,6 +686,11 @@ type Mutation {
   updateAttachment(input: UpdateAttachmentDto!): UpdateAttachmentResponse!
   deleteAttachment(input: DeleteAttachmentDto!): DeleteAttachmentResponse!
   restoreAttachment(input: RestoreAttachmentDto!): RestoreAttachmentResponse!
+  createInventoryItem(input: CreateInventoryItemDto!): CreateInventoryItemResponse!
+  updateInventoryItem(input: UpdateInventoryItemDto!): UpdateInventoryItemResponse!
+  deleteInventoryItem(input: DeleteInventoryItemDto!): DeleteInventoryItemResponse!
+  adjustStock(input: AdjustStockDto!): AdjustStockResponse!
+  setMenuItemRecipe(input: SetMenuItemRecipeDto!): SetMenuItemRecipeResponse!
 }
 
 input CreateCategoryDto {
@@ -861,4 +959,48 @@ input DeleteAttachmentDto {
 
 input RestoreAttachmentDto {
   _id: String!
+}
+
+input CreateInventoryItemDto {
+  name: String!
+  sku: String
+  category: String!
+  unit: String!
+  currentStock: Float
+  minStockAlert: Float
+  costPerUnit: Float
+  isActive: String
+}
+
+input UpdateInventoryItemDto {
+  _id: String!
+  name: String
+  sku: String
+  category: String
+  unit: String
+  minStockAlert: Float
+  costPerUnit: Float
+  isActive: String
+}
+
+input DeleteInventoryItemDto {
+  _id: String!
+}
+
+input AdjustStockDto {
+  inventoryItemId: String!
+  type: String!
+  quantity: Float!
+  staffId: String
+  note: String
+}
+
+input SetMenuItemRecipeDto {
+  menuItemId: String!
+  ingredients: [RecipeIngredientInput!]!
+}
+
+input RecipeIngredientInput {
+  inventoryItemId: String!
+  quantityRequired: Float!
 }
