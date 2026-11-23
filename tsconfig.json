@@ -29,5 +29,5 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "fruit-erp-web"]
+  "exclude": ["node_modules", "dist"]
 }
